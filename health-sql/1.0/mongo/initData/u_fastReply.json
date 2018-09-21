@@ -1,0 +1,8 @@
+db.u_fastReply.update({},{$set:{"is_system":NumberInt(1)}},false,true)
+
+
+db.u_fastReply.insert({"replyContent" : "现病史：1、发病情况：发病时间的新久、发病原因或诱因，主要症状、体征的性状、部位、持续时间、曾作何处理","replyTime" : NumberLong("1453558437799"),"replyType" : 3,"is_system" : 0});
+db.u_fastReply.insert({"replyContent" : "既往史：（既往诊断）既往健康情况、患病情况","replyTime" : NumberLong("1453558437799"),"replyType" : 3,"is_system" : 0});
+db.u_fastReply.insert({"replyContent" : "现病史：2、病变过程：询问从发病到就诊这段时间内病情的变化，哪些症状加重或减轻，又出现了哪些新的症状或体征，疾病的发展有无规律性","replyTime" : NumberLong("1453558437799"),"replyType" : 3,"is_system" : 0});
+db.u_fastReply.insert({"replyContent" : "家族史：有无遗传性或传染性疾病","replyTime" : NumberLong("1453558437799"),"replyType" : 3,"is_system" : 0});
+db.u_fastReply.insert({"replyContent" : "月经史：月经初潮的年龄、月经周期","replyTime" : NumberLong("1453558437799"),"replyType" : 3,"is_system" : 0});

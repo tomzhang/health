@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dachen.health.pack.patient.mapper.OrderSessionMapper">
+  <resultMap id="BaseResultMap" type="com.dachen.health.pack.patient.model.OrderSession">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="msg_group_id" jdbcType="VARCHAR" property="msgGroupId" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="last_modify_time" jdbcType="BIGINT" property="lastModifyTime" />
+    <result column="appoint_time" jdbcType="BIGINT" property="appointTime" />
+    <result column="service_begin_time" jdbcType="BIGINT" property="serviceBeginTime" />
+    <result column="service_end_time" jdbcType="BIGINT" property="serviceEndTime" />
+    <result column="patient_can_send" jdbcType="BIT" property="patientCanSend" />
+    <result column="treat_begin_time" jdbcType="BIGINT" property="treatBeginTime" />
+    <result column="is_send_over_time" jdbcType="BIT" property="isSendOverTime" />
+    <result column="assistant_patient_group_id" jdbcType="VARCHAR" property="assistantPatientGroupId" />
+    <result column="assistant_doctor_group_id" jdbcType="VARCHAR" property="assistantDoctorGroupId" />
+    <result column="total_reply_count" jdbcType="INTEGER" property="totalReplyCount" />
+    <result column="replid_count" jdbcType="INTEGER" property="replidCount" />
+    <result column="first_message_id" jdbcType="VARCHAR" property="firstMessageId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, order_id, msg_group_id, create_time, last_modify_time, appoint_time, service_begin_time, 
+    service_end_time, patient_can_send, treat_begin_time, is_send_over_time ,
+    assistant_patient_group_id ,assistant_doctor_group_id ,total_reply_count,replid_count,first_message_id
+  </sql>
+  <select id="selectByExample" parameterType="com.dachen.health.pack.patient.model.OrderSessionExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_order_session
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_session
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_order_session
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dachen.health.pack.patient.model.OrderSessionExample">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_order_session
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dachen.health.pack.patient.model.OrderSession" useGeneratedKeys="true" keyProperty="id">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into t_order_session (id, order_id, msg_group_id, 
+      create_time, last_modify_time, appoint_time, 
+      service_begin_time, service_end_time, patient_can_send, 
+      treat_begin_time, is_send_over_time,assistant_patient_group_id ,assistant_doctor_group_id ,
+      total_reply_count , replid_count)
+    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{msgGroupId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=BIGINT}, #{lastModifyTime,jdbcType=BIGINT}, #{appointTime,jdbcType=BIGINT}, 
+      #{serviceBeginTime,jdbcType=BIGINT}, #{serviceEndTime,jdbcType=BIGINT}, #{patientCanSend,jdbcType=BIT}, 
+      #{treatBeginTime,jdbcType=BIGINT}, #{isSendOverTime,jdbcType=BIT},
+      #{assistantPatientGroupId,jdbcType=VARCHAR},
+      #{assistantDoctorGroupId,jdbcType=VARCHAR},
+      #{totalReplyCount,jdbcType=INTEGER},
+      #{replidCount,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dachen.health.pack.patient.model.OrderSession">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into t_order_session
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="msgGroupId != null">
+        msg_group_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+      <if test="appointTime != null">
+        appoint_time,
+      </if>
+      <if test="serviceBeginTime != null">
+        service_begin_time,
+      </if>
+      <if test="serviceEndTime != null">
+        service_end_time,
+      </if>
+      <if test="patientCanSend != null">
+        patient_can_send,
+      </if>
+      <if test="treatBeginTime != null">
+        treat_begin_time,
+      </if>
+      <if test="isSendOverTime != null">
+        is_send_over_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="msgGroupId != null">
+        #{msgGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="appointTime != null">
+        #{appointTime,jdbcType=BIGINT},
+      </if>
+      <if test="serviceBeginTime != null">
+        #{serviceBeginTime,jdbcType=BIGINT},
+      </if>
+      <if test="serviceEndTime != null">
+        #{serviceEndTime,jdbcType=BIGINT},
+      </if>
+      <if test="patientCanSend != null">
+        #{patientCanSend,jdbcType=BIT},
+      </if>
+      <if test="treatBeginTime != null">
+        #{treatBeginTime,jdbcType=BIGINT},
+      </if>
+      <if test="isSendOverTime != null">
+        #{isSendOverTime,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dachen.health.pack.patient.model.OrderSessionExample" resultType="java.lang.Integer">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from t_order_session
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_order_session
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null">
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgGroupId != null">
+        msg_group_id = #{record.msgGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastModifyTime != null">
+        last_modify_time = #{record.lastModifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.appointTime != null">
+        appoint_time = #{record.appointTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceBeginTime != null">
+        service_begin_time = #{record.serviceBeginTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceEndTime != null">
+        service_end_time = #{record.serviceEndTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.patientCanSend != null">
+        patient_can_send = #{record.patientCanSend,jdbcType=BIT},
+      </if>
+      <if test="record.treatBeginTime != null">
+        treat_begin_time = #{record.treatBeginTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.isSendOverTime != null">
+        is_send_over_time = #{record.isSendOverTime,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_order_session
+    set id = #{record.id,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      msg_group_id = #{record.msgGroupId,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=BIGINT},
+      last_modify_time = #{record.lastModifyTime,jdbcType=BIGINT},
+      appoint_time = #{record.appointTime,jdbcType=BIGINT},
+      service_begin_time = #{record.serviceBeginTime,jdbcType=BIGINT},
+      service_end_time = #{record.serviceEndTime,jdbcType=BIGINT},
+      patient_can_send = #{record.patientCanSend,jdbcType=BIT},
+      treat_begin_time = #{record.treatBeginTime,jdbcType=BIGINT},
+      is_send_over_time = #{record.isSendOverTime,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dachen.health.pack.patient.model.OrderSession">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_order_session
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="msgGroupId != null">
+        msg_group_id = #{msgGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time = #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="appointTime != null">
+        appoint_time = #{appointTime,jdbcType=BIGINT},
+      </if>
+      <if test="serviceBeginTime != null">
+        service_begin_time = #{serviceBeginTime,jdbcType=BIGINT},
+      </if>
+      <if test="serviceEndTime != null">
+        service_end_time = #{serviceEndTime,jdbcType=BIGINT},
+      </if>
+      <if test="patientCanSend != null">
+        patient_can_send = #{patientCanSend,jdbcType=BIT},
+      </if>
+      <if test="treatBeginTime != null">
+        treat_begin_time = #{treatBeginTime,jdbcType=BIGINT},
+      </if>
+      <if test="isSendOverTime != null">
+        is_send_over_time = #{isSendOverTime,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dachen.health.pack.patient.model.OrderSession">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_order_session
+    set order_id = #{orderId,jdbcType=INTEGER},
+      msg_group_id = #{msgGroupId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      last_modify_time = #{lastModifyTime,jdbcType=BIGINT},
+      appoint_time = #{appointTime,jdbcType=BIGINT},
+      service_begin_time = #{serviceBeginTime,jdbcType=BIGINT},
+      service_end_time = #{serviceEndTime,jdbcType=BIGINT},
+      patient_can_send = #{patientCanSend,jdbcType=BIT},
+      treat_begin_time = #{treatBeginTime,jdbcType=BIGINT},
+      <if test="totalReplyCount != null">total_reply_count=#{totalReplyCount},</if>
+      <if test="replidCount != null">replid_count=#{replidCount},</if>
+      is_send_over_time = #{isSendOverTime,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="getAllMoringBeginConsultationOrders"
+  		  parameterType="map"
+  		  resultMap="BaseResultMap">
+  	select 
+    	<include refid="Base_Column_List" />
+    from t_order_session
+    where order_id in
+    <foreach collection="orderIds" item="item" open="(" close=")" separator=",">
+    	#{item}
+    </foreach>
+    <![CDATA[
+    	and appoint_time >= #{begin}
+    	and appoint_time < #{end}
+    ]]>
+  </select>
+
+  <select id="getTimeAreaOrderIds"
+  		  parameterType="map"
+  		  resultType="int">
+  	select order_id
+  	from  t_order_session
+  	<![CDATA[
+       where appoint_time >= #{start}
+    	and appoint_time < #{end}
+    ]]>
+  </select>
+  
+  <update id="changeAppointmentTime"
+		  parameterType="map">
+		update t_order_session
+		   set service_begin_time = null ,
+		       appoint_time = #{appointmentTime}
+		where order_id = #{orderId}
+  </update>
+  
+  <select id="selectByGroupId" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_order_session
+    where msg_group_id = #{groupId} or assistant_patient_group_id=#{groupId} or assistant_doctor_group_id=#{groupId}
+
+  </select>
+  
+  <update id="updateFirstMessage" parameterType="map">
+  	update t_order_session
+  	   set first_message_id = #{firstMessageId}
+  	 where order_id = #{orderId} 
+  </update>
+
+  <select id="findByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT * FROM t_order_session os WHERE os.`order_id` = #{orderId}
+  </select>
+</mapper>

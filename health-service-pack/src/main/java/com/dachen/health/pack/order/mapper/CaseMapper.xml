@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.order.mapper.CaseMapper">
+	<resultMap id="checkInMap" type="com.dachen.health.pack.order.entity.vo.CheckInVO">
+		<result column="id" property="caseId" />
+		<result column="check_in_id" property="checkInId" />
+		<result column="patient_name" property="patientName" />
+		<result column="sex" property="sex" />
+		<result column="birthday" property="birthday" />
+		<result column="phone" property="phone" />
+		<result column="hospital" property="hospital" />
+		<result column="record_num" property="recordNum" />
+		<result column="last_cure_time" property="lastCureTime" />
+		<result column="description" property="description" />
+		<result column="message" property="message"/>
+		<result column="top_path" property="topPath"/>
+		<result column="user_id" property="userId"/>
+		<result column="disease_id" property="diseaseId"/>
+		<result column="status" property="status"/>
+		<result column="area" property="area"/>
+		<result column="patient_id" property="patientId"/>
+	</resultMap>
+	
+	<!-- 添加病例 -->
+	<insert id="add" parameterType="com.dachen.health.pack.order.entity.po.Case" useGeneratedKeys="true" keyProperty="id">
+		insert into p_case(
+			user_id,
+			patient_id,
+			patient_name,
+			sex,birthday,
+			check_in_id,
+			phone,
+			hospital,
+			record_num,
+			last_cure_time,
+			description,
+			disease_id,
+			message
+		)
+		values(
+			#{userId},
+			#{patientId},
+			#{patientName},
+			#{sex},
+			#{birthday},
+			#{checkInId},
+			#{phone},
+			#{hospital},
+			#{recordNum},
+			#{lastCureTime},
+			#{description},
+			#{diseaseId},
+			#{message}
+		)
+	</insert>
+	
+	<!-- 根据报到查找病例 -->
+	<select id="getByCheckIn" parameterType="com.dachen.health.pack.order.entity.param.CheckInParam" resultMap="checkInMap">
+		select
+			c.id,
+			c.user_id,
+			c.patient_name,
+			c.sex,
+			c.birthday,
+			c.phone,
+			c.hospital,
+			c.record_num,
+			c.last_cure_time,
+			c.disease_id,
+			c.description,
+			c.message,
+			c.check_in_id,
+			p.top_path,
+			p.area,
+			p.id AS patient_id,
+			ci.status
+		from
+			p_check_in ci
+		left join p_case c on ci.id = c.check_in_id
+		left join t_patient p on ci.patient_id = p.id
+		where
+			ci.id=#{checkInId}
+		<choose>
+			<when test="doctorId!=null">
+				and ci.doctor_id=#{doctorId}
+			</when>
+			<when test="userId!=null">
+				and ci.user_id=#{userId}
+			</when>
+		</choose>
+		
+	</select>
+	
+	<update id="updateCase" parameterType="com.dachen.health.pack.order.entity.po.Case">
+		update p_case 
+		<set>
+			<if test="message != null">
+				message = #{message}
+			</if>
+			<if test="description != null">
+				,description = #{description}
+			</if>
+		</set>
+		where id =#{id}
+	</update>
+	
+	<update id="updateAllCase" parameterType="com.dachen.health.pack.order.entity.po.Case">
+		update p_case 
+        set
+		   user_id = #{userId},
+		   patient_id = #{patientId},
+		   patient_name = #{patientName},
+		   sex = #{sex},
+		   birthday = #{birthday},
+		   check_in_id = #{checkInId},
+		   phone = #{phone},
+		   hospital = #{hospital},
+		   record_num = #{recordNum},
+		   last_cure_time = #{lastCureTime},
+		   disease_id = #{diseaseId},
+		   description = #{description},
+		   message = #{message}
+		where id =#{id}
+	</update>
+	<!--add by  liwei  20160217  -->
+	<select id="selectCaseByCheckInId"  parameterType="com.dachen.health.pack.order.entity.param.CheckInParam" resultMap="checkInMap">
+	    select 
+	        p.id,
+	        p.user_id,
+			p.patient_id,
+			p.patient_name,
+			p.sex,
+			p.birthday,
+			p.check_in_id,
+			p.phone,
+			p.hospital,
+			p.record_num,
+			p.last_cure_time,
+			p.disease_id,
+			p.description,
+			p.message
+	     from   p_case p   where  p.check_in_id = #{checkInId}
+	
+	</select>
+	
+</mapper>

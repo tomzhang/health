@@ -1,0 +1,13 @@
+需要升级内容：
+1、应用、im的、文件服务器   ok
+2、mysql 脚本和预置数据     ok
+3、mongo 预置数据   ok
+4、修改配置文件（ classes/properties下环境相关文件）  ok
+5、tomcat下的模板文件 （classes/temp）  ok
+5、文件服务器预置图片 （www/resources/default）  ok
+6、web服务器   （ www/model/content）  ok
+7、健康关怀配置平台（老禹）
+8、运营平台的广告数据
+
+更新日志：
+1、下次更新的时候需要执行updateData2016.js （2016.1.11）

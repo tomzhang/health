@@ -1,0 +1,1 @@
+echo ${PWD##*/} > /data/ops/build/pdir

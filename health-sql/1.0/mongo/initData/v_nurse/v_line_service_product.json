@@ -1,0 +1,36 @@
+﻿{
+  "_id" : ObjectId("5666447db472652084362c8b"),
+  "title" : "检查直通车",
+  "content" : "您可指定要检查的医院和科室，护士帮您",
+  "price" : 125,
+  "infoURL" : "http://hao.360.cn/?src=lm&ls=n6075a44d8c",
+  "picIds" : ["http://192.168.3.7:8081/cert/1908/11908/c9/470988625.505843.png.jpg", "http://192.168.3.7:8081/cert/1908/11908/c9/470988625.505843.png.jpg"],
+  "type" : 1,
+  "remarks" : "产品备注1",
+  "productType" : 7
+}
+
+
+{
+  "_id" : ObjectId("566644bab472652084362c8c"),
+  "title" : "就医直通车",
+  "content" : "您可指定要检查的医院和科室，护士帮您",
+  "price" : 199,
+  "infoURL" : "http://hao.360.cn/?src=lm&ls=n6075a44d8c",
+  "picIds" : ["http://192.168.3.7:8081/cert/1908/11908/c9/470988625.505843.png.jpg", "http://192.168.3.7:8081/cert/1908/11908/c9/470988625.505843.png.jpg"],
+  "type" : 0,
+  "remarks" : "产品备注",
+  "productType" : 5
+}
+
+{
+  "_id" : ObjectId("566644e2b472652084362c8d"),
+  "title" : "专家直通车",
+  "content" : "您可指定要检查的医院和科室，护士帮您",
+  "price" : 589,
+  "infoURL" : "http://hao.360.cn/?src=lm&ls=n6075a44d8c",
+  "picIds" : ["http://192.168.3.7:8081/cert/1908/11908/c9/470988625.505843.png.jpg", "http://192.168.3.7:8081/cert/1908/11908/c9/470988625.505843.png.jpg"],
+  "type" : 1,
+  "remarks" : "产品备注",
+  "productType" : 6
+}

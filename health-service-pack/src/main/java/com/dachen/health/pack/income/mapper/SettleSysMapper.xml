@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.income.mapper.SettleSysMapper" >
+  <resultMap id="BaseResultMap" type="com.dachen.health.pack.income.entity.po.SettleSys" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="settleMoney" property="settlemoney" jdbcType="BIGINT" />
+    <result column="unSettleMoney" property="unsettlemoney" jdbcType="BIGINT" />
+    <result column="userType" property="usertype" jdbcType="INTEGER" />
+    <result column="settle_time" property="settleTime" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, name, settleMoney, unSettleMoney, userType, settle_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from t_settle_sys
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_settle_sys
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dachen.health.pack.income.entity.param.SettleParam" useGeneratedKeys="true" keyProperty="id">
+    insert into t_settle_sys (id, name, settleMoney, 
+      unSettleMoney, userType, settle_time, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{settlemoney,jdbcType=BIGINT}, 
+      #{unsettlemoney,jdbcType=BIGINT}, #{userType,jdbcType=INTEGER}, #{settleTime,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dachen.health.pack.income.entity.po.SettleSys" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into t_settle_sys
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="settlemoney != null" >
+        settleMoney,
+      </if>
+      <if test="unsettlemoney != null" >
+        unSettleMoney,
+      </if>
+      <if test="usertype != null" >
+        userType,
+      </if>
+      <if test="settleTime != null" >
+        settle_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="settlemoney != null" >
+        #{settlemoney,jdbcType=BIGINT},
+      </if>
+      <if test="unsettlemoney != null" >
+        #{unsettlemoney,jdbcType=BIGINT},
+      </if>
+      <if test="usertype != null" >
+        #{usertype,jdbcType=INTEGER},
+      </if>
+      <if test="settleTime != null" >
+        #{settleTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dachen.health.pack.income.entity.po.SettleSys" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_settle_sys
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="settlemoney != null" >
+        settleMoney = #{settlemoney,jdbcType=BIGINT},
+      </if>
+      <if test="unsettlemoney != null" >
+        unSettleMoney = #{unsettlemoney,jdbcType=BIGINT},
+      </if>
+      <if test="usertype != null" >
+        userType = #{usertype,jdbcType=INTEGER},
+      </if>
+      <if test="settleTime != null" >
+        settle_time = #{settleTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dachen.health.pack.income.entity.po.SettleSys" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_settle_sys
+    set name = #{name,jdbcType=VARCHAR},
+      settleMoney = #{settlemoney,jdbcType=BIGINT},
+      unSettleMoney = #{unsettlemoney,jdbcType=BIGINT},
+      userType = #{usertype,jdbcType=INTEGER},
+      settle_time = #{settleTime,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

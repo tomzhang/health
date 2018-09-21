@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dachen.health.commons.dao.mybatis.MemberMapper">
+
+	<resultMap id="BaseResultMap" type="com.dachen.health.commons.vo.Member">
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="company_id" property="companyId" jdbcType="INTEGER" />
+		<result column="dep_id" property="depId" jdbcType="INTEGER" />
+		<result column="role_id" property="roleId" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="user_nick" property="userNick" jdbcType="VARCHAR" />
+		<result column="join_time" property="joinTime" jdbcType="TIMESTAMP" />
+		<result column="leave_time" property="leaveTime" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.dachen.health.commons.vo.Member">
+		<selectKey keyProperty="memberId" resultType="java.lang.Integer"
+			order="AFTER">
+		<![CDATA[
+		SELECT LAST_INSERT_ID() as memberId
+		]]>
+		</selectKey>
+	<![CDATA[
+	INSERT INTO tb_member (
+		company_id,
+		dep_id,
+		role_id,
+		user_id,
+		user_name,
+		user_nick,
+		join_time,
+		status
+	)
+	VALUES
+		(
+			#{companyId,jdbcType=INTEGER}, 
+			#{depId,jdbcType=INTEGER}, 
+			#{roleId,jdbcType=INTEGER}, 
+			#{userId,jdbcType=INTEGER},
+			#{userName,jdbcType=VARCHAR},
+			'',
+			NOW(),
+			1
+		)
+	]]>
+	</insert>
+
+	<update id="update" parameterType="com.dachen.health.commons.vo.Member">
+		UPDATE tb_member
+		<set>
+			<if test="depId != null">
+				dep_id = #{depId,jdbcType=INTEGER},
+			</if>
+			<if test="roleId != null">
+				role_id = #{roleId,jdbcType=INTEGER},
+			</if>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userNick != null">
+				user_nick = #{userNick,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE member_id = #{memberId,jdbcType=INTEGER}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Object">
+		DELETE FROM tb_member WHERE
+		member_id = ${value}
+	</delete>
+
+	<select id="selectByExample" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		SELECT * FROM tb_member WHERE 1 = 1
+		<if test="companyId != null">company_id = ${companyId}</if>
+		<if test="userId != null">user_id = ${userId}</if>
+	</select>
+
+	<select id="selectById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		SELECT * FROM tb_member WHERE member_id = ${value}
+	</select>
+
+</mapper>

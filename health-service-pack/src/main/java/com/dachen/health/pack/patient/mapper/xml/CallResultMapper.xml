@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dachen.health.pack.patient.mapper.CallResultMapper">
+  <resultMap id="BaseResultMap" type="com.dachen.health.pack.patient.model.CallResult">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="event" jdbcType="VARCHAR" property="event" />
+    <result column="callid" jdbcType="VARCHAR" property="callid" />
+    <result column="accountid" jdbcType="VARCHAR" property="accountid" />
+    <result column="appid" jdbcType="VARCHAR" property="appid" />
+    <result column="confid" jdbcType="VARCHAR" property="confid" />
+    <result column="calltype" jdbcType="TINYINT" property="calltype" />
+    <result column="callertype" jdbcType="TINYINT" property="callertype" />
+    <result column="caller" jdbcType="VARCHAR" property="caller" />
+    <result column="calledtype" jdbcType="TINYINT" property="calledtype" />
+    <result column="called" jdbcType="VARCHAR" property="called" />
+    <result column="starttime" jdbcType="VARCHAR" property="starttime" />
+    <result column="stoptime" jdbcType="VARCHAR" property="stoptime" />
+    <result column="length" jdbcType="INTEGER" property="length" />
+    <result column="recordurl" jdbcType="VARCHAR" property="recordurl" />
+    <result column="user_data" jdbcType="VARCHAR" property="userData" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="subreason" jdbcType="VARCHAR" property="subreason" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, event, callid, accountid, appid, confid, calltype, callertype, caller, calledtype, 
+    called, starttime, stoptime, length, recordurl, user_data, reason, subreason
+  </sql>
+  <select id="selectByExample" parameterType="com.dachen.health.pack.patient.model.CallResultExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_call_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from t_call_result
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_call_result
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dachen.health.pack.patient.model.CallResultExample">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_call_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dachen.health.pack.patient.model.CallResult">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_call_result (event, callid, accountid, 
+      appid, confid, calltype, 
+      callertype, caller, calledtype, 
+      called, starttime, stoptime, 
+      length, recordurl, user_data, 
+      reason, subreason)
+    values (#{event,jdbcType=VARCHAR}, #{callid,jdbcType=VARCHAR}, #{accountid,jdbcType=VARCHAR}, 
+      #{appid,jdbcType=VARCHAR}, #{confid,jdbcType=VARCHAR}, #{calltype,jdbcType=TINYINT}, 
+      #{callertype,jdbcType=TINYINT}, #{caller,jdbcType=VARCHAR}, #{calledtype,jdbcType=TINYINT}, 
+      #{called,jdbcType=VARCHAR}, #{starttime,jdbcType=VARCHAR}, #{stoptime,jdbcType=VARCHAR}, 
+      #{length,jdbcType=INTEGER}, #{recordurl,jdbcType=VARCHAR}, #{userData,jdbcType=VARCHAR}, 
+      #{reason,jdbcType=VARCHAR}, #{subreason,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dachen.health.pack.patient.model.CallResult">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_call_result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="event != null">
+        event,
+      </if>
+      <if test="callid != null">
+        callid,
+      </if>
+      <if test="accountid != null">
+        accountid,
+      </if>
+      <if test="appid != null">
+        appid,
+      </if>
+      <if test="confid != null">
+        confid,
+      </if>
+      <if test="calltype != null">
+        calltype,
+      </if>
+      <if test="callertype != null">
+        callertype,
+      </if>
+      <if test="caller != null">
+        caller,
+      </if>
+      <if test="calledtype != null">
+        calledtype,
+      </if>
+      <if test="called != null">
+        called,
+      </if>
+      <if test="starttime != null">
+        starttime,
+      </if>
+      <if test="stoptime != null">
+        stoptime,
+      </if>
+      <if test="length != null">
+        length,
+      </if>
+      <if test="recordurl != null">
+        recordurl,
+      </if>
+      <if test="userData != null">
+        user_data,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+      <if test="subreason != null">
+        subreason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="event != null">
+        #{event,jdbcType=VARCHAR},
+      </if>
+      <if test="callid != null">
+        #{callid,jdbcType=VARCHAR},
+      </if>
+      <if test="accountid != null">
+        #{accountid,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null">
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="confid != null">
+        #{confid,jdbcType=VARCHAR},
+      </if>
+      <if test="calltype != null">
+        #{calltype,jdbcType=TINYINT},
+      </if>
+      <if test="callertype != null">
+        #{callertype,jdbcType=TINYINT},
+      </if>
+      <if test="caller != null">
+        #{caller,jdbcType=VARCHAR},
+      </if>
+      <if test="calledtype != null">
+        #{calledtype,jdbcType=TINYINT},
+      </if>
+      <if test="called != null">
+        #{called,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptime != null">
+        #{stoptime,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null">
+        #{length,jdbcType=INTEGER},
+      </if>
+      <if test="recordurl != null">
+        #{recordurl,jdbcType=VARCHAR},
+      </if>
+      <if test="userData != null">
+        #{userData,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="subreason != null">
+        #{subreason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dachen.health.pack.patient.model.CallResultExample" resultType="java.lang.Integer">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from t_call_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_call_result
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.event != null">
+        event = #{record.event,jdbcType=VARCHAR},
+      </if>
+      <if test="record.callid != null">
+        callid = #{record.callid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountid != null">
+        accountid = #{record.accountid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appid != null">
+        appid = #{record.appid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confid != null">
+        confid = #{record.confid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.calltype != null">
+        calltype = #{record.calltype,jdbcType=TINYINT},
+      </if>
+      <if test="record.callertype != null">
+        callertype = #{record.callertype,jdbcType=TINYINT},
+      </if>
+      <if test="record.caller != null">
+        caller = #{record.caller,jdbcType=VARCHAR},
+      </if>
+      <if test="record.calledtype != null">
+        calledtype = #{record.calledtype,jdbcType=TINYINT},
+      </if>
+      <if test="record.called != null">
+        called = #{record.called,jdbcType=VARCHAR},
+      </if>
+      <if test="record.starttime != null">
+        starttime = #{record.starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stoptime != null">
+        stoptime = #{record.stoptime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.length != null">
+        length = #{record.length,jdbcType=INTEGER},
+      </if>
+      <if test="record.recordurl != null">
+        recordurl = #{record.recordurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userData != null">
+        user_data = #{record.userData,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reason != null">
+        reason = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subreason != null">
+        subreason = #{record.subreason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_call_result
+    set id = #{record.id,jdbcType=INTEGER},
+      event = #{record.event,jdbcType=VARCHAR},
+      callid = #{record.callid,jdbcType=VARCHAR},
+      accountid = #{record.accountid,jdbcType=VARCHAR},
+      appid = #{record.appid,jdbcType=VARCHAR},
+      confid = #{record.confid,jdbcType=VARCHAR},
+      calltype = #{record.calltype,jdbcType=TINYINT},
+      callertype = #{record.callertype,jdbcType=TINYINT},
+      caller = #{record.caller,jdbcType=VARCHAR},
+      calledtype = #{record.calledtype,jdbcType=TINYINT},
+      called = #{record.called,jdbcType=VARCHAR},
+      starttime = #{record.starttime,jdbcType=VARCHAR},
+      stoptime = #{record.stoptime,jdbcType=VARCHAR},
+      length = #{record.length,jdbcType=INTEGER},
+      recordurl = #{record.recordurl,jdbcType=VARCHAR},
+      user_data = #{record.userData,jdbcType=VARCHAR},
+      reason = #{record.reason,jdbcType=VARCHAR},
+      subreason = #{record.subreason,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dachen.health.pack.patient.model.CallResult">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_call_result
+    <set>
+      <if test="event != null">
+        event = #{event,jdbcType=VARCHAR},
+      </if>
+      <if test="callid != null">
+        callid = #{callid,jdbcType=VARCHAR},
+      </if>
+      <if test="accountid != null">
+        accountid = #{accountid,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null">
+        appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="confid != null">
+        confid = #{confid,jdbcType=VARCHAR},
+      </if>
+      <if test="calltype != null">
+        calltype = #{calltype,jdbcType=TINYINT},
+      </if>
+      <if test="callertype != null">
+        callertype = #{callertype,jdbcType=TINYINT},
+      </if>
+      <if test="caller != null">
+        caller = #{caller,jdbcType=VARCHAR},
+      </if>
+      <if test="calledtype != null">
+        calledtype = #{calledtype,jdbcType=TINYINT},
+      </if>
+      <if test="called != null">
+        called = #{called,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        starttime = #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptime != null">
+        stoptime = #{stoptime,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null">
+        length = #{length,jdbcType=INTEGER},
+      </if>
+      <if test="recordurl != null">
+        recordurl = #{recordurl,jdbcType=VARCHAR},
+      </if>
+      <if test="userData != null">
+        user_data = #{userData,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="subreason != null">
+        subreason = #{subreason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dachen.health.pack.patient.model.CallResult">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_call_result
+    set event = #{event,jdbcType=VARCHAR},
+      callid = #{callid,jdbcType=VARCHAR},
+      accountid = #{accountid,jdbcType=VARCHAR},
+      appid = #{appid,jdbcType=VARCHAR},
+      confid = #{confid,jdbcType=VARCHAR},
+      calltype = #{calltype,jdbcType=TINYINT},
+      callertype = #{callertype,jdbcType=TINYINT},
+      caller = #{caller,jdbcType=VARCHAR},
+      calledtype = #{calledtype,jdbcType=TINYINT},
+      called = #{called,jdbcType=VARCHAR},
+      starttime = #{starttime,jdbcType=VARCHAR},
+      stoptime = #{stoptime,jdbcType=VARCHAR},
+      length = #{length,jdbcType=INTEGER},
+      recordurl = #{recordurl,jdbcType=VARCHAR},
+      user_data = #{userData,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR},
+      subreason = #{subreason,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="selectByTime" parameterType="com.dachen.health.pack.patient.model.CallResultExample" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_call_result t WHERE t.stoptime &lt; (SELECT UNIX_TIMESTAMP() * 1000-10*60*1000)  AND  t.stoptime IS NOT NULL
+  </select>
+  
+  <select id="getAllCallResultByOrderId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_call_result t WHERE t.user_data = #{orderId} order by stoptime desc
+  </select>
+  
+</mapper>

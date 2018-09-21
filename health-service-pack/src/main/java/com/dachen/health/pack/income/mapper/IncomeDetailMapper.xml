@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.income.mapper.IncomeDetailMapper">
+	<resultMap id="incomeDetailMap" type="com.dachen.health.pack.income.entity.vo.IncomeDetailVO">
+		<result column="doctor_id" property="doctorId" />
+		<result column="user_id" property="userId" />
+		<result column="money" property="money" />
+		<result column="remark" property="remark" />
+		<result column="income_time" property="incomeTime" />
+		<result column="finish_time" property="finishTime" />
+		<result column="status" property="status" />
+	</resultMap>
+
+	<!-- 获取医生收入详细  -->
+	<select id="getIncomeDetails" parameterType="com.dachen.health.pack.income.entity.param.IncomeParam" resultMap="incomeDetailMap">
+		select id.user_id, id.money,id.remark,id.income_time,id.status from t_income_detail id 
+		where id.doctor_id = #{doctorId} 
+		<if test="startTime !=null and endTime !=null">
+			and income_time between #{startTime} and #{endTime}
+		</if>
+		order by id.income_time desc
+	</select>
+
+</mapper>

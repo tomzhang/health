@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.income.mapper.IncomeDetailsMapper" >
+  <resultMap id="BaseResultMap" type="com.dachen.health.pack.income.entity.vo.IncomeDetailsVO" >
+  
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="doctor_id" property="doctorId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="money" property="money" jdbcType="BIGINT" />
+    <result column="share_money" property="shareMoney" jdbcType="BIGINT" />
+    <result column="income_type" property="incomeType" jdbcType="INTEGER" />
+    <result column="groupMoney" property="groupMoney" jdbcType="BIGINT" />
+    <result column="doc_proportion" property="docProportion" jdbcType="INTEGER" />
+    <result column="up_doc" property="upDoc" jdbcType="INTEGER" />
+    <result column="group_proportion" property="groupProportion" jdbcType="INTEGER" />
+    <result column="up_group" property="upGroup" jdbcType="VARCHAR" />
+    <result column="sys_proportion" property="sysProportion" jdbcType="INTEGER" />
+    <result column="self_proportion" property="selfProportion" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="BIGINT" />
+    <result column="extend_1" property="extend1" jdbcType="VARCHAR" />
+    <result column="extend_2" property="extend2" jdbcType="VARCHAR" />
+    <result column="order_type" property="orderType" jdbcType="INTEGER"  />
+    <result column="pack_type" property="packType" jdbcType="INTEGER"  />
+    <result column="finish_time" property="finishTime" jdbcType="BIGINT" />
+    <result column="finishedMoney" property="finishedMoney" jdbcType="BIGINT" />
+    <result column="unfinishedMoney" property="unfinishedMoney" jdbcType="BIGINT" />
+    <result column="order_no" property="orderNo" />
+    <result column="order_status" property="orderStatus" />
+  </resultMap>
+  
+  <resultMap type="com.dachen.health.pack.income.entity.vo.PageIncome" id="YMGroup">
+  	<result column="up_group" property="groupId" jdbcType="VARCHAR" />
+    <result column="keyYM" property="keyYM" jdbcType="VARCHAR" />
+    <result column="totalMoney" property="totalMoney" jdbcType="BIGINT" />
+    <result column="totalNum" property="totalNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, doctor_id, order_id, money, share_money, income_type, doc_proportion, up_doc, 
+    group_proportion, up_group, sys_proportion, self_proportion, status, remark, create_time, 
+    modify_time, extend_1, extend_2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from t_income_details
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_income_details
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into t_income_details (id, doctor_id, order_id, 
+      money, share_money, income_type, 
+      doc_proportion, up_doc, group_proportion, 
+      up_group, sys_proportion, self_proportion, 
+      status, remark, create_time, 
+      modify_time, extend_1, extend_2
+      )
+    values (#{id,jdbcType=INTEGER}, #{doctorId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, 
+      #{money,jdbcType=BIGINT}, #{shareMoney,jdbcType=BIGINT}, #{incomeType,jdbcType=INTEGER}, 
+      #{docProportion,jdbcType=INTEGER}, #{upDoc,jdbcType=INTEGER}, #{groupProportion,jdbcType=INTEGER}, 
+      #{upGroup,jdbcType=VARCHAR}, #{sysProportion,jdbcType=INTEGER}, #{selfProportion,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
+      #{modifyTime,jdbcType=BIGINT}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into t_income_details
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="doctorId != null" >
+        doctor_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="shareMoney != null" >
+        share_money,
+      </if>
+      <if test="incomeType != null" >
+        income_type,
+      </if>
+      <if test="docProportion != null" >
+        doc_proportion,
+      </if>
+      <if test="upDoc != null" >
+        up_doc,
+      </if>
+      <if test="groupProportion != null" >
+        group_proportion,
+      </if>
+      <if test="upGroup != null" >
+        up_group,
+      </if>
+      <if test="sysProportion != null" >
+        sys_proportion,
+      </if>
+      <if test="selfProportion != null" >
+        self_proportion,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="extend1 != null" >
+        extend_1,
+      </if>
+      <if test="extend2 != null" >
+        extend_2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null" >
+        #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=BIGINT},
+      </if>
+      <if test="shareMoney != null" >
+        #{shareMoney,jdbcType=BIGINT},
+      </if>
+      <if test="incomeType != null" >
+        #{incomeType,jdbcType=INTEGER},
+      </if>
+      <if test="docProportion != null" >
+        #{docProportion,jdbcType=INTEGER},
+      </if>
+      <if test="upDoc != null" >
+        #{upDoc,jdbcType=INTEGER},
+      </if>
+      <if test="groupProportion != null" >
+        #{groupProportion,jdbcType=INTEGER},
+      </if>
+      <if test="upGroup != null" >
+        #{upGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="sysProportion != null" >
+        #{sysProportion,jdbcType=INTEGER},
+      </if>
+      <if test="selfProportion != null" >
+        #{selfProportion,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_income_details
+    <set >
+      <if test="doctorId != null" >
+        doctor_id = #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=BIGINT},
+      </if>
+      <if test="shareMoney != null" >
+        share_money = #{shareMoney,jdbcType=BIGINT},
+      </if>
+      <if test="incomeType != null" >
+        income_type = #{incomeType,jdbcType=INTEGER},
+      </if>
+      <if test="docProportion != null" >
+        doc_proportion = #{docProportion,jdbcType=INTEGER},
+      </if>
+      <if test="upDoc != null" >
+        up_doc = #{upDoc,jdbcType=INTEGER},
+      </if>
+      <if test="groupProportion != null" >
+        group_proportion = #{groupProportion,jdbcType=INTEGER},
+      </if>
+      <if test="upGroup != null" >
+        up_group = #{upGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="sysProportion != null" >
+        sys_proportion = #{sysProportion,jdbcType=INTEGER},
+      </if>
+      <if test="selfProportion != null" >
+        self_proportion = #{selfProportion,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="extend1 != null" >
+        extend_1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        extend_2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_income_details
+    set doctor_id = #{doctorId,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER},
+      money = #{money,jdbcType=BIGINT},
+      share_money = #{shareMoney,jdbcType=BIGINT},
+      income_type = #{incomeType,jdbcType=INTEGER},
+      doc_proportion = #{docProportion,jdbcType=INTEGER},
+      up_doc = #{upDoc,jdbcType=INTEGER},
+      group_proportion = #{groupProportion,jdbcType=INTEGER},
+      up_group = #{upGroup,jdbcType=VARCHAR},
+      sys_proportion = #{sysProportion,jdbcType=INTEGER},
+      self_proportion = #{selfProportion,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=BIGINT},
+      extend_1 = #{extend1,jdbcType=VARCHAR},
+      extend_2 = #{extend2,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getDocIncomeList" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" resultMap="BaseResultMap">
+<!--   		select td.* , po.order_type,po.pack_type,po.create_time -->
+<!--   		from t_income_details td -->
+<!--   		left join  t_income_settle tis on tis.income_id = td.id -->
+<!--   		left join  t_settle ts on ts.id = tis.settle_id -->
+<!--   		left join  p_order po on td.order_id = po.id -->
+<!--   		where po.order_status = #{type,jdbcType=INTEGER} and td.doctor_id =  #{doctorId,jdbcType=INTEGER}  or  td.up_doc = #{doctorId,jdbcType=INTEGER} -->
+<!--   		<if test="status != null"> -->
+<!--   			and  ts.status = #{status,jdbcType=INTEGER} -->
+<!--   		</if> -->
+<!--   		<if test="createTime !=null"> -->
+<!--   			and po.create_time &gt; #{createTime} -->
+<!--   		</if> -->
+<!--   		<if test="finishTime !=null"> -->
+<!--   			 and po.finish_time &lt; #{finishTime} -->
+<!--   		</if> -->
+<!--   		order by td.create_time desc  -->
+<!--   		limit #{start},#{pageSize} -->
+
+			select td.* , po.order_type,po.pack_type,po.create_time
+	  		from t_income_details td
+	  		inner join  p_order po on td.order_id = po.id and po.order_status = #{type,jdbcType=INTEGER}
+	  		<!-- 已完成订单 -->
+	  		<if test="type == 4 ">
+	  		inner join  t_income_settle tis on tis.income_id = td.id
+	  		inner join  t_settle ts on ts.id = tis.settle_id  and  ts.status = #{status,jdbcType=INTEGER}
+	  		where  ts.user_id =  #{doctorId,jdbcType=INTEGER}  
+	  		</if>
+	  		 <!-- 未完成订单 -->
+	  		<if test="type == 3 ">
+	  		where  (td.doctor_id =  #{doctorId,jdbcType=INTEGER} or  td.up_doc =  #{doctorId,jdbcType=INTEGER})
+	  		</if>
+	  		
+	  		<if test="createTime !=null"> 
+	  			and po.create_time &gt; #{createTime}
+	  		</if>
+	  		<if test="finishTime !=null">
+	  			 and po.finish_time &lt; #{finishTime}
+	  		</if>
+		  	order by td.create_time desc 
+  			limit #{start},#{pageSize}
+  </select>
+  
+  <select id="getDocIncomeCount" resultType="Integer" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" >
+  		select count(*)
+  		from t_income_details td
+  		left join  p_order po on td.order_id = po.id
+  		where po.order_status = #{type,jdbcType=INTEGER} and td.doctor_id =  #{doctorId,jdbcType=INTEGER}  or  td.up_doc = #{doctorId,jdbcType=INTEGER}
+  		<if test="status != null">
+  			and  td.status = #{status,jdbcType=INTEGER}
+  		</if>
+  		<if test="createTime !=null">
+  			and po.create_time &gt; #{createTime}
+  		</if>
+  		<if test="finishTime !=null">
+  			 and po.finish_time &lt; #{finishTime}
+  		</if>
+  </select>
+  <select id="getListByDoctorID" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" resultMap="BaseResultMap">
+  		select * from t_doctor_income where doctor_id = #{doctorId,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="getDocHisIncomeList" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" resultMap="BaseResultMap">
+  			select td.* , po.order_type,po.pack_type,po.create_time,po.order_status
+	  		from t_income_details td
+	  		left join  p_order po on td.order_id = po.id
+	  		where po.order_status  = 4
+	  				 and ( td.doctor_id =  #{doctorId,jdbcType=INTEGER}  or  td.up_doc = #{doctorId,jdbcType=INTEGER} )
+	  		<if test="createTime !=null">
+	  			and td.create_time &gt; #{createTime}
+	  		</if>
+	  		<if test="finishTime !=null">
+	  			 and td.create_time &lt; #{finishTime}
+	  		</if>
+	  		order by td.create_time desc 
+	  		limit #{start},#{pageSize}
+  
+  </select>
+  
+  <select id="getOrderOrCommissionIncomeDetail" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" resultMap="BaseResultMap">
+		  select td.* , po.order_type,po.pack_type,po.create_time
+		  		from t_income_details td
+		  		left join  p_order po on td.order_id = po.id
+		  		where po.order_status in ('3', '4')
+		  		<choose>
+				   <when test="upDoc != null">
+				  		 and td.up_doc = #{upDoc,jdbcType=INTEGER}
+				   </when>
+				    <when test="doctorId != null">
+				  		 and td.doctor_id =  #{doctorId,jdbcType=INTEGER}
+				   </when>
+			   </choose>
+		  		<if test="createTime !=null">
+		  			and td.create_time &gt; #{createTime}
+		  		</if>
+		  		<if test="finishTime !=null">
+		  			 and td.create_time &lt; #{finishTime}
+		  		</if>
+		  		order by td.create_time desc 
+		  		limit #{start},#{pageSize}
+  </select>
+  
+  <select id="getGroupIncomeList" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" resultMap="BaseResultMap">
+			select tid.* ,(tid.money*tid.self_proportion*tid.group_proportion/10000) as groupMoney,po.order_type, po.pack_type, po.create_time, po.order_no,po.order_status
+	  		from t_income_details tid
+	  		inner join  p_order po on tid.order_id = po.id and po.order_status = 4 
+	  		where  tid.up_group=#{upGroup,jdbcType=VARCHAR} 
+	  		and tid.extend_1 = #{time}
+  			order by tid.create_time desc
+	  		limit #{start},#{pageSize}
+	  		
+  </select>
+    <select id="getGroupIncomeListCount" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam"  resultType="Integer">
+			select count(*)
+	  		from t_income_details td
+	  		inner join  p_order po on td.order_id = po.id and po.order_status = 4 
+	  		where  td.up_group =  #{upGroup,jdbcType=VARCHAR}
+	  		and td.extend_1=#{time}
+  </select>
+  
+  <select id="getGroupDoctorIncomeList" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" resultMap="BaseResultMap">
+		select td.doctor_id,sum(td.share_money) as finishedMoney
+		 					from t_income_details td 
+		  					left join p_order po on td.order_id = po.id
+		  					where po.order_status = 4
+		  					<if test="upGroup !=null">
+		  						and td.up_group =#{upGroup}
+		  					</if> 
+		  					<if test="doctorId !=null">
+		  						and td.doctor_id =#{doctorId,jdbcType=INTEGER}
+		  					</if>	
+		  					<if test="time != null">
+		  						and td.extend_1=#{time}
+		  					</if> 					
+		  					group by td.doctor_id 
+		  			      
+			ORDER BY  finishedMoney desc
+			limit #{start},#{pageSize}
+  </select>
+  <select id="getUpDocIncome" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" resultMap="BaseResultMap">
+		select tt.doctor_id,sum(tt.money*tt.self_proportion*doc_proportion) as money 
+	    from t_income_details tt 
+	    where  tt.up_doc = #{upDoc,jdbcType=INTEGER}
+      	<if test="time !=null" > 
+	  		 and tt.extend_1=#{time} 
+	  	</if>
+	  	group by tt.doctor_id
+  </select>
+  <select id="getGroupDoctorIncomeListCount" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" resultType="Integer">
+  			select td.doctor_id,sum(td.share_money) as finishedMoney
+		 					from t_income_details td 
+		  					left join p_order po on td.order_id = po.id
+		  					where po.order_status = 4
+		  					<if test="upGroup !=null">
+		  						and td.up_group =#{upGroup}
+		  					</if> 
+		  					<if test="doctorId !=null">
+		  						and td.doctor_id =#{doctorId,jdbcType=INTEGER}
+		  					</if>	
+		  					<if test="time != null">
+		  						and td.extend_1=#{time}
+		  					</if> 					
+		  					group by td.doctor_id 
+  </select>
+  
+  <select id="getGroupDoctorIncomeByTime" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam">
+  		select tid.doctor_id ,po.order_status, count(*),sum(tid.money*tid.self_proportion*tid.group_proportion/10000) 
+  		from t_income_details tid
+		LEFT JOIN p_order  po on po.id=tid.order_id
+		where tid.up_group = #{upGroup,jdbcType=VARCHAR} AND po.order_status IN(3,4) and tid.doctor_id !=0  
+		<if test="doctorId != null"> and tid.doctor_id =#{doctorId,jdbcType=INTEGER}</if>
+		<if test="createTime !=null">and tid.create_time  &gt; #{createTime}</if>
+		<if test="finishTime !=null">and tid.create_time  &lt; #{finishTime} </if>
+		GROUP BY tid.doctor_id,po.order_status
+		limit #{start},#{pageSize}
+  		
+  </select>
+  
+  <select id="getGroupIncomeByYM" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" resultMap="YMGroup">
+		SELECT up_group,  extend_1 as keyYM, count(*) as totalNum,SUM(tid.money*tid.self_proportion*tid.group_proportion/10000)as totalMoney from t_income_details tid WHERE up_group=#{upGroup,jdbcType=VARCHAR}
+		GROUP BY up_group,extend_1
+		limit #{start},#{pageSize}
+  </select>
+  <select id="getGroupIncomeByYMCount" parameterType="com.dachen.health.pack.income.entity.param.IncomeDetailsParam" resultType="Integer">
+		select count(*) from
+		(SELECT up_group,  extend_1 as keyYM, count(*) as totalNum,SUM(tid.money*tid.self_proportion*tid.group_proportion/10000)as totalMoney from t_income_details tid WHERE up_group=#{upGroup,jdbcType=VARCHAR}
+		GROUP BY up_group,extend_1 )t
+  </select>
+  
+    <select id="getUnFinishBalance" parameterType="Integer" resultType="Integer">
+		SELECT sum(price) as unFinishBalance    FROM p_order WHERE doctor_id=#{doctorId} and order_status=3
+	</select>
+</mapper>

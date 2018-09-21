@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.account.mapper.RechargeMapper">
+
+	<resultMap id="rechargeMap" type="com.dachen.health.pack.account.entity.vo.RechargeVO">
+		<result column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="recharge_money" property="rechargeMoney" />
+		<result column="pay_type" property="payType" />
+		<result column="recharge_status" property="rechargeStatus" />
+		<result column="source_type" property="sourceType" />
+		<result column="pay_no" property="payNo" />
+		<result column="source_id" property="sourceId" />
+		<result column="param" property="alipayNo" />
+		<result column="partner" property="partner" />
+	</resultMap>
+	
+	<resultMap id="rechargeOneMap" type="com.dachen.health.pack.account.entity.po.Recharge">
+		<result column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="recharge_money" property="rechargeMoney" />
+		<result column="pay_type" property="payType" />
+		<result column="pay_no" property="payNo" />
+		<result column="recharge_status" property="rechargeStatus" />
+		<result column="source_type" property="sourceType" />
+		<result column="source_id" property="sourceId" />
+		<result column="param" property="param" />
+		<result column="partner" property="partner" />
+	</resultMap>
+
+	<!-- 添加充值记录 -->
+	<insert id="addRecharge" useGeneratedKeys="true" parameterType="com.dachen.health.pack.account.entity.po.Recharge">
+		insert into t_recharge (
+			user_id, 
+			recharge_money, 
+      		pay_type, 
+      		pay_no, 
+      		create_time, 
+      		recharge_status, 
+      		source_type, 
+      		source_id
+      	)
+    	values (
+			#{userId}, 
+			#{rechargeMoney}, 
+      		#{payType}, 
+      		#{payNo}, 
+      		#{createTime}, 
+      		#{rechargeStatus}, 
+      		#{sourceType}, 
+      		#{sourceId}
+      	)
+	</insert>
+
+	<select id="getOne" parameterType="com.dachen.health.pack.account.entity.param.RechargeParam" resultMap="rechargeMap">
+		select r.id,r.user_id,r.recharge_money,r.pay_type,r.pay_no,r.recharge_status,r.source_type,r.source_id,r.param  
+			from t_recharge r where r.pay_no=#{payNo}
+	</select>
+	<select id="getOneByOrderId" parameterType="com.dachen.health.pack.account.entity.param.RechargeParam" resultMap="rechargeMap">
+		select r.id,r.user_id,r.recharge_money,r.pay_type,r.pay_no,r.recharge_status,r.source_type,r.source_id ,r.partner, r.param 
+			from t_recharge r where r.source_id=#{SourceId} and r.recharge_status=2
+	</select>
+	
+	<select id="getRechargeByOrder" parameterType="com.dachen.health.pack.account.entity.param.RechargeParam" resultMap="rechargeOneMap">
+		select r.id,
+		      r.user_id,
+		      r.recharge_money,
+		      r.pay_type,
+		      r.pay_no,
+		      r.recharge_status,
+		      r.source_type,
+		      r.source_id,
+		      r.param 
+	   from t_recharge r 
+	   where r.source_id=#{orderId} and r.user_id=#{userId}
+	</select>
+	
+	<update id="update" parameterType="com.dachen.health.pack.account.entity.vo.RechargeVO" >
+		update t_recharge
+		<set>
+			<if test="rechargeStatus != null">
+				recharge_status = #{rechargeStatus,jdbcType=INTEGER},
+			</if>
+			<if test="payType != null">
+				pay_type = #{payType,jdbcType=INTEGER},
+			</if>
+			<if test="partner != null">
+				partner = #{partner},
+			</if>
+			<if test="alipayNo != null">
+				param = #{alipayNo}
+			</if>
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

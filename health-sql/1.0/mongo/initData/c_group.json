@@ -1,0 +1,9 @@
+{
+"_id" : ObjectId("666666666666666666666666"),
+"name" : "系统平台",
+"outpatientPrice" : NumberInt(1000),
+"config" : {
+      "groupProfit" : NumberInt(0)
+    },
+}
+

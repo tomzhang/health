@@ -1,0 +1,104 @@
+﻿{ 
+    "_id":new ObjectId(),
+    "code" : "PF", 
+    "name" : "皮肤性病科", 
+    "weight" : NumberInt(1),
+    "documentType":2
+    "count":0
+}
+{ 
+    "_id":new ObjectId(),
+    "code" : "TJ", 
+    "name" : "头颈外科",     
+    "weight" : NumberInt(0),
+    "documentType":2
+    "count":0
+}
+{ 
+    "_id":new ObjectId(),
+    "code" : "SJ", 
+    "name" : "神经内科",
+    "weight" : NumberInt(0),
+    "documentType":2
+    "count":0
+}
+{
+    "_id":new ObjectId(), 
+    "code" : "NK", 
+    "name" : "内科", 
+    "weight" : NumberInt(8),
+    "documentType":2
+    "count":0
+}
+{
+    "_id":new ObjectId(), 
+    "code" : "YK", 
+    "name" : "眼科", 
+    "weight" : NumberInt(4),
+    "documentType":2
+    "count":0
+}
+{
+    "_id":new ObjectId(), 
+    "code" : "KQ", 
+    "name" : "口腔科", 
+    "weight" : NumberInt(3),
+    "documentType":2,
+    "count":0
+}
+{
+    "_id":new ObjectId(), 
+    "code" : "EB", 
+    "name" : "耳鼻喉科", 
+    "weight" : NumberInt(0),
+    "documentType":2,
+    "count":0
+}
+{
+    "_id":new ObjectId(), 
+    "code" : "EK", 
+    "name" : "儿科",
+    "weight" : NumberInt(5),
+    "documentType":2,
+    "count":0
+}
+{
+    "_id":new ObjectId(), 
+    "code" : "XL", 
+    "name" : "心理科", 
+    "weight" : NumberInt(2),
+    "documentType":2
+    "count":0
+}
+{
+    "_id":new ObjectId(), 
+    "code" : "CR", 
+    "name" : "传染科", 
+    "weight" : NumberInt(0),
+    "documentType":2,
+    "count":0
+}
+{
+    "_id":new ObjectId(), 
+    "code" : "FC", 
+    "name" : "妇产科", 
+    "weight" : NumberInt(6),
+    "documentType":2,
+    "count":0
+}
+{
+    "_id":new ObjectId(), 
+    "code" : "WK", 
+    "name" : "外科", 
+    "weight" : NumberInt(7),
+    "documentType":2,
+    "count":0
+}
+{
+    "_id":new ObjectId(), 
+    "code" : "QT", 
+    "name" : "其它", 
+    "weight" : NumberInt(0),
+    "documentType":2,
+    "count":0
+}

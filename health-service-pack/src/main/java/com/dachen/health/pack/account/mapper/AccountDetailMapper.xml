@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.account.mapper.AccountDetailMapper">
+	
+	<insert id="add" useGeneratedKeys="true" parameterType="com.dachen.health.pack.account.entity.po.AccountDetail">
+		insert into t_account_detail (
+			user_id,
+			change_money,
+			usable_money,
+			frozen_money,
+			create_time,
+			history_usable_money,
+			history_frozen_money,
+			history_create_time,
+			source_type,
+			source_id
+		) 
+		values (
+			#{userId}, 
+			#{changeMoney}, 
+      		#{usableMoney}, 
+      		#{frozenMoney}, 
+      		#{createTime},
+      		#{historyUsableMoney}, 
+      		#{historyFrozenMoney},
+      		#{historyCreateTime},
+      		#{sourceType},
+      		#{sourceId}
+		)
+	</insert>
+</mapper>

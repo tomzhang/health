@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.commons.dao.mybatis.BasicMapper">
+
+	<select id="getAreaList" resultType="com.dachen.health.commons.vo.AreaVO"
+		parameterType="java.lang.Integer">
+	<![CDATA[
+	SELECT id, type, name, zip FROM tb_areas WHERE parent_id = ${value}
+	]]>
+	</select>
+
+	<select id="getOptionList" parameterType="java.lang.Integer"
+		resultType="com.dachen.health.commons.vo.OptionVO">
+	<![CDATA[
+	SELECT id, parent_id parentId, name, more FROM tb_constants WHERE parent_id = ${value}
+	]]>
+	</select>
+
+</mapper>

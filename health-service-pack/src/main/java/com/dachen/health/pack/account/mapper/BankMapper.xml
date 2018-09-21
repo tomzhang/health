@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.account.mapper.BankMapper">
+	<resultMap id="bankMap" type="com.dachen.health.pack.account.entity.vo.BankVO">
+		<id column="id" property="id" />
+		<result column="bank_name" property="bankName" />
+	</resultMap>
+
+	<select id="getAll" resultMap="bankMap">
+		select b.id,b.bank_name from t_bank b order by b.orders
+	</select>
+	
+	<select id="getOne" resultMap="bankMap" parameterType="Integer">
+		select b.id,b.bank_name from t_bank b where id=#{id}
+	</select>
+	
+	<select id="getAllByNameKeyWord" resultType="java.lang.String" parameterType="com.dachen.health.pack.account.entity.param.BankCardParam">
+		select bank_name from t_bank where 1=1
+		<if test="bankName != null">
+			and bank_name LIKE CONCAT('%',#{bankName},'%')  
+		</if>
+		order by orders desc 
+     	limit #{start},#{pageSize}
+	</select>
+
+</mapper>

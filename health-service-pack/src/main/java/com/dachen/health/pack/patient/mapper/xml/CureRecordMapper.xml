@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.patient.mapper.CureRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.dachen.health.pack.patient.model.CureRecord" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="doctor_id" property="doctorId" jdbcType="INTEGER" />
+    <result column="patient_id" property="patientId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="treat_advise" property="treatAdvise" jdbcType="VARCHAR" />
+    <result column="drug_advise" property="drugAdvise" jdbcType="VARCHAR" />
+    <result column="attention" property="attention" jdbcType="VARCHAR" />
+    <result column="consult_advise" property="consultAdvise" jdbcType="VARCHAR" />
+    <result column="consult_advise_diseases" property="consultAdviseDiseases" jdbcType="VARCHAR" />
+    <result column="is_need_help" property="isNeedHelp" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, order_id, user_id,is_need_help, doctor_id, patient_id, create_time, treat_advise, drug_advise, 
+    attention, consult_advise, consult_advise_diseases,update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.patient.model.CureRecordExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from p_cure_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from p_cure_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from p_cure_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dachen.health.pack.patient.model.CureRecordExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from p_cure_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dachen.health.pack.patient.model.CureRecord" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p_cure_record (id, order_id, user_id, 
+      doctor_id, patient_id, create_time, 
+      treat_advise, drug_advise, attention, 
+      consult_advise, consult_advise_diseases,is_need_help)
+    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{doctorId,jdbcType=INTEGER}, #{patientId,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, 
+      #{treatAdvise,jdbcType=VARCHAR}, #{drugAdvise,jdbcType=VARCHAR}, #{attention,jdbcType=VARCHAR},
+      #{consultAdvise,jdbcType=VARCHAR}, #{consultAdviseDiseases,jdbcType=VARCHAR},#{isNeedHelp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dachen.health.pack.patient.model.CureRecord" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p_cure_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="doctorId != null" >
+        doctor_id,
+      </if>
+      <if test="patientId != null" >
+        patient_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="treatAdvise != null" >
+        treat_advise,
+      </if>
+      <if test="drugAdvise != null" >
+        drug_advise,
+      </if>
+      <if test="attention != null" >
+        attention,
+      </if>
+      <if test="consultAdvise != null" >
+        consult_advise,
+      </if>
+      <if test="consultAdviseDiseases != null" >
+        consult_advise_diseases,
+      </if>
+      <if test="isNeedHelp != null" >
+        is_need_help,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null" >
+        #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="patientId != null" >
+        #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="treatAdvise != null" >
+        #{treatAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="drugAdvise != null" >
+        #{drugAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="attention != null" >
+        #{attention,jdbcType=VARCHAR},
+      </if>
+      <if test="consultAdvise != null" >
+        #{consultAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="consultAdviseDiseases != null" >
+        #{consultAdviseDiseases,jdbcType=VARCHAR},
+      </if>
+      <if test="isNeedHelp != null" >
+        #{isNeedHelp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dachen.health.pack.patient.model.CureRecordExample" resultType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from p_cure_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update p_cure_record
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctorId != null" >
+        doctor_id = #{record.doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.patientId != null" >
+        patient_id = #{record.patientId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.treatAdvise != null" >
+        treat_advise = #{record.treatAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugAdvise != null" >
+        drug_advise = #{record.drugAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attention != null" >
+        attention = #{record.attention,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consultAdvise != null" >
+        consult_advise = #{record.consultAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consultAdviseDiseases != null" >
+        consult_advise_diseases = #{record.consultAdviseDiseases,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update p_cure_record
+    set id = #{record.id,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      doctor_id = #{record.doctorId,jdbcType=INTEGER},
+      patient_id = #{record.patientId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=BIGINT},
+      treat_advise = #{record.treatAdvise,jdbcType=VARCHAR},
+      drug_advise = #{record.drugAdvise,jdbcType=VARCHAR},
+      attention = #{record.attention,jdbcType=VARCHAR},
+      consult_advise = #{record.consultAdvise,jdbcType=VARCHAR},
+      consult_advise_diseases = #{record.consultAdviseDiseases,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dachen.health.pack.patient.model.CureRecord" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update p_cure_record
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="patientId != null" >
+        patient_id = #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="treatAdvise != null" >
+        treat_advise = #{treatAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="drugAdvise != null" >
+        drug_advise = #{drugAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="attention != null" >
+        attention = #{attention,jdbcType=VARCHAR},
+      </if>
+      <if test="consultAdvise != null" >
+        consult_advise = #{consultAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="consultAdviseDiseases != null" >
+        consult_advise_diseases = #{consultAdviseDiseases,jdbcType=VARCHAR},
+      </if>
+       <if test="isNeedHelp != null" >
+        is_need_help = #{isNeedHelp,jdbcType=VARCHAR},
+      </if>
+       <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dachen.health.pack.patient.model.CureRecord" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update p_cure_record
+    set order_id = #{orderId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      doctor_id = #{doctorId,jdbcType=INTEGER},
+      patient_id = #{patientId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      treat_advise = #{treatAdvise,jdbcType=VARCHAR},
+      drug_advise = #{drugAdvise,jdbcType=VARCHAR},
+      attention = #{attention,jdbcType=VARCHAR},
+      consult_advise = #{consultAdvise,jdbcType=VARCHAR},
+      consult_advise_diseases = #{consultAdviseDiseases,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getCommonDiseasesByDocId" parameterType="Integer" resultMap="BaseResultMap">
+		SELECT * FROM p_cure_record WHERE consult_advise_diseases != '' and  consult_advise_diseases != 'null' and  doctor_id = #{doctorId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getListByCondition" resultMap="BaseResultMap">
+		SELECT * FROM p_cure_record p,p_image_data m WHERE  m.relation_id = p.id and  p.is_need_help = 0 and m.image_type=4
+  </select>
+  <select id="getEndTime" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.patient.model.CureRecord">
+		SELECT p.* 
+		FROM p_cure_record p,p_order o where p.order_id = #{orderId} and p.order_id = o.id   order by p.update_time desc
+  </select>
+  
+   <select id="pushMessageToDoctor" parameterType="Integer" resultMap="BaseResultMap">
+		SELECT p.* FROM p_cure_record p,p_order o WHERE p.order_id = o.id and p.doctor_id = #{doctorId,jdbcType=INTEGER} 
+		and o.order_status=3 and o.record_status = 3 order by p.create_time desc
+  </select>
+
+  <select id="getByOrderIds" parameterType="list" resultMap="BaseResultMap">
+    SELECT
+      <include refid="Base_Column_List" />
+    FROM p_cure_record cr WHERE cr.`order_id` IN
+      <foreach collection="list" item="item" open="(" close=")" separator="," >
+          #{item}
+      </foreach>
+  </select>
+</mapper>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>爱心宣教</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="keywords" content="爱心宣教" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <style type="text/css">
+        html,body{
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        *{
+            box-sizing: border-box;
+        }
+        .container{
+            width: 100%;
+            padding:0px 10px 10px 10px;
+            word-wrap: break-word;
+        }
+        .container>.title{
+            color: #333333;
+            font-size:22px;
+            font-weight: normal;
+        }
+        .container>.a-t{
+            font-size: 16px;
+            color: #888888;
+            margin-top:10px;
+        }
+        .container>.a-t>.author{
+            margin-left: 20px;
+        }
+        .container >.font-img{
+            max-width: 100%;
+            margin: 15px 0 0;
+        }
+        .container >.article{
+            color: #333333;
+            font-size: 16px;
+            margin-top: 10px;
+            line-height: 150%;
+        }
+        .article img{
+            max-width: 100% !important;
+
+        }
+        /* 中等屏幕（桌面显示器，大于等于 992px） */
+        @media (min-width: 992px) {
+            .container{
+                width: 900px;
+                margin-left: auto;
+                margin-right: auto;
+                padding:10px;
+            }
+            .container>.title{
+                font-weight: bold;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">{{title}}</h1>
+        <div class="a-t"><span>{{date}}</span><span class="author">{{author}}</span></div>
+        <img src="{{imgSrc}}" class="font-img">
+        <div class="article">
+            {{content}}
+        </div>
+    </div>
+</body>
+</html>

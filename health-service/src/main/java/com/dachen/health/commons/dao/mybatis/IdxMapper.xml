@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dachen.health.commons.dao.mybatis.IdxMapper">
+
+
+	<resultMap id="BaseResultMap" type="com.dachen.health.commons.vo.IdxVO">
+		<result column="id" property="id" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="com.dachen.health.commons.vo.IdxVO">
+		<selectKey resultType="java.lang.Integer" keyProperty="id">
+		<![CDATA[
+		SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+		<![CDATA[
+		REPLACE INTO idx_user (stub) VALUES ('a')
+		]]>
+	</insert>
+	<insert id="insertDoctor" parameterType="com.dachen.health.commons.vo.IdxVO">
+		<selectKey resultType="java.lang.Integer" keyProperty="id">
+		<![CDATA[
+		SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+		<![CDATA[
+		REPLACE INTO idx_doctor (stub) VALUES ('b')
+		]]>
+	</insert>
+	<update id="resetDoctor">
+		<set>
+			id=1
+		</set>
+	</update>
+	
+	<insert id="insertDoctorPrefix" parameterType="com.dachen.health.commons.vo.IdxVO">
+		<selectKey resultType="java.lang.Integer" keyProperty="id">
+		<![CDATA[
+		SELECT LAST_INSERT_ID()
+		]]>
+		</selectKey>
+		<![CDATA[
+		REPLACE INTO idx_doctor_prefix (stub) VALUES ('a')
+		]]>
+	</insert>
+	
+	<select id="selectDoctorPrefix" 
+		resultMap="BaseResultMap">
+		SELECT * FROM idx_doctor_prefix limit 1
+	</select>
+
+</mapper>

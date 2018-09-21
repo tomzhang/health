@@ -1,0 +1,2095 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.order.mapper.OrderMapper">
+	
+	<resultMap id="orderSessionResultMap" type="com.dachen.health.pack.patient.model.OrderSession" >
+	    <result column="id" property="id" jdbcType="INTEGER" />
+	    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+	    <result column="service_begin_time" property="serviceBeginTime" jdbcType="BIGINT" />
+	    <result column="treat_begin_time" property="treatBeginTime" jdbcType="BIGINT" />
+	    <result column="time_long" property="timeLong" jdbcType="BIGINT" />
+	    <result column="msg_group_id" property="msgGroupId" jdbcType="BIGINT" />
+    </resultMap>
+	
+	<resultMap id="orderMap" type="com.dachen.health.pack.order.entity.po.Order">
+		<result column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="doctor_id" property="doctorId" />
+		<result column="group_id" property="groupId" />
+		<result column="order_type" property="orderType" />
+		<result column="pack_type" property="packType" />
+		<result column="pack_id" property="packId" />
+		<result column="time_long" property="timeLong" />
+		<result column="price" property="price" />
+		<result column="disease_id" property="diseaseId" />
+		<result column="create_time" property="createTime" />
+		<result column="patient_id" property="patientId" />
+		<result column="order_status" property="orderStatus" />
+		<result column="refund_status" property="refundStatus" />
+		<result column="pre_order_status" property="preOrderStatus" />
+		<result column="cancel_from" property="cancelFrom" />
+		<result column="cancel_reason" property="cancelReason" />
+		<result column="order_no" property="orderNo" />
+		<result column="care_template_id" property="careTemplateId" />
+		<result column="follow_template_id" property="followTemplateId" />
+		<result column="remarks" property="remarks" />
+		<result column="record_status" property="recordStatus" />
+		<result column="acStatus" property="acStatus" />
+		<result column="pay_type" property="payType" />
+		<result column="help_times" property="helpTimes" />
+		<result column="illCaseInfo_id" property="illCaseInfoId" />
+		<result column="consultation_pack_id" property="consultationPackId" />
+		<result column="pay_time" property="payTime" />
+		<result column="hospital_id" property="hospitalId" />
+		<result column="assistant_id" property="assistantId" />
+		<result column="expect_appointment_ids" property="expectAppointmentIds" />
+		<result column="care_name" property="careName" />
+		<result column="care_order_id" property="careOrderId" />
+		<result column="old_session" property="oldSession"/>
+		<result column="ill_historyInfo_id" property="illHistoryInfoId" />
+	</resultMap>
+	
+	<resultMap id="orderVoMap" type="com.dachen.health.pack.order.entity.vo.OrderVO">
+		<result column="id" property="orderId" />
+		<result column="doctor_id" property="doctorId" />
+		<result column="order_type" property="orderType" />
+		<result column="pack_type" property="packType" />
+		<result column="time_long" property="timeLong" />
+		<result column="ill_historyInfo_id" property="illHistoryInfoId" />
+		<result column="assistantComment" property="assistantComment" />
+		<result column="expect_appointment_ids" property="expectAppointment" />
+		
+		<result column="price" property="money" />
+		<result column="pack_id" property="packId" />
+		<result column="create_time" property="createTime" />
+		<result column="patient_id" property="patientId" />
+		<result column="user_name" property="patientName" />
+		<result column="sex" property="sex" />
+		<result column="age" property="age" />
+		<result column="pre_order_status" property="preOrderStatus" />
+		<result column="birthday" property="birthday" />
+		<result column="telephone" property="telephone" />
+		<result column="order_status" property="orderStatus" />
+		<result column="refund_status" property="refundStatus" />
+		<result column="create_time" property="createTime" />
+		<result column="user_id" property="userId" />
+		<result column="disease_id" property="diseaseId" />
+		<result column="area" property="area" />
+		
+		<result column="top_path" property="topPath" />
+		<result column="appoint_time" property="appointTime" />
+		<result column="service_begin_time" property="serviceBeginTime" />
+		<result column="service_end_time" property="serviceEndTime" />
+		<result column="relation" property="relation" />
+		<result column="status" property="checkInVo.status" />
+		<result column="hospital" property="checkInVo.hospital" />
+		<result column="record_num" property="checkInVo.recordNum" />
+		<result column="last_cure_time" property="checkInVo.lastCureTime" />
+		<result column="description" property="checkInVo.description" />
+		<result column="message" property="checkInVo.message" />
+		<result column="checkId" property="checkInVo.checkInId" />
+		<result column="caseId" property="checkInVo.caseId" />
+		<result column="order_no" property="orderNo" />
+		<result column="appoint_str" property="appointStrTime" />
+		<result column="record_status" property="recordStatus" />
+		<result column="pay_time" property="payTime" />
+		<result column="pay_type" property="payType" />
+		<result column="group_id" property="groupId" />
+		<result column="remarks" property="remarks" />
+		<result column="msg_group_id" property="orderSession.msgGroupId" />
+		<result column="hospital_id" property="hospitalId" />
+		<result column="service_begin_time" property="serviceBeginTime" />
+		<result column="cancel_reason" property="cancelReason" />
+		<result column="assistant_id" property="assistantId" />
+		<result column="care_order_id" property="careOrderId" />
+		<result column="name" property="pointName" />
+		<result column="point" property="point" />
+	</resultMap>
+	
+	<resultMap id="orderDiseaseMap" type="com.dachen.health.pack.order.entity.vo.OrderDetailVO">
+		<result column="doctor_id" property="orderVo.doctorId" />
+		<result column="order_type" property="orderVo.orderType" />
+		<result column="pack_type" property="orderVo.packType" />
+		<result column="order_no" property="orderVo.orderNo" />
+		<result column="time_long" property="orderVo.timeLong" />
+		<result column="price" property="orderVo.money" />
+		<result column="pack_id" property="orderVo.packId" />
+		<result column="create_time" property="orderVo.createTime" />
+		<result column="patient_id" property="orderVo.patientId" />
+		<result column="disease_id" property="orderVo.diseaseId" />
+		<result column="user_name" property="orderVo.patientName" />
+		<result column="sex" property="orderVo.sex" />
+		<result column="birthday" property="orderVo.birthday" />
+		<result column="order_status" property="orderVo.orderStatus" />
+		<result column="refund_status" property="orderVo.refundStatus" />
+		<result column="create_time" property="orderVo.createTime" />
+		<result column="user_id" property="orderVo.userId" />
+		<result column="telephone" property="orderVo.telephone" />
+		<result column="area" property="orderVo.area" />
+		<result column="relation" property="orderVo.relation" />
+		<result column="status" property="orderVo.checkInVo.status" />
+		<result column="case_id" property="orderVo.checkInVo.caseId" />
+		<result column="hospital" property="orderVo.checkInVo.hospital" />
+		<result column="record_num" property="orderVo.checkInVo.recordNum" />
+		<result column="last_cure_time" property="orderVo.checkInVo.lastCureTime" />
+		<result column="description" property="orderVo.checkInVo.description" />
+		<result column="message" property="orderVo.checkInVo.message" />
+		<result column="checkId" property="orderVo.checkInVo.checkInId" />
+	</resultMap> 
+	
+	<select id="findOrderDisease" resultMap="orderDiseaseMap" parameterType="Integer">
+		SELECT  o.doctor_id, 
+				o.order_type, 
+				o.pack_type, 
+				o.time_long, 
+				o.price, 
+				o.pack_id, 
+				o.patient_id, 
+				o.disease_id, 
+				o.order_status, 
+				o.refund_status, 
+				o.create_time, 
+				o.user_id,
+				o.order_no,
+				d.user_name, 
+				p.sex, 
+				p.top_path, 
+				d.birthday, 
+				d.telephone,
+				d.area,
+				d.relation,
+				d.disease_info,
+				c.id as checkId,
+				c.status,
+				ca.id case_id,
+			    ca.hospital,
+			    ca.record_num,
+			    ca.last_cure_time,
+			    ca.description,
+			    ca.message
+				FROM p_order o 
+				LEFT JOIN t_patient p ON o.patient_id = p.id  
+				LEFT JOIN t_disease d ON o.disease_id = d.id  
+				LEFT JOIN  p_check_in c  ON o.id = c.order_id 
+			    LEFT JOIN  p_case ca  ON c.id = ca.check_in_id 
+				WHERE o.id=#{orderId}
+	</select> 
+	
+	<select id="getOrdersToRepairIncomes" parameterType="com.dachen.health.pack.order.entity.param.OrderParam" resultMap="orderMap">
+		select * from  p_order
+		where order_status=4 and price > 0
+		<if test="startCreateTime != null">
+			and create_time &gt; #{startCreateTime,jdbcType=BIGINT}
+		</if>
+		<if test="endCreateTime != null">
+			and create_time &lt; #{endCreateTime,jdbcType=BIGINT} 
+		</if>
+	</select>
+	
+	
+	<!-- 新增订单 -->
+	<insert id="add" useGeneratedKeys="true" keyProperty="id"  parameterType="com.dachen.health.pack.order.entity.po.Order">
+		insert into p_order (
+			user_id, 
+			doctor_id,
+			group_id,
+			order_type, 
+      		pack_type, 
+      		pack_id, 
+      		time_long,
+      		price, 
+      		create_time,
+      		finish_time, 
+      		patient_id, 
+      		disease_id,
+      		order_status,
+      		refund_status,
+      		order_no,
+      		care_template_id,
+      		follow_template_id,
+      		remarks,
+      		help_times,
+      		acStatus,
+      		illCaseInfo_id,
+      		consultation_pack_id,
+      		hospital_id ,
+      		expect_appointment_ids,
+      		assistant_id,
+      		care_order_id,
+      		old_session
+      	)
+    	values (
+    		#{userId}, 
+    		#{doctorId},
+    		#{groupId},
+    		#{orderType}, 
+      		#{packType}, 
+      		#{packId},
+      		#{timeLong},
+      		#{price}, 
+      		#{createTime},
+      		#{finishTime}, 
+      		#{patientId}, 
+      		#{diseaseId},
+      		#{orderStatus},
+      		#{refundStatus},
+      		#{orderNo},
+      		#{careTemplateId},
+      		#{followTemplateId},
+      		#{remarks},
+      		#{helpTimes},
+      		#{acStatus},
+      		#{illCaseInfoId},
+      		#{consultationPackId},
+      		#{hospitalId},
+      		#{expectAppointmentIds},
+      		#{assistantId},
+      		#{careOrderId},
+      		#{oldSession}
+      	)
+	</insert>
+	
+	<select id="getOne" resultMap="orderMap" parameterType="Integer">
+		select id,
+			user_id, 
+			doctor_id, 
+			group_id,
+      		pack_type, 
+      		pack_id, 
+      		price, 
+      		create_time,
+      		order_status, 
+      		patient_id, 
+      		disease_id,
+      		order_type,
+      		time_long,
+      		order_no,
+      		care_template_id,
+      		follow_template_id,
+      		remarks,
+      		record_status,
+      		cancel_from,
+      		cancel_reason,
+      		acStatus,
+      		pay_type,
+      		help_times,
+      		illCaseInfo_id,
+			consultation_pack_id,
+			hospital_id	,
+			assistant_id,
+			pay_time,
+			expect_appointment_ids,
+			care_order_id,
+			old_session,
+			ill_historyInfo_id
+      	from p_order where id=#{id}
+	</select>
+	
+	<select id="findOrderByIds" resultMap="orderMap" >
+		select id,
+			user_id, 
+			doctor_id, 
+			group_id,
+      		pack_type, 
+      		pack_id, 
+      		price, 
+      		create_time,
+      		order_status, 
+      		patient_id, 
+      		disease_id,
+      		order_type,
+      		time_long,
+      		order_no,
+      		care_template_id,
+      		follow_template_id,
+      		remarks,
+      		record_status,
+      		cancel_from,
+      		cancel_reason,
+      		acStatus,
+      		pay_type,
+      		help_times,
+      		illCaseInfo_id,
+			consultation_pack_id,
+			hospital_id	,
+			assistant_id,
+			pay_time,
+			expect_appointment_ids,
+			care_order_id,
+			old_session,
+			ill_historyInfo_id
+      		from p_order where id in 
+      		<foreach item="item" index="index" collection="list" 
+                    open="(" separator="," close=")">
+                   #{item}
+       		</foreach> 
+       		order by create_time DESC
+	</select>
+	
+	<select id="getNoAcStatusByUserId" resultMap="orderMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select id,acStatus from p_order where 1=1
+      	<if test="activateStatus != null">
+			and acStatus =#{activateStatus}
+		</if>
+		<if test="userId != null">
+			and user_id =#{userId}
+		</if>
+	</select>
+	
+	<select id="findOrderBydiseaseId" resultMap="orderMap" parameterType="Integer">
+		select id,
+			user_id, 
+			doctor_id, 
+			group_id,
+      		pack_type, 
+      		pack_id, 
+      		price, 
+      		create_time,
+      		order_status, 
+      		patient_id, 
+      		disease_id,
+      		order_type,
+      		time_long,
+      		order_no,
+      		care_template_id,
+      		follow_template_id,
+      		help_times,
+      		remarks,
+      		record_status,
+      		cancel_from,
+      		cancel_reason
+      	from p_order where disease_id=#{id}
+	</select>
+	
+	<select id="findOrderByCarePlanId" resultMap="orderMap" parameterType="String">
+		select id,
+			user_id, 
+			doctor_id, 
+			group_id,
+      		pack_type, 
+      		pack_id, 
+      		price, 
+      		create_time,
+      		order_status, 
+      		patient_id, 
+      		disease_id,
+      		order_type,
+      		time_long,
+      		order_no,
+      		care_template_id,
+      		follow_template_id,
+      		help_times,
+      		remarks,
+      		record_status,
+      		cancel_from,
+      		cancel_reason
+      	from p_order where care_template_id=#{carePlanId}
+	</select>
+	
+	<select id="findByCarePlanIds" resultMap="orderMap">
+		select id,
+			user_id, 
+			doctor_id, 
+			group_id,
+      		pack_type, 
+      		pack_id, 
+      		price, 
+      		create_time,
+      		order_status, 
+      		patient_id, 
+      		disease_id,
+      		order_type,
+      		time_long,
+      		order_no,
+      		care_template_id,
+      		follow_template_id,
+      		help_times,
+      		remarks,
+      		record_status,
+      		cancel_from,
+      		cancel_reason
+      		from p_order where care_template_id in
+      	<foreach item="item" index="index" collection="list" 
+                    open="(" separator="," close=")">
+                 #{item}
+        </foreach> 
+        order by create_time DESC
+      	
+	</select>
+	
+	<select id="countNewOrder" resultType="Integer" parameterType="Integer">
+		select count(*) from p_order o where o.order_status=1 and o.doctor_id=#{userId} 
+	</select>
+	
+	<select id="countByPatientId" resultType="Integer" parameterType="Integer">
+		select count(*) from p_order o where o.patient_id=#{patientId} 
+	</select>
+	
+	<update id="update" parameterType="com.dachen.health.pack.order.entity.po.Order">
+		update p_order 
+		<set>
+			<if test="orderStatus != null">
+				order_status =#{orderStatus},
+			</if>
+			<if test="refundStatus != null">
+				refund_status =#{refundStatus},
+			</if>
+			<if test="preOrderStatus != null">
+				pre_order_status =#{preOrderStatus},
+			</if>
+			<if test="patientId != null">
+				patient_id =#{patientId},
+			</if>
+			<if test="groupId != null">
+				group_id =#{groupId},
+			</if>
+			<if test="cancelFrom != null">
+				cancel_from =#{cancelFrom},
+			</if>
+			<if test="cancelReason != null">
+				cancel_reason =#{cancelReason},
+			</if>
+			<if test="payTime != null">
+				pay_time = #{payTime},
+			</if>
+			<if test="payType != null">
+				pay_type =#{payType},
+			</if>
+			<if test="remarks != null">
+				remarks =#{remarks},
+			</if>
+			<if test="recordStatus != null">
+				record_status =#{recordStatus},
+			</if>
+			<if test="acStatus != null">
+				acStatus =#{acStatus},
+			</if>
+			<if test="diseaseId != null">
+				disease_id =#{diseaseId},
+			</if>
+			<if test="careTemplateId != null">
+				care_template_id =#{careTemplateId},
+			</if>
+			<if test="followTemplateId != null">
+				follow_template_id =#{followTemplateId},
+			</if>
+			<if test="consultationPackId != null">
+				consultation_pack_id =#{consultationPackId},
+			</if>
+			<if test="hospitalId != null">
+				hospital_id =#{hospitalId}
+			</if>
+			<if test="oldSession != null">
+				old_session =#{oldSession},
+			</if>
+			<if test="illHistoryInfoId != null">
+				ill_historyInfo_id =#{illHistoryInfoId},
+			</if>
+			<if test="expectAppointmentIds != null">
+				expect_appointment_ids = #{expectAppointmentIds}
+			</if>
+
+		</set>
+		where id=#{id} 
+	</update>
+	
+	<select id="findOrderExpiredStatus" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		SELECT  o.`id`,
+				o.`user_id`,
+		        o.`doctor_id`,
+		        o.`pack_type`,
+		        o.`disease_id`,
+		        o.`order_type`,
+		        o.`patient_id`,
+		        s.`msg_group_id`
+		         FROM p_order o  LEFT JOIN  `t_order_session` s  
+				ON o.`id`= s.`order_id`  
+				WHERE  o.`order_type` IN (1,3) 
+				<if test="userId != null">
+					 and o.user_id=#{userId}
+				</if>
+				<if test="doctorId != null">
+					and o.doctor_id=#{doctorId}
+				</if>
+				AND s.`service_begin_time` IS NOT NULL 
+				AND o.`time_long` IS NOT NULL
+				AND o.`order_status` =3
+				AND s.`service_end_time` IS NULL
+				AND ((UNIX_TIMESTAMP(NOW())*1000)- s.`service_begin_time` )>(o.`time_long`*60000)
+				ORDER BY s.`service_begin_time` DESC
+	</select>
+	
+	<select id="findOrderExistByStatus" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+	
+		select	o.id,  
+				o.doctor_id,
+			   	o.order_type,
+			   	o.pack_type,
+			   	o.time_long,
+			   	o.price,
+			   	o.pack_id,
+			   	o.patient_id,
+			   	o.disease_id,
+			   	o.order_status,
+			   	o.refund_status,
+			   	o.create_time,
+			   	o.order_no,
+			   	o.user_id,
+			   	o.pay_time,
+			   	o.pay_type
+			   	from p_order o 
+			   	where o.pack_type in(3,4)
+			   	<if test="userId != null">
+					 and o.user_id=#{userId}
+				</if>
+				<if test="doctorId != null">
+					and o.doctor_id=#{doctorId}
+				</if>
+				<if test="moreStatus != null">
+					and o.order_status in
+					<foreach collection="moreStatus" item="statusType" open="(" close=")" separator="," >
+	      					#{statusType}
+	    			</foreach>
+    			</if>
+	</select>
+	
+	<select id="findPaidOrders" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select o.id,
+			   o.doctor_id,
+			   o.order_type,
+			   o.pack_type,
+			   o.time_long,
+			   o.price,
+			   o.pack_id,
+			   o.patient_id,
+			   case when td.user_name is null then p.user_name else td.user_name end user_name,
+			   p.sex,
+			   p.relation,
+			   p.top_path,
+			   td.birthday,
+			   td.telephone,
+			   o.disease_id,
+			   o.order_status,
+			   o.refund_status,
+			   o.create_time,
+			   o.order_no,
+			   o.user_id,
+			   o.pay_time,
+			   td.area,
+<!-- 		   td.relation, -->	
+			   o.pay_type,
+			   o.remarks,
+			   pack.name,
+			   pack.point
+			from p_order o 
+			left join t_patient p on  o.patient_id = p.id 
+			left join  t_disease td ON td.id = o.disease_id
+			left join p_pack pack on o.pack_id = pack.id 
+			where o.acStatus=1 and o.order_type != 2 and o.order_status != 1 and o.order_status != 2 AND NOT (o.order_status = 5 AND o.pre_order_status IN (1, 2))
+				<if test="orderNo != null">
+					 and o.order_no=#{orderNo}
+				</if>
+				<if test="orderStatus != null">
+					and o.order_status=#{orderStatus}
+				</if>
+				<if test="packType != null">
+					and o.pack_type=#{packType}
+				</if>
+				<if test="orderType != null">
+					and o.order_type=#{orderType}
+				</if>
+				<if test="diseaseTel != null">
+					and td.telephone LIKE #{diseaseTel}
+				</if>
+				<if test="groupId != null">
+					and o.group_id =#{groupId} AND o.order_type != 12
+				</if>
+				<if test="userIds !=null">
+					and (o.doctor_id in
+					<foreach collection="userIds" item="Item" open="(" close=")" separator="," >
+	      				#{Item}
+	    			</foreach> 
+    			 	or o.user_id in
+    			 	<foreach collection="userIds" item="ItemId" open="(" close=")" separator="," >
+      					#{ItemId}
+    				</foreach>
+    			 	)
+				</if>
+			order by o.create_time desc limit #{start},#{pageSize}
+	</select>
+	
+	<select id="findPaidOrdersCount" resultType="Integer" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select count(*) 
+			from p_order o 
+			left join t_patient p on  o.patient_id = p.id 
+			left join  t_disease td ON td.id = o.disease_id
+			where o.acStatus=1 and o.order_type != 2 and o.order_status != 1 and o.order_status != 2 AND NOT (o.order_status = 5 AND o.pre_order_status IN (1, 2))
+				<if test="orderNo != null">
+					 and o.order_no=#{orderNo}
+				</if>
+				<if test="orderStatus != null">
+					and o.order_status=#{orderStatus}
+				</if>
+				<if test="packType != null">
+					and o.pack_type=#{packType}
+				</if>
+				<if test="orderType != null">
+					and o.order_type=#{orderType}
+				</if>
+				<if test="diseaseTel != null">
+					and td.telephone LIKE #{diseaseTel}
+				</if>
+				<if test="groupId != null">
+					and o.group_id =#{groupId} AND o.order_type != 12
+				</if>
+				<if test="userIds !=null">
+					and (o.doctor_id in
+					<foreach collection="userIds" item="Item" open="(" close=")" separator="," >
+	      				#{Item}
+	    			</foreach> 
+    			 	or o.user_id in
+    			 	<foreach collection="userIds" item="ItemId" open="(" close=")" separator="," >
+      					#{ItemId}
+    				</foreach>
+    			 	)
+				</if>
+	</select>
+	
+	<select id="findOrders" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select o.id,
+			   o.doctor_id,
+			   o.order_type,
+			   o.pack_type,
+			   o.time_long,
+			   o.price,
+			   o.pack_id,
+			   o.patient_id,
+			   p.user_name ,
+			   p.sex,
+			   p.top_path,
+			   td.birthday,
+			   td.telephone,
+			   o.disease_id,
+			   o.order_status,
+			   o.refund_status,
+			   o.create_time,
+			   o.order_no,
+			   o.user_id,
+			   o.pay_time,
+			   td.area,
+			   td.relation,
+			   o.pay_type,
+			   o.remarks,
+			   pack.name,
+			   pack.point
+			from p_order o 
+			left join t_patient p on  o.patient_id = p.id 
+			left join  t_disease td ON td.id = o.disease_id
+			left join p_pack pack on o.pack_id = pack.id
+			where o.acStatus=1 and o.order_type != 2
+				<if test="userId != null">
+					 and o.user_id=#{userId}
+				</if>
+				<if test="orderNo != null">
+					 and o.order_no=#{orderNo}
+				</if>
+				<if test="diseaseTel != null">
+					 and td.telephone=#{diseaseTel}
+				</if>
+				<if test="orderStatus != null">
+					and o.order_status=#{orderStatus}
+				</if>
+				<if test="payType != null">
+					and o.pay_type=#{payType}
+				</if>
+				<if test="packType != null">
+					and o.pack_type=#{packType}
+				</if>
+				<if test="doctorId != null">
+					and ( o.doctor_id=#{doctorId} 
+						<if test="orderIds != null">
+							or o.id IN 
+							<foreach collection="orderIds" item="item" open="(" separator="," close=")">
+								#{item}
+							</foreach>
+						</if>
+					)
+				</if>
+				<if test="orderType != null">
+					and o.order_type=#{orderType}
+					<if test="orderType == 6">
+						and o.order_status != 2
+					</if>
+				</if>
+				<if test="orderType == null">
+					and ((o.order_type = 6 and o.order_status != 2) or (o.order_type != 6))
+				</if>
+				<if test="groupId != null">
+					and o.group_id=#{groupId}
+				</if>
+				<if test="userIds !=null">
+					and (o.doctor_id in
+					<foreach collection="userIds" item="Item" open="(" close=")" separator="," >
+	      				#{Item}
+	    			</foreach> 
+    			 	or o.user_id in
+    			 	<foreach collection="userIds" item="ItemId" open="(" close=")" separator="," >
+      					#{ItemId}
+    				</foreach>
+    			 	)
+				</if>
+				<if test="userType != null">
+					 <if test="userType == 3">
+						and not (o.pack_type = 1 and o.order_status = 1)
+						and not (o.order_type = 3 and o.order_status = 2)
+					</if>
+					<if test="userType == 1">
+						and not (o.order_type = 7 AND o.order_status = 1)
+						and not (o.order_type = 7 AND o.order_status = 5 AND o.pre_order_status = 1)
+					</if>
+				</if>
+			order by o.create_time desc limit #{start},#{pageSize}
+	</select>
+	
+	<select id="findOrdersCount" resultType="Integer" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select count(*) 
+			from p_order o 
+			left join t_patient p on  o.patient_id = p.id 
+			left join  t_disease td ON td.id = o.disease_id
+			where o.acStatus=1 and o.order_type != 2  
+				<if test="userId != null">
+					 and o.user_id=#{userId}
+				</if>
+				<if test="orderNo != null">
+					 and o.order_no=#{orderNo}
+				</if>
+				<if test="diseaseTel != null">
+					 and td.telephone=#{diseaseTel}
+				</if>
+				<if test="orderStatus != null">
+					and o.order_status=#{orderStatus}
+				</if>
+				<if test="payType != null">
+					and o.pay_type=#{payType}
+				</if>
+				<if test="packType != null">
+					and o.pack_type=#{packType}
+				</if>
+				<if test="doctorId != null">
+					and ( o.doctor_id=#{doctorId} 
+						<if test="orderIds != null">
+							or o.id IN 
+							<foreach collection="orderIds" item="item" open="(" separator="," close=")">
+								#{item}
+							</foreach>
+						</if>
+					)
+				</if>
+				<if test="orderType != null">
+					and o.order_type=#{orderType}
+					<if test="orderType == 6">
+						and o.order_status != 2
+					</if>
+				</if>
+				<if test="orderType == null">
+					and ((o.order_type = 6 and o.order_status != 2) or (o.order_type != 6))
+				</if>
+				<if test="groupId != null">
+					and o.group_id=#{groupId}
+				</if>
+				<if test="userIds !=null">
+					and (o.doctor_id in
+					<foreach collection="userIds" item="Item" open="(" close=")" separator="," >
+	      				#{Item}
+	    			</foreach> 
+    			 	or o.user_id in
+    			 	<foreach collection="userIds" item="ItemId" open="(" close=")" separator="," >
+      					#{ItemId}
+    				</foreach>
+    			 	)
+				</if>
+				<if test="userType != null">
+					 <if test="userType == 3">
+						and not (o.pack_type = 1 and o.order_status = 1)
+					</if>
+					<if test="userType == 1">
+						and not (o.order_type = 7 AND o.order_status = 1)
+						and not (o.order_type = 7 AND o.order_status = 5 AND o.pre_order_status = 1)
+					</if>
+				</if>
+	</select>
+	
+	<select id="findOrdersNoLimit" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select o.id,
+			   o.doctor_id,
+			   o.order_type,
+			   o.pack_type,
+			   o.time_long,
+			   o.price,
+			   o.pack_id,
+			   o.patient_id,
+			   p.user_name,
+			   p.sex,
+			   p.top_path,
+			   td.birthday,
+			   td.telephone,
+			   o.disease_id,
+			   o.order_status,
+			   o.refund_status,
+			   o.create_time,
+			   o.order_no,
+			   o.user_id,
+			   o.remarks,
+			   td.area,
+			   td.relation ,
+			   o.ill_historyInfo_id
+			from p_order o 
+			left join t_patient p on  o.patient_id = p.id
+			LEFT JOIN  t_disease td ON td.id = o.disease_id
+			where o.acStatus=1 and o.order_status!=5
+				<if test="userId != null">
+					 and o.user_id=#{userId}
+				</if>
+				<if test="orderNo != null">
+					 and o.order_no=#{orderNo}
+				</if>
+				<if test="orderStatus != null">
+					and o.order_status=#{orderStatus}
+				</if>
+				<if test="recordStatus != null">
+					and o.record_status=#{recordStatus}
+				</if>
+				<if test="doctorId != null">
+					and o.doctor_id=#{doctorId}
+				</if>
+				<if test="orderType != null">
+					and o.order_type=#{orderType}
+				</if>
+				<if test="groupId != null">
+					and o.group_id=#{groupId}
+				</if>
+				<if test="startCreateTime != null">
+					and o.create_time &lt;=  #{startCreateTime}
+				</if>
+				<if test="endCreateTime != null">
+					and o.create_time  &gt;  #{endCreateTime}
+				</if>
+				
+			  order by o.create_time desc
+	</select>
+	
+	<select id="getOrderByRecordStatus" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select o.id,
+			o.doctor_id, 
+			o.price,
+      		o.record_status,
+      		s.appoint_time
+      	from p_order o
+      	left join t_order_session s on o.id = s.order_id
+      	where o.acStatus=1 
+      		<if test="recordStatus != null">
+				and o.record_status=#{recordStatus}
+			</if>
+			and o.id in
+			<foreach collection="orderIds" item="Item" open="(" close=")" separator="," >
+      			#{Item}
+    		</foreach>
+    		and o.order_status in (3,4)
+    	order by s.appoint_time desc limit #{start},#{pageSize}
+	</select>
+	
+	<select id="getOrderByRecordStatusCount" resultType="Integer" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select COUNT(*)
+      	from p_order o
+      	left join t_order_session s on o.id = s.order_id
+      	where o.acStatus=1 
+      		<if test="recordStatus != null">
+				and o.record_status=#{recordStatus}
+			</if>
+			and o.id in
+			<foreach collection="orderIds" item="Item" open="(" close=")" separator="," >
+      			#{Item}
+    		</foreach>
+    		and o.order_status in (3,4)
+	</select>
+	
+	<select id="detail" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		SELECT o.id,
+			   o.doctor_id,
+			   o.order_type,
+			   o.pack_type,
+			   o.time_long,
+			   o.price,
+			   o.pack_id,
+			   o.patient_id,
+			   o.remarks,
+			   o.group_id,
+			   CASE WHEN o.order_type = 2 THEN ca.patient_name ELSE td.user_name END user_name, -- 患者报到取病例信息、其他类型取t_disease
+			   CASE WHEN o.order_type = 2 THEN ca.sex          ELSE td.sex       END sex,
+			   CASE WHEN o.order_type = 2 THEN ca.birthday     ELSE td.birthday  END birthday,
+			   o.disease_id,
+			   p.top_path,
+			   o.disease_id,
+			   o.order_status,
+			   o.refund_status,
+			   o.create_time,
+			   o.order_no,
+			   o.user_id,
+			   o.pre_order_status,
+			   td.area,
+			   td.relation,
+			   CASE WHEN o.order_type = 2 THEN ca.phone ELSE td.telephone end telephone,
+			   c.id as checkId,
+			   c.status,
+			   ca.id as caseId,
+			   ca.hospital,
+			   ca.record_num,
+			   ca.last_cure_time,
+			   ca.description,
+			   ca.message,
+			   os.appoint_time,
+			   o.hospital_id ,
+			   o.ill_historyInfo_id
+			 FROM p_order o 
+			 LEFT JOIN  p_check_in c  ON o.id = c.order_id 
+			 LEFT JOIN  p_case ca  ON c.id = ca.check_in_id 
+			 LEFT JOIN  t_order_session os ON o.id = os.order_id 
+			 LEFT JOIN  t_disease td ON td.id = o.disease_id
+			 LEFT JOIN 	t_patient p ON   p.id =o.patient_id 
+			 WHERE  o.id=#{orderId}
+	</select>
+	
+	<select id="selectServingOrderByDocId" resultType="Integer" parameterType="Integer">
+<!-- 		SELECT order_id FROM t_order_session 
+		WHERE service_begin_time IS NOT NULL 
+		AND service_end_time IS NULL 
+		AND order_id IN (SELECT id FROM p_order WHERE doctor_id=#{docId,jdbcType=INTEGER}) -->
+			SELECT a.order_id FROM t_order_session a
+			INNER JOIN p_order b ON a.order_id =b.id  AND b.order_status=3
+			WHERE a.service_begin_time IS NOT NULL 
+			AND a.service_end_time IS NULL 
+			AND b.doctor_id=#{docId,jdbcType=INTEGER} 
+	</select>
+	
+	 <delete id="deleteById" parameterType="Integer">
+	     delete from p_order
+	     where id=#{id}
+	  </delete>
+  
+  <select id="getAll" resultMap="orderMap">
+		select id,
+			user_id, 
+			doctor_id, 
+			group_id,
+      		pack_type, 
+      		pack_id, 
+      		price, 
+      		create_time,
+      		order_status, 
+      		patient_id, 
+      		disease_id,
+      		order_type,
+      		time_long,
+      		order_no,
+      		cancel_from,
+      		cancel_reason,
+      		illCaseInfo_id,
+      		ill_historyInfo_id
+      	from p_order where acStatus=1 order by create_time asc
+	</select>
+
+	<select id="findAllWithNoActive" resultMap="orderMap">
+		select id,
+		user_id,
+		doctor_id,
+		group_id,
+		pack_type,
+		pack_id,
+		price,
+		create_time,
+		order_status,
+		patient_id,
+		disease_id,
+		order_type,
+		time_long,
+		order_no,
+		cancel_from,
+		cancel_reason,
+		illCaseInfo_id,
+		ill_historyInfo_id
+		from p_order order by create_time asc
+	</select>
+
+	<select id="findMinDay" resultType="String" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select min(t.cd) mincd from (		
+			select date_format(from_unixtime(create_time/1000),'%Y-%m-%d') as cd from p_order o where 
+			 o.acStatus=1
+				<if test="userId != null">
+					 and o.user_id=#{userId}
+				</if>
+				<if test="orderStatus != null">
+					and o.order_status=#{orderStatus}
+				</if>
+				<if test="doctorId != null">
+					and o.doctor_id=#{doctorId}
+				</if>
+				<if test="orderType != null">
+					and o.order_type=#{orderType}
+				</if>
+				<if test="groupId != null">
+					and o.group_id=#{groupId}
+				</if>
+			
+			and  create_time &lt;  #{startCreateTime} group by cd order by cd desc limit 15
+        )as t
+	</select>
+	
+	
+	<select id="getOrderByDocIdAndUserId" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		SELECT * FROM `p_order` WHERE `order_type` = #{orderType}
+		AND `user_id` = #{userId} 
+		AND `doctor_id` = #{doctorId} 
+		AND `order_status` IN (1,2,3)
+		LIMIT 0, 1
+	</select>
+	
+	<select id="getOverTimeOrderSession" resultMap="orderSessionResultMap">
+		SELECT a.id,a.order_id,a.service_begin_time,a.msg_group_id,b.time_long,a.treat_begin_time FROM t_order_session a
+		LEFT JOIN p_order b ON a.order_id=b.id
+ 		WHERE 
+ 		b.pack_type IN (1,2) AND a.is_send_over_time IS NULL
+		AND a.service_begin_time IS NOT NULL AND a.service_end_time IS NULL
+	</select>
+	
+	<select id="getAllPaidConsultationOrderIds"
+			resultType="int">
+		select DISTINCT id
+		from p_order
+		where order_type = 7 
+		and   order_status = 3				
+	</select>
+	
+	<select id="getLastGidByDoctorIdAndPatientId"
+			parameterType="map"
+			resultType="string">
+		SELECT t.msg_group_id
+			FROM t_order_session t
+			JOIN p_order p ON (t.order_id = p.id)
+		WHERE p.doctor_id = #{doctorId}
+		<if test="userId != null">
+			AND   p.user_id = #{userId}
+		</if>
+		<if test="patientId != null">
+			AND p.patient_id = #{patientId}
+		</if>
+		order by p.create_time desc
+		limit 1
+	</select>
+	
+	<select id="findOrderIdByIllCaseInfoId"
+			parameterType="string"
+			resultType="int">
+		select id
+		from p_order
+		where illCaseInfo_id = #{illCaseInfoId}
+	</select>
+
+	<select id="findByIllCaseInfoId" parameterType="String" resultMap="orderMap">
+		SELECT * FROM p_order o WHERE o.acStatus=1 AND o.illCaseInfo_id = #{illCaseInfoId} ORDER BY o.create_time DESC
+	</select>
+	
+	<update id="updateOrderIllCaseInfoId"
+			parameterType="map">
+		update p_order
+		set    illCaseInfo_id = #{illCaseInfoId}		
+		where  id = #{orderId}
+	</update>
+	
+	<select id="findConsultationOrder"
+			parameterType="map"
+			resultMap="orderMap">
+		select 
+			a.id,
+			a.user_id, 
+			a.doctor_id, 
+			a.group_id,
+			a.pack_type, 
+			a.pack_id, 
+			a.price, 
+			a.create_time,
+			a.order_status, 
+			a.patient_id, 
+			a.disease_id,
+			a.order_type,
+			a.time_long,
+			a.order_no,
+			a.care_template_id,
+			a.follow_template_id,
+			a.consultation_pack_id,
+			a.remarks,
+			a.record_status,
+			a.cancel_from,
+			a.cancel_reason,
+			a.acStatus,
+			a.pay_type,
+			a.illCaseInfo_id 
+		from p_order a join t_order_session b ON (a.id = b.order_id)
+		where a.order_type = 7
+		<if test="orderIds != null">
+			and a.id in
+				<foreach collection="orderIds" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+		</if>
+		<if test="specialistStatus != null">
+			and a.order_status in
+				<foreach collection="specialistStatus" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+		</if>
+		ORDER BY (case when a.create_time > b.last_modify_time then a.create_time else b.last_modify_time end) desc
+		<if test="offset != null and pageSize != null">
+			limit #{pageSize} offset #{offset}
+		</if>
+	</select>
+	
+	<select id="findConsultationOrderCount"
+			parameterType="map"
+			resultType="long">
+		select count(1) 
+		from p_order
+		where order_type = 7
+		<if test="orderIds != null">
+			and id in
+				<foreach collection="orderIds" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+		</if>
+		<if test="specialistStatus != null">
+			and order_status in
+				<foreach collection="specialistStatus" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+		</if>
+	</select>
+	
+	<select id="findOrderIdByDoctorId"
+			parameterType="map"
+			resultType="int">
+		select distinct id
+	  	from p_order
+	  	where doctor_id = #{doctorId}
+	  	<if test="orderStatus != null">
+		  	and order_status = #{orderStatus}
+	  	</if>
+	  	<if test="statusList != null">
+	  		and order_status in 
+	  		<foreach collection="statusList" item="item" open="(" separator="," close=")">
+	  			#{item}
+	  		</foreach>
+	  	</if>
+	  	and order_type = 7
+	</select>
+	
+	<select id="findByIds" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		 select id,
+			user_id, 
+			doctor_id, 
+			group_id,
+      		pack_type, 
+      		pack_id, 
+      		price, 
+      		create_time,
+      		order_status, 
+      		patient_id, 
+      		disease_id,
+      		order_type,
+      		time_long,
+      		order_no,
+      		care_template_id,
+      		follow_template_id,
+      		remarks,
+      		record_status,
+      		cancel_from,
+      		cancel_reason
+      		from p_order p where p.id in
+             <foreach item="item" index="index" collection="orderIds" 
+                    open="(" separator="," close=")">
+                   #{item}
+           </foreach> order by p.create_time DESC
+	</select>
+	
+	<select id="findByIdsMap" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+         select id,
+			user_id, 
+			doctor_id, 
+			group_id,
+      		pack_type, 
+      		pack_id, 
+      		price, 
+      		create_time,
+      		order_status, 
+      		patient_id, 
+      		disease_id,
+      		order_type,
+      		time_long,
+      		order_no,
+      		care_template_id,
+      		follow_template_id,
+      		remarks,
+      		record_status,
+      		cancel_from,
+      		cancel_reason
+      		from p_order p where p.order_status = 3 and p.record_status=2 and p.order_type=1 and id in
+             <foreach item="item" index="index" collection="orderIds" 
+                    open="(" separator="," close=")">
+                   #{item}
+           </foreach> order by p.create_time DESC limit #{start},#{pageSize}
+  </select> 
+  
+  <select id="findByIdsMapCount" resultType="Integer" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+         select COUNT(*)
+      		from p_order p where p.order_status = 3 and p.record_status=2  and p.order_type=1 and id in
+             <foreach item="item" index="index" collection="orderIds" 
+                    open="(" separator="," close=")">
+                   #{item}
+           </foreach>
+  </select> 
+	<select id="getGuideAlreadyServicedOrder" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+      		SELECT p.* FROM p_order p,p_cure_record c WHERE p.id = c.order_id  AND p.record_status in(3,4) and order_type=1 ORDER BY  p.create_time DESC
+      		 LIMIT #{start},#{pageSize}
+  </select> 
+  
+  <select id="getGuideAlreadyServicedOrderCount" resultType="Integer" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+        SELECT COUNT(*) FROM p_order p,p_cure_record c WHERE p.id = c.order_id AND p.record_status in(3,4) and order_type=1
+  </select> 
+  
+  <select id="getRefundOrders" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+        SELECT p.id, p.order_no, p.doctor_id, p.user_id, p.order_type, p.pack_type, p.price, p.refund_status,
+        	   t.create_time,t.pay_type,  
+               tp.user_name, tp.relation
+        FROM p_order p 
+		INNER JOIN t_recharge t ON p.id = t.source_id 
+		LEFT JOIN t_patient tp ON tp.id = p.patient_id
+		WHERE t.recharge_status = 2 AND p.order_status = 5 AND p.order_type != 6 AND p.order_type != 12
+		<if test="packType != null">
+			and p.pack_type=#{packType}
+		</if>
+		<if test="orderType != null">
+			and p.order_type=#{orderType}
+		</if>
+		<if test="orderNo != null">
+			and p.order_no=#{orderNo}
+		</if>
+		<if test="refundStatus != null">
+			and p.refund_status=#{refundStatus}
+		</if>
+		<if test="userIds !=null">
+			and (p.doctor_id in
+			<foreach collection="userIds" item="Item" open="(" close=")" separator="," >
+     				#{Item}
+   			</foreach> 
+  			 	or p.user_id in
+  			 	<foreach collection="userIds" item="ItemId" open="(" close=")" separator="," >
+    					#{ItemId}
+  				</foreach>
+  			 	)
+		</if>
+		ORDER BY t.create_time DESC LIMIT #{start},#{pageSize}
+  </select> 
+  
+  <select id="getRefundOrdersCount" resultType="Integer" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+        SELECT count(*)
+        FROM p_order p
+		INNER JOIN t_recharge t ON p.id = t.source_id 
+		WHERE t.recharge_status = 2 AND p.order_status = 5 AND p.order_type != 6 
+		<if test="packType != null">
+			and p.pack_type=#{packType}
+		</if>
+		<if test="orderType != null">
+			and p.order_type=#{orderType}
+		</if>
+		<if test="orderNo != null">
+			and p.order_no=#{orderNo}
+		</if>
+		<if test="refundStatus != null">
+			and p.refund_status=#{refundStatus}
+		</if>
+		<if test="userIds !=null">
+			and (p.doctor_id in
+			<foreach collection="userIds" item="Item" open="(" close=")" separator="," >
+     				#{Item}
+   			</foreach> 
+  			 	or p.user_id in
+  			 	<foreach collection="userIds" item="ItemId" open="(" close=")" separator="," >
+    					#{ItemId}
+  				</foreach>
+  			 	)
+		</if>
+  </select> 
+  
+  <update id="updateCareOrder"
+  		  parameterType="com.dachen.health.pack.order.entity.po.Order">
+  	update p_order 
+  	   set	illCaseInfo_id =#{illCaseInfoId},
+  	   		patient_id =#{patientId},
+  	   		disease_id =#{diseaseId}
+  	 where id = #{id}
+  </update>
+  
+  <select id="findDiseaseIdByIllCaseInfoId"
+  		  parameterType="string"
+  		  resultType="int">
+  	select disease_id
+	from p_order
+	where illCaseInfo_id = #{illCaseInfoId}  
+  </select>
+  
+  
+  <select id="getLastEveryDoctor"
+  		  parameterType="Integer"
+  		  resultMap="orderVoMap">
+  	SELECT doctor_id,create_time FROM 
+  	(SELECT doctor_id, create_time FROM p_order WHERE user_id = #{userId} ORDER BY create_time DESC) A 
+	GROUP BY doctor_id 
+  </select>
+  
+  <select id="getAppointmentOrdersCount"
+  		  parameterType="map"
+  		  resultType="long">
+  	select count(1) 
+  	 from  p_order
+  	 where order_status = #{status}
+  	 and   order_type = 9
+  </select>
+  
+  <select id="getAppointmentOrders"
+  		  parameterType="map"
+  		  resultType="com.dachen.health.pack.order.entity.vo.AppointOrderGuideVo">
+  	 select id as orderId ,
+  	 		doctor_id as doctorId ,
+  	 		create_time as orderTime ,
+  	 		patient_id as patientId
+  	 from  p_order
+  	 where order_status = #{status}
+  	 and   order_type = 9
+  	 order by create_time desc
+  	 <if test="pageSize != null and offset != null">
+  	  	limit #{pageSize} offset #{offset}
+  	 </if> 
+  </select>
+  
+  <update id="updateHospital"
+  		  parameterType="map">
+  	update p_order
+  	   set hospital_id = #{hospitalId}
+  	where id = #{orderId}
+  </update>
+  <select id="getOrderListByMoreCond" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+  		select o.id,o.doctor_id,o.order_type,o.pack_type,o.time_long,o.hospital_id,
+			   o.price,o.pack_id,o.patient_id,
+			   case when td.user_name is null then p.user_name else td.user_name end user_name,
+			   p.sex,p.top_path,td.birthday,td.telephone,o.disease_id,o.order_status,
+			   o.refund_status,o.create_time,o.order_no,o.user_id,o.pay_time,
+			   td.area,td.relation,o.pay_type,o.remarks
+		from p_order o 
+		left join t_patient p on  o.patient_id = p.id 
+		left join  t_disease td ON td.id = o.disease_id
+		where o.acStatus=1 and o.order_type != 2 and o.order_status != 1  
+		<if test="groupId != null">
+			and o.group_id=#{groupId}
+		</if>
+		<if test="orderStatus != null">
+			and o.order_status=#{orderStatus}
+		</if>
+		<if test="orderType != null">
+			and o.order_type=#{orderType}
+		</if>
+		<if test="packType != null">
+	        and o.pack_type=#{packType}
+	      </if>
+		<if test="startCreateTime != null" >
+	        and o.create_time &gt; #{startCreateTime,jdbcType=BIGINT}
+	    </if>
+	    <if test="endCreateTime != null">
+	      	and o.create_time &lt; #{endCreateTime,jdbcType=BIGINT}
+	    </if>
+		<if test="userIds !=null">
+			and (o.doctor_id in
+				<foreach collection="userIds" item="Item" open="(" close=")" separator="," >
+							#{Item}
+				</foreach> 
+					or o.user_id in
+				<foreach collection="userIds" item="ItemId" open="(" close=")" separator="," >
+							#{ItemId}
+				</foreach>
+    		)
+		</if>
+		<if test="patientIds !=null">
+			and  p.id in
+			<foreach collection="patientIds" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach> 
+		</if>
+		<if test="hospitalIds !=null">
+			and  o.hospital_id in
+			<foreach collection="hospitalIds" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach> 
+		</if>
+		order by o.create_time desc limit #{start},#{pageSize}
+  </select>
+  
+  <select id="getOrderListByMoreCondCount" resultType="Integer" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+	    select count(*)
+		from p_order o 
+		left join t_patient p on  o.patient_id = p.id 
+		left join  t_disease td ON td.id = o.disease_id
+		where o.acStatus=1 and o.order_type != 2 and o.order_status != 1  
+		<if test="groupId != null">
+			and o.group_id=#{groupId}
+		</if>
+		<if test="orderStatus != null">
+			and o.order_status=#{orderStatus}
+		</if>
+		<if test="orderType != null">
+			and o.order_type=#{orderType}
+		</if>
+		<if test="packType != null">
+	        and o.pack_type=#{packType}
+	    </if>
+		<if test="startCreateTime != null" >
+	        and o.create_time &gt; #{startCreateTime,jdbcType=BIGINT}
+	    </if>
+	    <if test="endCreateTime != null">
+	      	and o.create_time &lt; #{endCreateTime,jdbcType=BIGINT}
+	    </if>
+		<if test="userIds !=null">
+			and (o.doctor_id in
+				<foreach collection="userIds" item="Item" open="(" close=")" separator="," >
+							#{Item}
+				</foreach> 
+					or o.user_id in
+				<foreach collection="userIds" item="ItemId" open="(" close=")" separator="," >
+							#{ItemId}
+				</foreach>
+    		)
+		</if>
+		<if test="patientIds !=null">
+			and  p.id in
+			<foreach collection="patientIds" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach> 
+		</if>
+		<if test="hospitalIds !=null">
+			and  o.hospital_id in
+			<foreach collection="hospitalIds" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach> 
+		</if>
+	</select>
+	
+	<update id="clearOrderIllCaseInfo"
+			parameterType="map">
+		update p_order
+		set    illCaseInfo_id = null
+		where  illCaseInfo_id = #{illCaseInfoId}
+	</update>
+	
+	<select id="getByPackTypeAndTime" resultMap="orderMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		SELECT
+			o.id,
+			o.user_id, 
+			o.doctor_id, 
+			o.group_id,
+			o.pack_type, 
+			o.pack_id, 
+			o.price, 
+			o.create_time,
+			o.order_status, 
+			o.patient_id, 
+			o.disease_id,
+			o.order_type,
+			o.time_long,
+			o.order_no,
+			o.care_template_id,
+			o.follow_template_id,
+			o.remarks,
+			o.record_status,
+			o.cancel_from,
+			o.cancel_reason,
+			o.acStatus,
+			o.pay_type,
+			o.help_times,
+			o.illCaseInfo_id,
+			o.consultation_pack_id,
+			o.pay_time,
+			o.hospital_id,
+			p.name care_name,
+			o.care_template_id
+		FROM p_order o left Join p_pack p on p.id = o.pack_id
+      	WHERE o.pack_type = #{packType}
+      	AND o.create_time &gt;= #{startCreateTime}
+      	AND o.create_time &lt;= #{endCreateTime}
+      	ORDER BY o.create_time DESC
+	</select>
+	
+	<select id="getAppointmentListByCondition" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+  		select 
+  		o.id,
+  		o.doctor_id,
+  		o.order_type,
+  		o.pack_type,
+  		o.time_long,
+  		o.hospital_id,
+		o.price,
+		o.pack_id,
+		o.patient_id,
+		o.disease_id,
+		o.order_status,
+		o.refund_status,
+		o.create_time,
+		o.order_no,
+		o.user_id,
+		o.pay_time,
+		o.pay_type,
+		o.remarks,
+		p.user_name,
+		p.top_path,
+		p.telephone,
+		os.appoint_time,
+		os.service_begin_time,
+		os.service_end_time
+		from p_order o 
+		left join t_order_session os on os.order_id = o.id	
+		left join t_patient p on  o.patient_id = p.id 
+		where 1=1
+		<if test="groupId != null">
+			and o.group_id=#{groupId}
+		</if>
+		<if test="orderType != null">
+			and o.order_type=#{orderType}
+		</if>
+		<if test="oppointTime != null" >
+	        and os.appoint_time &gt;=#{oppointTime,jdbcType=BIGINT}
+	        and os.appoint_time &lt;#{oppointTime,jdbcType=BIGINT}+86400000
+	    </if>
+	    <if test="doctorId != null">
+			and o.doctor_id=#{doctorId}
+		</if>
+		<if test="hospitalId !=null">
+			and  o.hospital_id=#{hospitalId}
+		</if>
+		and o.order_status in 
+      	<foreach collection="orderStatusList" item="item" open="(" separator="," close=")">
+      		#{item}
+      	</foreach>
+		order by os.appoint_time ASC
+  </select>
+  
+  <select id="getHaveAppointmentListByDate" resultType="Integer" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+  		select count(*)
+		from p_order o 
+		left join t_order_session os on os.order_id = o.id	
+		left join t_patient p on  o.patient_id = p.id 
+		where 1=1
+		<if test="groupId != null">
+			and o.group_id=#{groupId}
+		</if>
+		<if test="orderType != null">
+			and o.order_type=#{orderType}
+		</if>
+		<if test="oppointTime != null" >
+	        and os.appoint_time &gt;=#{oppointTime,jdbcType=BIGINT}
+	        and os.appoint_time &lt;#{oppointTime,jdbcType=BIGINT}+86400000
+	    </if>
+	    <if test="doctorId != null">
+			and o.doctor_id=#{doctorId}
+		</if>
+		<if test="hospitalId !=null">
+			and  o.hospital_id=#{hospitalId}
+		</if>
+		and o.order_status in 
+      	<foreach collection="orderStatusList" item="item" open="(" separator="," close=")">
+      		#{item}
+      	</foreach>
+		order by os.appoint_time ASC
+  </select>
+	
+	<select id="getAppointmentPaidOrdersGroupByDoctorId"
+			parameterType="map"
+			resultType="java.util.HashMap">
+		select
+		   doctor_id as doctorId, 
+		   count(1) as count
+		from p_order
+		where pack_type = 9
+		and order_status in (3,4,6) 
+		and group_id = #{groupId}
+		and hospital_id = #{hospitalId}
+		and id in
+		<foreach collection="orderIds" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		group by doctor_id 
+	</select>
+	
+	
+	<select id="searchAppointmentOrder4Guide"
+			parameterType="map"
+			resultMap="orderVoMap">
+		SELECT
+			a.id,
+			a.user_id, 
+			a.doctor_id, 
+      		a.order_status, 
+      		a.patient_id,
+      		b.appoint_time,
+      		b.service_begin_time
+      	FROM p_order a
+      	join t_order_session b
+      	  on (a.id = b.order_id) 
+      	WHERE a.pack_type = 9
+      	AND a.patient_id in 
+      	<foreach collection="patientIds" item="item" open="(" separator="," close=")">
+      		#{item}
+      	</foreach>
+      	order by a.create_time desc
+      	limit #{pageSize}  offset #{offset}
+	</select>
+	
+	<select id="searchAppointmentOrder4GuideCount"
+			parameterType="map"
+			resultType="long">
+		SELECT
+			count(1)
+      	FROM p_order a
+      	join t_order_session b
+      	  on (a.id = b.order_id) 
+      	WHERE a.pack_type = 9
+      	AND a.patient_id in 
+      	<foreach collection="patientIds" item="item" open="(" separator="," close=")">
+      		#{item}
+      	</foreach>
+	</select>
+	
+	<select id="findOrdersForAssistant" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select o.id,
+			   o.doctor_id,
+			   o.order_type,
+			   o.pack_type,
+			   o.time_long,
+			   o.price,
+			   o.pack_id,
+			   o.patient_id,
+			   p.user_name ,
+			   p.sex,
+			   p.top_path,
+			   p.area,
+			   p.relation,
+			   p.birthday,
+			   p.telephone,
+			   o.disease_id,
+			   o.order_status,
+			   o.refund_status,
+			   o.create_time,
+			   o.order_no,
+			   o.user_id,
+			   o.pay_time,
+			   o.pay_type,
+			   o.remarks,
+			   o.assistant_id,
+			   pack.name,
+			   pack.point
+			from p_order o 
+			left join t_patient p on  o.patient_id = p.id 
+			left join p_pack pack on o.pack_id = pack.id
+			where o.pack_type IN (1,2,3,12)
+
+			<if test="assistantId != null">
+				and o.assistant_id=#{assistantId}
+			</if>
+			<if test="packType != null">
+				and o.pack_type=#{packType}
+			</if>
+			<if test="orderStatus != null">
+				and o.order_status=#{orderStatus}
+			</if>
+			<if test="doctorId != null">
+				and o.doctor_id=#{doctorId}
+			</if>
+			<if test="userId != null">
+				and o.user_id=#{userId}
+			</if>
+			<if test="patientId != null">
+				and o.patient_id=#{patientId}
+			</if>
+
+			<if test="orderIds != null">
+				and  o.id in
+				<foreach collection="orderIds" item="orderId" open="(" separator="," close=")">
+					#{orderId}
+				</foreach>
+			</if>
+			<if test="doctorIds != null">
+				and  o.doctor_id in
+				<foreach collection="doctorIds" item="doctorId" open="(" separator="," close=")">
+					#{doctorId}
+				</foreach>
+			</if>
+				
+			order by o.create_time desc limit #{start},#{pageSize}
+
+				
+			  
+	</select>
+
+	<select id="findOrdersForAssistantAll" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select o.id,
+		o.doctor_id,
+		o.order_type,
+		o.pack_type,
+		o.time_long,
+		o.price,
+		o.pack_id,
+		o.patient_id,
+		p.user_name ,
+		p.sex,
+		p.top_path,
+		p.area,
+		p.relation,
+		p.birthday,
+		p.telephone,
+		o.disease_id,
+		o.order_status,
+		o.refund_status,
+		o.create_time,
+		o.order_no,
+		o.user_id,
+		o.pay_time,
+		o.pay_type,
+		o.remarks,
+		o.assistant_id,
+		pack.name,
+		pack.point
+		from p_order o
+		left join t_patient p on  o.patient_id = p.id
+		left join p_pack pack on o.pack_id = pack.id
+		where o.pack_type IN (1,2,3,12)
+
+		<if test="assistantId != null">
+			and o.assistant_id=#{assistantId}
+		</if>
+		<if test="packType != null">
+			and o.pack_type=#{packType}
+		</if>
+		<if test="orderStatus != null">
+			and o.order_status=#{orderStatus}
+		</if>
+		<if test="doctorId != null">
+			and o.doctor_id=#{doctorId}
+		</if>
+		<if test="userId != null">
+			and o.user_id=#{userId}
+		</if>
+		<if test="patientId != null">
+			and o.patient_id=#{patientId}
+		</if>
+
+		<if test="orderIds != null">
+			and  o.id in
+			<foreach collection="orderIds" item="orderId" open="(" separator="," close=")">
+				#{orderId}
+			</foreach>
+		</if>
+		<if test="doctorIds != null">
+			and  o.doctor_id in
+			<foreach collection="doctorIds" item="doctorId" open="(" separator="," close=")">
+				#{doctorId}
+			</foreach>
+		</if>
+
+		order by o.create_time desc
+
+	</select>
+	
+	<select id="findOrdersForAssistantCount" resultType="Integer" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select count(*) 
+			from p_order o 
+			left join t_patient p on  o.patient_id = p.id
+			left join p_pack pack on o.pack_id = pack.id
+			where o.pack_type IN (1,2,3,12)
+			<if test="assistantId != null">
+				and o.assistant_id=#{assistantId}
+			</if>
+			<if test="packType != null">
+				and o.pack_type=#{packType}
+			</if>
+			<if test="orderStatus != null">
+				and o.order_status=#{orderStatus}
+			</if>
+			<if test="doctorId != null">
+				and o.doctor_id=#{doctorId}
+			</if>
+			<if test="userId != null">
+				and o.user_id=#{userId}
+			</if>
+			<if test="patientId != null">
+				and o.patient_id=#{patientId}
+			</if>
+
+			<if test="orderIds != null">
+				and  o.id in
+				<foreach collection="orderIds" item="orderId" open="(" separator="," close=")">
+					#{orderId}
+				</foreach>
+			</if>
+			<if test="doctorIds != null">
+				and  o.doctor_id in
+				<foreach collection="doctorIds" item="doctorId" open="(" separator="," close=")">
+					#{doctorId}
+				</foreach>
+			</if>
+
+	</select>
+
+	<select id="doctorAssistantQueryOrderById" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select o.id,
+		o.doctor_id,
+		o.order_type,
+		o.pack_type,
+		o.time_long,
+		o.price,
+		o.pack_id,
+		o.patient_id,
+		o.ill_historyInfo_id illHistoryInfoId,
+		o.assistantComment,
+		o.expect_appointment_ids,
+		p.user_name,
+		p.sex,
+		p.birthday,
+		p.top_path,
+		p.area,
+		p.relation,
+		p.telephone,
+		o.disease_id,
+		o.order_status,
+		o.refund_status,
+		o.create_time,
+		o.order_no,
+		o.user_id,
+		o.pay_time,
+		o.pay_type,
+		o.remarks,
+		o.assistant_id,
+		pack.name,
+		pack.point
+		from p_order o
+		left join t_patient p on  o.patient_id = p.id
+		left join p_pack pack on o.pack_id = pack.id
+		where o.pack_type IN (1,2,3,12)
+		and o.id=#{orderId}
+	</select>
+	
+	<update id="updateAssistantComment" parameterType="map">
+		update p_order set assistantComment=#{assistantComment} where id=#{orderId}
+	</update>
+	<select id="queryOrders" resultMap="orderVoMap" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select o.id,
+			   o.doctor_id,
+			   o.order_type,
+			   o.pack_type,
+			   o.time_long,
+			   o.price,
+			   o.pack_id,
+			   o.patient_id,
+			   p.user_name,
+			   p.sex,
+			   p.top_path,
+			   p.birthday,
+			   p.telephone,
+			   o.disease_id,
+			   o.order_status,
+			   o.refund_status,
+			   o.create_time,
+			   o.order_no,
+			   o.user_id,
+			   o.pay_time,
+			   o.pay_type,
+			   o.remarks,
+			   o.assistant_id
+			from p_order o 
+			left join t_patient p on  o.patient_id = p.id 
+			where o.pack_type NOT IN (9,10)
+				<if test="orderNo != null">
+					 and o.order_no=#{orderNo}
+				</if>
+				<if test="groupId != null">
+					 and o.group_id=#{groupId}
+				</if>
+				<if test="startCreateTime != null">
+					 and o.create_time &gt;=#{startCreateTime}
+				</if>
+				<if test="endCreateTime != null">
+					 and o.create_time &lt;=#{endCreateTime}
+				</if>
+				<if test="patientName != null">
+					 and p.user_name LIKE '%#{patientName}%'
+				</if>
+				<if test="telephone != null">
+					 and (o.user_id in
+					<foreach collection="userIds" item="item" open="(" separator="," close=")">
+						#{item}
+					</foreach> 
+					or o.doctor_id in
+					<foreach collection="userIds" item="item" open="(" separator="," close=")">
+						#{item}
+					</foreach> 
+					or p.telephone=#{telephone}
+					 )
+				</if>
+				<if test="doctorName != null">
+					 and  o.doctor_id in
+					<foreach collection="userIds" item="item" open="(" separator="," close=")">
+						#{item}
+					</foreach> 
+				</if>
+				<if test="userName != null">
+					 and  o.user_id in
+					<foreach collection="userIds" item="item" open="(" separator="," close=")">
+						#{item}
+					</foreach>
+				</if>
+				
+				<if test="packType != null">
+					 and o.pack_type=#{packType}
+				</if>
+				<if test="orderStatus != null">
+					and o.order_status=#{orderStatus}
+				</if>
+				order by o.create_time desc limit #{start},#{pageSize}
+	</select>
+	
+	<select id="queryOrdersCount" resultType="Integer" parameterType="com.dachen.health.pack.order.entity.param.OrderParam">
+		select count(*) 
+			from p_order o 
+			left join t_patient p on  o.patient_id = p.id 
+			left join  t_disease td ON td.id = o.disease_id
+			where o.pack_type NOT IN (9,10)
+				<if test="orderNo != null">
+					 and o.order_no=#{orderNo}
+				</if>
+				<if test="groupId != null">
+					 and o.group_id=#{groupId}
+				</if>
+				<if test="startCreateTime != null">
+					 and o.create_time &gt;=#{startCreateTime}
+				</if>
+				<if test="endCreateTime != null">
+					 and o.create_time &lt;=#{endCreateTime}
+				</if>
+				<if test="patientName != null">
+					 and p.user_name LIKE '%#{patientName}%'
+				</if>
+				<if test="telephone != null">
+					 and (o.user_id in
+					<foreach collection="userIds" item="item" open="(" separator="," close=")">
+						#{item}
+					</foreach> 
+					or o.doctor_id in
+					<foreach collection="userIds" item="item" open="(" separator="," close=")">
+						#{item}
+					</foreach> 
+					or p.telephone=#{telephone}
+					 )
+				</if>
+				<if test="doctorName != null">
+					 and  o.doctor_id in
+					<foreach collection="userIds" item="item" open="(" separator="," close=")">
+						#{item}
+					</foreach> 
+				</if>
+				<if test="userName != null">
+					 and  o.user_id in
+					<foreach collection="userIds" item="item" open="(" separator="," close=")">
+						#{item}
+					</foreach>
+				</if>
+				
+				<if test="packType != null">
+					 and o.pack_type=#{packType}
+				</if>
+				<if test="orderStatus != null">
+					and o.order_status=#{orderStatus}
+				</if>
+	</select>
+	
+	<select id="getOngoingCareOrderByPatient"
+			parameterType="map"
+			resultMap="orderVoMap" >
+		select *
+	  	from p_order
+	  	where patient_id = #{patientId} 
+	  	and pack_id = #{packId}
+	  	and pack_type = #{packType}
+	  	and (order_status=2 or order_status=3)
+	  	order by id
+	  	limit 0,1
+	</select>
+
+	<update id="updateExpectAppointmentIds" parameterType="map">
+		UPDATE p_order
+		set expect_appointment_ids = #{expectAppointmentIds}
+		WHERE id = #{orderId}
+	</update>
+
+	<select id="findAllCareOrder" resultMap="orderMap">
+		select id,
+			user_id,
+			doctor_id,
+			group_id,
+      		pack_type,
+      		pack_id,
+      		price,
+      		create_time,
+      		order_status,
+      		patient_id,
+      		disease_id,
+      		order_type,
+      		time_long,
+      		order_no,
+      		care_template_id,
+      		follow_template_id,
+      		remarks,
+      		record_status,
+      		cancel_from,
+      		cancel_reason,
+      		acStatus
+      	from p_order
+      	where pack_type in (3,4)
+      	and   order_status not in (1,2,10)
+	</select>
+	
+	<update id="updateOrderDocAssitant" parameterType="map">
+		UPDATE p_order
+		set assistant_id = #{newAssistantId}
+		WHERE doctor_id = #{param.doctorId}
+		<if test="param.assistantId != null">
+			and assistant_id = #{param.assistantId}
+		</if>
+	</update>
+	
+	<select id="getConsultationTimesByDocIdAndGroupId" parameterType="map" resultType="java.util.HashMap">
+		SELECT  consultation_pack_id as consultationId,count(consultation_pack_id) as times  from p_order 
+		WHERE doctor_id = #{docId} 
+		AND consultation_pack_id is not null 
+		<![CDATA[
+        	AND consultation_pack_id <> ''
+        ]]>
+		<if test="groupId != null">
+			AND group_id = #{groupId}
+		</if>
+		GROUP BY consultationId
+		ORDER BY times desc
+	</select>
+</mapper>

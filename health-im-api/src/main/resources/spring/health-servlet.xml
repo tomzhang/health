@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	
+	<mvc:annotation-driven >
+		<mvc:message-converters>
+			<ref bean="jsonConverter" />
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<context:component-scan base-package="com.dachen,com.tls.sigcheck">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+	</context:component-scan>
+	
+	<!-- json转换器 -->
+	<bean id="jsonConverter" class="com.dachen.commons.support.spring.convert.MappingFastjsonHttpMessageConverter">  
+	    <property name="supportedMediaTypes" value="application/json" />  
+	    <property name="serializerFeatures">  
+	        <array>  
+	            <value>QuoteFieldNames</value>  
+	            <value>DisableCircularReferenceDetect</value>
+	        </array>  
+	    </property>  
+	</bean>
+	
+	<!--<mvc:interceptors>-->
+		<!--<mvc:interceptor>-->
+			<!--<mvc:mapping path="/**" />-->
+			<!--<mvc:exclude-mapping path="/user/register" />-->
+			<!--<mvc:exclude-mapping path="/user/registerByWechat" />-->
+			<!--<mvc:exclude-mapping path="/user/registerImUser" />-->
+			<!--<mvc:exclude-mapping path="/user/registerGroup" />-->
+			<!--<mvc:exclude-mapping path="/user/login" />-->
+			<!--<mvc:exclude-mapping path="/user/loginByCode" />-->
+			<!--<mvc:exclude-mapping path="/user/loginByCaptcha" />-->
+			<!--<mvc:exclude-mapping path="/user/loginByWeChat" />-->
+			<!--<mvc:exclude-mapping path="/user/loginByWeChat4MP" />-->
+			<!--<mvc:exclude-mapping path="/user/login/auto" />-->
+			<!--<mvc:exclude-mapping path="/user/loginBuyCareOrder" />-->
+			<!--<mvc:exclude-mapping path="/user/get" />-->
+			<!--<mvc:exclude-mapping path="/user/password/reset" />-->
+			<!--<mvc:exclude-mapping path="/user/resetPhoneAndPassword" />-->
+			<!--<mvc:exclude-mapping path="/user/password/update" />-->
+			<!--<mvc:exclude-mapping path="/user/getWeChatStatus" />-->
+			<!--<mvc:exclude-mapping path="/user/getWeChatStatus4MP" />-->
+			<!--<mvc:exclude-mapping path="/user/isBindWechat" />-->
+			<!--<mvc:exclude-mapping path="/sms/randcode/getSMSCode" />-->
+			<!--<mvc:exclude-mapping path="/sms/randcode/getVoiceCode" />-->
+			<!--<mvc:exclude-mapping path="/sms/randcode/verifyCode" />-->
+			<!--<mvc:exclude-mapping path="/conference/endCall" />-->
+			<!--<mvc:exclude-mapping path="/sms/verify/telephone" />-->
+			<!--<mvc:exclude-mapping path="/sms/verify/isJoinHospital" />-->
+			<!--<mvc:exclude-mapping path="/b/circle/msg/hot" />-->
+			<!--<mvc:exclude-mapping path="/b/circle/msg/latest" />-->
+			<!--<mvc:exclude-mapping path="/b/circle/msg/get" />-->
+			<!--<mvc:exclude-mapping path="/b/circle/msg/comment/list" />-->
+			<!--<mvc:exclude-mapping path="/b/circle/msg/square" />-->
+			<!--<mvc:exclude-mapping path="/config" />-->
+			<!--<mvc:exclude-mapping path="/getQiniuToken" />-->
+			<!--<mvc:exclude-mapping path="/qr/scanning" />-->
+			<!--<mvc:exclude-mapping path="/qr/generateScan" />-->
+			<!--<mvc:exclude-mapping path="/qr/circleQrcodeScan" />-->
+			<!--<mvc:exclude-mapping path="/qr/wxQrScanning" />-->
+			<!--<mvc:exclude-mapping path="/user/preResetPassword" />-->
+			<!--<mvc:exclude-mapping path="/user/preResetPasswordVoiceCode" />-->
+			<!--<mvc:exclude-mapping path="/user/sendRanCode" />-->
+			<!--<mvc:exclude-mapping path="/user/verifyResetPassword" />-->
+			<!--<mvc:exclude-mapping path="/user/resetPassword" />-->
+			<!--<mvc:exclude-mapping path="/user/findSmsCodeById" />-->
+			<!--<mvc:exclude-mapping path="/base/*" />-->
+			<!--<mvc:exclude-mapping path="/monitor/*" />-->
+			<!--<mvc:exclude-mapping path="/company/registerCompany" />-->
+			<!--<mvc:exclude-mapping path="/pack/order/submitCareOrder" />-->
+			<!--&lt;!&ndash; 服务号：web端使用 &ndash;&gt;-->
+			<!--<mvc:exclude-mapping path="/pack/carePlan/findDoctorGroupByPackId" />-->
+			<!--<mvc:exclude-mapping path="/pack/pack/findDoctorGroupByPackId" />-->
+			<!--<mvc:exclude-mapping path="/pack/order/getAppointmentOrder4H5" />-->
+
+			<!--<mvc:exclude-mapping path="/voip/endCall" />-->
+			<!--<mvc:exclude-mapping path="/pack/paynotify/alipaycallback" />-->
+			<!--<mvc:exclude-mapping path="/pack/paynotify/wxpaycallback" />-->
+			<!--<mvc:exclude-mapping path="/pack/refundnotify/alipaycallback" />-->
+			<!--<mvc:exclude-mapping path="/wx/*" />-->
+
+			<!--<mvc:exclude-mapping path="/groupSearch/findAllDoctor" />-->
+
+			<!--&lt;!&ndash; 健康关怀 &ndash;&gt;-->
+			<!--<mvc:exclude-mapping path="/pack/carePlan/findCarePlanInfo"/>-->
+			<!--&lt;!&ndash; 医生集团 H5页面&ndash;&gt;-->
+			<!--<mvc:exclude-mapping path="/company/user/confirmByCompany" />-->
+			<!--<mvc:exclude-mapping path="/group/user/confirmByJoin" />-->
+			<!--<mvc:exclude-mapping path="/group/doctor/getInviteGroupDoctors" />-->
+			<!--<mvc:exclude-mapping path="/group/doctor/saveCompleteByGroupDoctor" />-->
+			<!--<mvc:exclude-mapping path="/company/user/companyLogin" />-->
+			<!--<mvc:exclude-mapping path="/group/user/getInviteStatus" />-->
+
+			<!--<mvc:exclude-mapping path="/group/hospital/getGroupHospitalByTelephone" />-->
+			<!--<mvc:exclude-mapping path="/group/hospital/confirmByRegisterJoin" />-->
+			<!--<mvc:exclude-mapping path="/group/hospital/confirmByJoin" />-->
+			<!--<mvc:exclude-mapping path="/group/hospital/completeJoinHospital" />-->
+			<!--<mvc:exclude-mapping path="/group/hospital/updateUnauthUserMessage" />-->
+
+			<!--<mvc:exclude-mapping path="/base/getDepts" />-->
+			<!--<mvc:exclude-mapping path="/base/getTitles" />-->
+			<!--&lt;!&ndash; 内部apid &ndash;&gt;-->
+			<!--<mvc:exclude-mapping path="/inner_api/**" />-->
+			<!--&lt;!&ndash; 数据同步接口开始 &ndash;&gt;-->
+			<!--<mvc:exclude-mapping path="/drugEnterprise/addEnterPriseInfo" />-->
+			<!--<mvc:exclude-mapping path="/drugEnterprise/deleteEnterPriseInfo" />-->
+			<!--<mvc:exclude-mapping path="/drugEnterprise/addGoodsInfo" />-->
+			<!--<mvc:exclude-mapping path="/drugEnterprise/deleteGoodsInfo" />-->
+			<!--&lt;!&ndash; 数据同步接口结束 &ndash;&gt;-->
+			<!--<mvc:exclude-mapping path="/inner/pub/getPubGroups" />-->
+            <!--<mvc:exclude-mapping path="/inner/pub/getPubs" />-->
+            <!--<mvc:exclude-mapping path="/inner/pub/sendMsg" />-->
+			<!--&lt;!&ndash; 临时 &ndash;&gt;-->
+			<!--<mvc:exclude-mapping path="/pub/sendMsg" />-->
+
+			<!--<mvc:exclude-mapping path="/common/getServerTime" />-->
+			<!--&lt;!&ndash; 游客访问登录 &ndash;&gt;-->
+			<!--<mvc:exclude-mapping path="/user/getGuestToken"/>-->
+			<!--<mvc:exclude-mapping path="/groupSearch/findOrderDoctor" />-->
+			<!--<mvc:exclude-mapping path="/groupSearch/getDoctorsByPackType" />-->
+			<!--<mvc:exclude-mapping path="/groupSearch/findAllGroup" />-->
+			<!--<mvc:exclude-mapping path="/groupSearch/findRecommDisease" />-->
+			<!--<mvc:exclude-mapping path="/groupSearch/findGroupBaseInfo" />-->
+			<!--<mvc:exclude-mapping path="/groupSearch/findDoctorByGroupForPatient" />-->
+			<!--<mvc:exclude-mapping path="/groupSearch/getDoctorsByDiseaseId" />-->
+			<!--<mvc:exclude-mapping path="/doctor/basicInfo" />-->
+			<!--<mvc:exclude-mapping path="/doctor/getIntro" />-->
+			<!--<mvc:exclude-mapping path="/pack/pack/query" />-->
+			<!--<mvc:exclude-mapping path="/pack/evaluate/getTopSix" />-->
+			<!--<mvc:exclude-mapping path="/pack/evaluate/getEvaluationDetail" />-->
+			<!--<mvc:exclude-mapping path="/base/getOneLevelDisease" />-->
+			<!--<mvc:exclude-mapping path="/groupSearch/findDoctorByDisease" />-->
+			<!--<mvc:exclude-mapping path="/groupSearch/findDoctoreByKeyWord" />-->
+			<!--<mvc:exclude-mapping path="/pack/order/findOrderSchedule" />-->
+			<!--<mvc:exclude-mapping path="/pack/carePlan/queryCarePlanByOne" />-->
+			<!--<mvc:exclude-mapping path="/appService/getVersion" />-->
+
+			<!--<mvc:exclude-mapping path="/knowledge/getGroupMedicalKnowledgeList" />-->
+			<!--<mvc:exclude-mapping path="/dynamic/getGroupAndDoctorDynamicListByGroupId" />-->
+			<!--<mvc:exclude-mapping path="/group/getGroupExistRegion" />-->
+			<!--<mvc:exclude-mapping path="/groupSearch/getDeptsWithDoc" />-->
+			<!--<mvc:exclude-mapping path="/groupSearch/findDoctorByGroupForPatient" />-->
+			<!--<mvc:exclude-mapping path="/groupSearch/findGroupByKeyWord" />-->
+			<!--<mvc:exclude-mapping path="/dynamic/getDoctorDynamicListByDoctorId" />-->
+
+
+
+			<!--&lt;!&ndash; 推荐信息 &ndash;&gt;-->
+			<!--<mvc:exclude-mapping path="/group/getGroupRecommendedList" />-->
+			<!--<mvc:exclude-mapping path="/diseaseType/getCommonDiseases" />-->
+			<!--<mvc:exclude-mapping path="/diseaseType/findByKeyword" />-->
+			<!--<mvc:exclude-mapping path="/diseaseType/findById" />-->
+			<!--<mvc:exclude-mapping path="/recommend/getRecommendDocList" />-->
+			<!--<mvc:exclude-mapping path="/document/getDocumentList" />-->
+			<!--<mvc:exclude-mapping path="/integralDoctor/getIntegralDoctorList" />-->
+
+			<!--&lt;!&ndash; 系统数据修复 &ndash;&gt;-->
+			<!--<mvc:exclude-mapping path="/upatedate/**"/>-->
+			<!--<mvc:exclude-mapping path="/vpanfile/queryFile"/>-->
+			<!--&lt;!&ndash; 附近医生 &ndash;&gt;-->
+			<!--<mvc:exclude-mapping path="/geoNear/findDoctorByLocation"/>-->
+			<!--<mvc:exclude-mapping path="/geoNear/findDoctorByCondition"/>-->
+			<!--<mvc:exclude-mapping path="/geoNear/getAllGeoDepts"/>-->
+
+			<!--<mvc:exclude-mapping path="/wx/feedback/saveFeedback"/>-->
+
+			<!--<mvc:exclude-mapping path="/vpanfile/getUploadToken"/>-->
+
+			<!--<bean class="com.dachen.health.common.filter.LoggerInterceptor"/>-->
+		<!--</mvc:interceptor>-->
+
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**" />-->
+            <!--<bean class="com.dachen.health.common.filter.VersionInterceptor"/>-->
+        <!--</mvc:interceptor>-->
+
+	<!--</mvc:interceptors>-->
+</beans>

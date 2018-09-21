@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.pack.mapper.PackDoctorMapper" >
+  <resultMap id="BaseResultMap" type="com.dachen.health.pack.pack.entity.po.PackDoctor" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pack_id" property="packId" jdbcType="INTEGER" />
+    <result column="doctor_id" property="doctorId" jdbcType="INTEGER" />
+    <result column="split_ratio" property="splitRatio" jdbcType="INTEGER" />
+    <result column="receive_remind" property="receiveRemind" jdbcType="INTEGER" />
+  </resultMap>
+  
+   <resultMap id="GroupResultMap" type="com.dachen.health.pack.pack.entity.po.PackDoctorGroup" >
+    <result column="pack_id" property="packId" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, pack_id, doctor_id, split_ratio, receive_remind
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.pack.entity.po.PackDoctorExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from p_pack_doctor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from p_pack_doctor
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from p_pack_doctor
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dachen.health.pack.pack.entity.po.PackDoctorExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from p_pack_doctor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dachen.health.pack.pack.entity.po.PackDoctor" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into p_pack_doctor (id, pack_id, doctor_id, 
+      split_ratio, receive_remind)
+    values (#{id,jdbcType=INTEGER}, #{packId,jdbcType=INTEGER}, #{doctorId,jdbcType=INTEGER}, 
+      #{splitRatio,jdbcType=INTEGER},#{receiveRemind,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dachen.health.pack.pack.entity.po.PackDoctor" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into p_pack_doctor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="packId != null" >
+        pack_id,
+      </if>
+      <if test="doctorId != null" >
+        doctor_id,
+      </if>
+      <if test="splitRatio != null" >
+        split_ratio,
+      </if>
+      <if test="receiveRemind != null" >
+        receive_remind,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="packId != null" >
+        #{packId,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null" >
+        #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="splitRatio != null" >
+        #{splitRatio,jdbcType=INTEGER},
+      </if>
+      <if test="receiveRemind != null" >
+        #{receiveRemind,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dachen.health.pack.pack.entity.po.PackDoctorExample" resultType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from p_pack_doctor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update p_pack_doctor
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.packId != null" >
+        pack_id = #{record.packId,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctorId != null" >
+        doctor_id = #{record.doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.splitRatio != null" >
+        split_ratio = #{record.splitRatio,jdbcType=INTEGER},
+      </if>
+      <if test="record.receiveRemind != null" >
+        receive_remind = #{record.receiveRemind,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update p_pack_doctor
+    set id = #{record.id,jdbcType=INTEGER},
+      pack_id = #{record.packId,jdbcType=INTEGER},
+      doctor_id = #{record.doctorId,jdbcType=INTEGER},
+      split_ratio = #{record.splitRatio,jdbcType=INTEGER},
+      receive_remind = #{record.receiveRemind,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dachen.health.pack.pack.entity.po.PackDoctor" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update p_pack_doctor
+    <set >
+      <if test="packId != null" >
+        pack_id = #{packId,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null" >
+        doctor_id = #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="splitRatio != null" >
+        split_ratio = #{splitRatio,jdbcType=INTEGER},
+      </if>
+      <if test="receiveRemind != null" >
+        receive_remind = #{receiveRemind,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dachen.health.pack.pack.entity.po.PackDoctor" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update p_pack_doctor
+    set pack_id = #{packId,jdbcType=INTEGER},
+      doctor_id = #{doctorId,jdbcType=INTEGER},
+      split_ratio = #{splitRatio,jdbcType=INTEGER},
+      receive_remind = #{receiveRemind,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="groupByExample" parameterType="com.dachen.health.pack.pack.entity.po.PackDoctorExample" resultType="com.dachen.health.pack.pack.entity.po.PackDoctorGroup" >
+   SELECT pack_id packId,COUNT(*) count FROM p_pack_doctor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    GROUP BY pack_id
+  </select>
+
+  <select id="getDoctorByGoodsGroupId" resultType="java.lang.Integer" parameterType="list">
+    SELECT
+    p.doctor_id
+    FROM
+    p_pack p
+    WHERE
+    p.pack_type = 12
+    AND p.`status` = 1
+    AND p.goods_group_id IN
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
+  
+</mapper>

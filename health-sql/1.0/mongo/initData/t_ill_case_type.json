@@ -1,0 +1,136 @@
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfd7"), 
+    "typeName" : "主诉", 
+    "typeOrder" : 1.0, 
+    "categoryId" : NumberInt(1), 
+    "dataType" : NumberInt(1), 
+    "required" : true
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfd8"), 
+    "typeName" : "现病史", 
+    "typeOrder" : 3.0, 
+    "categoryId" : NumberInt(1), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfd9"), 
+    "typeName" : "既往史", 
+    "typeOrder" : 4.0, 
+    "categoryId" : NumberInt(1), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfda"), 
+    "typeName" : "家族史", 
+    "typeOrder" : 5.0, 
+    "categoryId" : NumberInt(1), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfdb"), 
+    "typeName" : "月经生育史", 
+    "typeOrder" : 6.0, 
+    "categoryId" : NumberInt(1), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfdc"), 
+    "typeName" : "就诊时间", 
+    "typeOrder" : 7.0, 
+    "categoryId" : NumberInt(1), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfdd"), 
+    "typeName" : "首诊", 
+    "typeOrder" : 1.0, 
+    "categoryId" : NumberInt(2), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfde"), 
+    "typeName" : "复诊", 
+    "typeOrder" : 2.0, 
+    "categoryId" : NumberInt(2), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfdf"), 
+    "typeName" : "手术", 
+    "typeOrder" : 3.0, 
+    "categoryId" : NumberInt(2), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfe0"), 
+    "typeName" : "住院", 
+    "typeOrder" : 4.0, 
+    "categoryId" : NumberInt(2), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfe1"), 
+    "typeName" : "出院", 
+    "typeOrder" : 5.0, 
+    "categoryId" : NumberInt(2), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfe2"), 
+    "typeName" : "会诊", 
+    "typeOrder" : 6.0, 
+    "categoryId" : NumberInt(2), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfe3"), 
+    "typeName" : "体格检查/专科检查", 
+    "typeOrder" : 7.0, 
+    "categoryId" : NumberInt(2), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfe4"), 
+    "typeName" : "实验室（化验报告）", 
+    "typeOrder" : 8.0, 
+    "categoryId" : NumberInt(2), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfe5"), 
+    "typeName" : "实验室（病历图片）", 
+    "typeOrder" : 9.0, 
+    "categoryId" : NumberInt(2), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a32411e1e8a01658d5dfe6"), 
+    "typeName" : "实验室（影像资料）", 
+    "typeOrder" : 10.0, 
+    "categoryId" : NumberInt(2), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}
+{ 
+    "_id" : ObjectId("56a74620d945cbaca0672abb"), 
+    "typeName" : "诊治情况", 
+    "typeOrder" : 2.0, 
+    "categoryId" : NumberInt(1), 
+    "dataType" : NumberInt(1), 
+    "required" : false
+}

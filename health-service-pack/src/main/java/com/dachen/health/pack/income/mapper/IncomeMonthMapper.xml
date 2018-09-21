@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.income.mapper.IncomeMonthMapper">
+	<resultMap id="incomeMonthMap" type="com.dachen.health.pack.income.entity.vo.IncomeMonthVO">
+		<result column="doctor_id" property="doctorId" />
+		<result column="month" property="month" />
+		<result column="money" property="money" />
+	</resultMap>
+
+	<!-- 获取医生月收入统计 -->
+	<select id="getIncomeMonth" parameterType="Integer" resultMap="incomeMonthMap">
+		select im.month,im.money from t_income_month im where im.doctor_id = #{doctorId} order by im.month desc
+	</select>
+
+</mapper>

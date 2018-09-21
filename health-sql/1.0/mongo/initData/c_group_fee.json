@@ -1,0 +1,1 @@
+db.c_group_fee.insert({"_id":ObjectId("888888888888888888888888"),"groupId":"666666666666666666666666","phoneMax":100000,"phoneMin":0,"carePlanMax":10000000,"carePlanMin":0});

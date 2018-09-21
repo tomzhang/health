@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${title}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <style type="text/css">
+        ::-webkit-scrollbar {
+            width: 1px;
+            margin-right: 2px
+        }
+        * {
+        	max-width: 100% !important;
+        	box-sizing: border-box;
+    	}
+        .btn-close {
+            position: absolute;
+            top: -11px;
+            right: -11px;
+        }
+        .ipod-header {
+            width: 100%;
+        }
+        body,html{
+        	padding:0;
+        	margin: 0;
+        }
+        .container {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            width: 100%;
+            min-height: 500px;
+            overflow: auto;
+
+            word-wrap: break-word;
+        }
+        .container>.title {
+            color: #333333;
+            font-size: 22px;
+            font-weight: bold;
+            padding: 0 10px;
+        }
+        .container>.disease>.tag {
+            display: inline-block;
+            background-color: #f8f8f8;
+            border: 1px solid #888888;
+            border-radius: 12px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            padding: 2px 6px;
+            color: #888888;
+            font-size: 12px;
+        }
+        .container>.a-t {
+            font-size: 14px;
+            color: #888888;
+            margin-top: 10px;
+            text-indent: 10px;
+        }
+        .container>.a-t>.author {
+            margin-left: 20px;
+        }
+        .container>.summary {
+            border-left: 3px solid #CCCCCC;
+            padding-left: 10px;
+            margin-top: 10px;
+            font-size: 14px;
+            line-height: 150%;
+            color: #888888;
+        }
+        .container >.font-img {
+            max-width: 100%;
+            margin: 10px 0 0;
+        }
+        .container >.article {
+            color: #333333;
+            font-size: 14px;
+            margin-top: 10px;
+            line-height: 150%;
+            padding: 0 10px;
+        }
+        .article img {
+            max-width: 100% !important;
+        }
+        .footer{
+        	background-color: #000;
+        	height: 60px;
+        	position: fixed;
+        	bottom: 0;
+        	opacity: .8;
+        	width: 100%;
+        	text-align: center;
+        }
+        .footer a{
+        	text-decoration: none;
+        	color:#fff;
+        	line-height: 60px;
+
+        }
+        @media (min-width: 992px) {
+            .container{
+                width: 900px;
+                margin-left: auto;
+                margin-right: auto;
+                padding:10px;
+            }
+            .container>.title{
+                font-weight: bold;
+            }
+
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="title">${title}</h1>
+    <div class="a-t">
+        <span>${publishTime}</span>
+    </div>
+    <div class="article">
+        <#if picUrl??><img src="${picUrl}" id="imgContent" /><br/></#if>
+        <div>
+            <#noescape>${content}</#noescape>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+        (function(){
+            var i =document.getElementById('imgContent');
+            if(i.src==''){
+                i.style.display='none';
+            }
+        })()
+    </script>
+</body>
+</html>

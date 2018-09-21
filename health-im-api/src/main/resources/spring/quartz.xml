@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+	<!-- 方式二：使用MethodInvokingJobDetailFactoryBean，任务类可以不实现Job接口，通过targetMethod指定调用方法 -->
+	
+	<!-- 定义调用对象和调用对象的方法 -->  
+	<!-- 订单自动关闭配置 -->
+	<bean id="SpringQtzJobMethod"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="orderServiceImpl" />
+		</property>
+		<property name="targetMethod">  <!-- 要执行的方法名称 -->
+			<value>checkAndAutoClose</value>
+		</property>
+	</bean>
+    
+	<bean id="groupDoctorServiceImpl_autoResetDuration"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="groupDoctorServiceImpl" />
+		</property>
+		<property name="targetMethod">  <!-- 要执行的方法名称 -->
+			<value>autoResetDuration</value>
+		</property>
+	</bean>
+	
+	<!-- start 检查所有超期的没有发送提醒的订单发送自动超期提醒，每隔5分钟处理一次 -->
+	<bean id="pollingService_sendOvertimeMsg"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="PollingServiceImpl" />
+		</property>
+		<property name="targetMethod">  <!-- 要执行的方法名称 -->
+			<value>sendOvertimeMsg</value>
+		</property>
+	</bean>
+	
+	<!-- 根据p_care_plan自动定期发送关怀计划、随访等start -->
+	<!-- 关怀计划的计划任务已迁移到careplan服务
+	<bean id="orderCareItemServiceImpl_autoSendHealthCare"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="healthCareItemServiceImpl" />
+		</property>
+		<property name="targetMethod">
+			<value>autoSendCareItem</value>
+		</property>
+	</bean>
+	 -->
+	
+	<!-- 扫描发送日程提醒start -->
+	<bean id="scheduleServiceImpl_scheduleRemind"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="scheduleServiceImpl" />
+		</property>
+		<property name="targetMethod"> 
+			<value>scheduleRemind</value>
+		</property>
+	</bean>
+	
+	
+	<!-- 扫描发送预约名医日程提醒start -->
+	<bean id="scheduleServiceImpl_scheduleAppointment"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="scheduleServiceImpl" />
+		</property>
+		<property name="targetMethod"> 
+			<value>scheduleAppointment</value>
+		</property>
+	</bean>
+	
+	<!-- 扫描发送咨询记录提醒通知 -->
+	<bean id="sendNoConsultNotice_autoSendSchedule"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="callRecordServiceImpl" />
+		</property>
+		<property name="targetMethod">  <!-- 要执行的方法名称 -->
+			<value>sendNoConsultNotice</value>
+		</property>
+	</bean>
+	
+	<!-- 会诊套餐定时任务 start -->
+	<bean id="consultation_task_day9" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="consultationPackTask" />
+		</property>
+		<property name="targetMethod">  
+			<value>day9PointTask</value>
+		</property>
+	</bean>
+	<!-- end 会诊套餐定时任务  -->
+	
+	<!-- 集团权重更新  start -->
+	<bean id="groupWeightUpdate" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="groupTimerTask" />
+		</property>
+		<property name="targetMethod">
+			<value>setGroupWeightEachDay</value>
+		</property>
+	</bean>
+	<!-- 集团权重更新   end-->
+	
+	<!-- 自动转存  start -->
+	<bean id="auto_settleNew" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="incomelogServiceImpl" />
+		</property>
+		<property name="targetMethod">
+			<value>autoSettleNew</value>
+		</property>
+	</bean>
+	<!-- 自动转存  end -->
+	
+	<!-- 自动审核  start -->
+	<bean id="auto_check" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="userTimerTask" />
+		</property>
+		<property name="targetMethod">
+			<value>autoCheck</value>
+		</property>
+	</bean>
+	<!-- 自动审核  end -->
+
+	<!-- ======================== 调度工厂 ======================== -->
+	<bean id="SpringJobSchedulerFactoryBean"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+			     <!-- 定义触发时间 -->  
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="SpringQtzJobMethod"></property>
+					<property name="cronExpression" value="0 0 0,1 * * ?"></property><!-- 每六十分 -->
+				</bean>
+				
+				<!-- 关怀计划的计划任务已迁移到careplan服务
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="orderCareItemServiceImpl_autoSendHealthCare"></property>
+					<property name="cronExpression" value="0 0/30 * * * ?"></property>
+				</bean>
+				 -->
+				
+				<!-- <bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+					<property name="jobDetail" ref="pollingService_sendOvertimeMsg" ></property> 
+					<property name="cronExpression" value="0 0/5 * * * ?"></property>每5分 </bean> -->
+			
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="scheduleServiceImpl_scheduleRemind"></property>
+					<property name="cronExpression" value="0 20,50 * * * ?"></property><!-- 每个小时的第20分钟，第50分钟执行 -->
+				</bean>
+				
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="scheduleServiceImpl_scheduleAppointment"></property>
+					<property name="cronExpression" value="0 0/30 * * * ?"></property><!-- 每三十分钟执行 -->
+				</bean>
+				
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="groupDoctorServiceImpl_autoResetDuration" />
+					<property name="cronExpression" value="0 0 0 1 * ?"></property><!-- 每六十秒 -->
+				</bean>
+				
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="sendNoConsultNotice_autoSendSchedule"></property>
+					<!-- 每1小时 -->
+					<property name="cronExpression" value="0 0 0/1 * * ?"></property>
+					<!-- 每六十秒 -->
+					<!-- <property name="cronExpression" value="*/10 * * * * ?"></property> -->
+				</bean>
+			 
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="consultation_task_day9"/>
+					<property name="cronExpression" value="0 0 9 * * ? *"/><!--  -->
+				</bean>
+	
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="groupWeightUpdate"/>
+					<property name="cronExpression" value="0 0 2 * * ? *"/>
+				</bean>
+				
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="auto_settleNew" />
+					<property name="cronExpression" value="0 0 0/1 * * ?"></property>
+				</bean>
+				
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="auto_check" />
+					<property name="cronExpression" value="0 0/2 * * * ?"></property><!-- 每两分钟执行 -->
+				</bean>
+				
+			</list>
+		</property>
+	</bean>    
+	
+</beans>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.account.mapper.BankCardMapper">
+
+	<resultMap id="bankCardMap" type="com.dachen.health.pack.account.entity.vo.BankCardVO">
+		<id column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="group_id" property="groupId" />
+		<result column="bank_no" property="bankNo" />
+		<result column="bank_id" property="bankId" />
+		<result column="bank_name" property="bankName" />
+		<result column="sub_bank" property="subBank" />
+		<result column="is_delete" property="isDelete" />
+		<result column="is_default" property="isDefault" />
+		<result column="person_no" property="personNo" />
+		<result column="user_real_name" property="userRealName" />
+	</resultMap>
+	
+
+    <!-- 添加银行卡 -->
+	<insert id="add" parameterType="com.dachen.health.pack.account.entity.po.BankCard"  useGeneratedKeys="true"  keyProperty="id">
+		insert into t_bank_card (
+			user_id,
+			group_id,
+			user_real_name,
+			bank_no,
+			bank_id,
+			bank_name,
+			sub_bank,
+			is_delete,
+			is_default,
+			person_no
+		) 
+		values (
+			#{userId},
+			#{groupId},
+			#{userRealName},
+			#{bankNo},
+			#{bankId},
+			#{bankName},
+			#{subBank},
+			#{isDelete},
+			#{isDefault},
+			#{personNo}
+		)
+	</insert>
+	
+	<!-- 删除银行卡 -->
+	<update id="delete" parameterType="com.dachen.health.pack.account.entity.param.BankCardParam" >
+		update t_bank_card set is_delete = #{isDelete} where id=#{id} 
+	</update>
+	<update id="updateSettleCard" parameterType="com.dachen.health.pack.income.entity.param.SettleParam">
+		update t_settle set user_bank_id=#{userBankId} where user_id=#{userId} and  status =2
+	</update>
+
+	<!-- 查找银行卡列表 -->
+	<select id="getAll" parameterType="Integer" resultMap="bankCardMap">
+		select b.id,b.bank_no,b.bank_id,b.bank_name,b.sub_bank,b.is_default,b.person_no,b.user_real_name from t_bank_card b where b.user_id=#{userId} and b.is_delete=2 order by b.is_default desc 
+	</select>
+	
+	<!-- 查找集团绑定的银行卡列表 -->
+	<select id="getAllByGroupId" parameterType="String" resultMap="bankCardMap">
+		select b.id,b.bank_no,b.bank_id,b.bank_name,b.sub_bank,b.is_default,b.person_no , b.user_real_name from t_bank_card b where b.group_id=#{groupId} and b.is_delete=2 order by b.is_default desc 
+	</select>
+	
+	<select id="getByID" parameterType="Integer" resultMap="bankCardMap">
+		select * from t_bank_card where id=#{id} 
+	</select>
+	
+	<!-- 根据卡号查找 -->
+	<select id="getByNo" parameterType="String" resultMap="bankCardMap">
+		select b.id,b.user_id,b.bank_no,b.bank_id,b.bank_name,b.sub_bank,b.is_default,b.person_no,b.user_real_name from t_bank_card b 
+		where b.bank_no=#{bankNo} and b.is_delete=2
+	</select>
+
+    <!-- 修改银行卡 -->
+	<update id="update" parameterType="com.dachen.health.pack.account.entity.param.BankCardParam">
+		update t_bank_card set sub_bank=#{subBank} where user_id=#{userId} and id=#{id} and is_delete=2
+	</update>
+	
+	<update id="updateStatus" parameterType="com.dachen.health.pack.account.entity.param.BankCardParam">
+		update t_bank_card set is_default = #{isDefault}  where  id=#{id} and is_delete=2
+	</update>
+	
+	<update id="updateunDefault" parameterType="com.dachen.health.pack.account.entity.param.BankCardParam">
+		update t_bank_card set is_default = 0 where 1=1
+		<choose>
+			<when test="userId != null">
+				and user_id=#{userId}
+			</when>
+			<when test="groupId != null">
+				and group_id=#{groupId}
+			</when>
+		</choose>
+	</update>
+	
+	<select id="getDefaultCard" parameterType="com.dachen.health.pack.account.entity.param.BankCardParam" resultMap="bankCardMap">
+		 select b.id,b.bank_no,b.bank_id,b.bank_name,b.sub_bank,b.is_default ,b.person_no,b.user_real_name
+		 from t_bank_card b where b.is_delete=2 
+		 	<choose>
+		 		<when test="userId != null">
+		 			and  b.user_id=#{userId}
+		 		</when>
+		 		<when test="groupId != null">
+		 			and group_id=#{groupId}
+		 		</when>
+		 	</choose>
+		 
+	</select>
+	
+	<update id="deleteByGroupId"
+			parameterType="string">
+		update t_bank_card set is_delete=1 where group_id = #{groupId}
+	</update>
+
+</mapper>

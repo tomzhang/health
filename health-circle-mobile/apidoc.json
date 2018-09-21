@@ -1,0 +1,20 @@
+{
+  "name": "doctor circle mobile",
+  "version": "1.0.0",
+  "description": "医生圈Mobile平台API",
+  "title": "doctor circle mobile api",
+  "url" : "http://192.168.3.231/health",
+  "sampleUrl": "http://192.168.3.231/health",
+  "header": {
+    "title": "header",
+    "filename": "header.md"
+  },
+  "footer": {
+    "title": "footer",
+    "filename": "footer.md"
+  },
+  "template": {
+  	"withCompare": true,
+  	"withGenerator": true
+  }
+}

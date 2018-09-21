@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.income.mapper.DoctorIncomeMapper" >
+  <resultMap id="BaseResultMap" type="com.dachen.health.pack.income.entity.po.DoctorIncome" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="doctor_id" property="doctorId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_income" property="orderIncome" jdbcType="DOUBLE" />
+    <result column="share_income" property="shareIncome" jdbcType="DOUBLE" />
+    <result column="actual_income" property="actualIncome" jdbcType="DOUBLE" />
+    <result column="division_doctor_prop" property="divisionDoctorProp" jdbcType="INTEGER" />
+    <result column="division_group_prop" property="divisionGroupProp" jdbcType="INTEGER" />
+    <result column="division_sys_prop" property="divisionSysProp" jdbcType="INTEGER" />
+    <result column="division_doctor_id" property="divisionDoctorId" jdbcType="INTEGER" />
+    <result column="division_group_id" property="divisionGroupId" jdbcType="VARCHAR" />
+    <result column="settle_status" property="settleStatus" jdbcType="VARCHAR" />
+    <result column="order_status" property="orderStatus" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="complete_time" property="completeTime" jdbcType="BIGINT" />
+    <result column="settle_time" property="settleTime" jdbcType="BIGINT" />
+    <result column="extend_1" property="extend1" jdbcType="VARCHAR" />
+    <result column="extend_2" property="extend2" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <resultMap id="DoctorIncomeVO" type="com.dachen.health.pack.income.entity.vo.DoctorIncomeVO" >
+
+    <result column="doctorId" property="doctorId" jdbcType="INTEGER" />
+    
+    <result column="divisionIncome" property="divisionIncome" jdbcType="DOUBLE" />
+
+    <result column="orderIncome" property="orderIncome" jdbcType="DOUBLE" />
+    
+	<result column="doctorId1" property="doctorId1" jdbcType="INTEGER" />
+	
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+    <select id="selectBySettleId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+
+    select di.* 
+    from t_doctor_income di 
+    left  join t_income_settle ti on di.id = ti.income_id
+	where 1=1 and ti.settle_id = #{settleId,jdbcType=INTEGER}
+
+  </select>
+  
+  
+   <select id="getTotalDoctorIncomeByGroupId" resultMap="DoctorIncomeVO" parameterType="com.dachen.health.pack.income.entity.param.DoctorIncomeParam" >
+		select * from 
+    	(
+			(select doctor_id as doctorId , sum(actual_income) as orderIncome
+   			from t_doctor_income  
+			where 1=1 and division_group_id = #{groupId,jdbcType=VARCHAR}
+			group by doctor_id)  t1 
+			
+		 LEFT OUTER JOIN
+
+ 		(select division_doctor_id as doctorId1 , sum(division_income) as divisionIncome
+    		from t_doctor_division  
+			where 1=1 and group_id = #{groupId,jdbcType=VARCHAR}
+			group by division_doctor_id)  t2
+
+		ON t1.doctorId = t2.doctorId1
+		)
+		UNION
+ 		select * from   	
+ 		(
+			(select doctor_id as doctorId , sum(actual_income) as orderIncome
+   			from t_doctor_income  
+			where 1=1 and division_group_id = #{groupId,jdbcType=VARCHAR}
+			group by doctor_id)  t3 
+			
+		 	right OUTER JOIN
+
+ 			(select division_doctor_id as doctorId1 , sum(division_income) as divisionIncome
+    		from t_doctor_division  
+			where 1=1 and group_id = #{groupId,jdbcType=VARCHAR}
+			group by division_doctor_id)  t4
+
+			ON t3.doctorId = t4.doctorId1
+		)
+
+	ORDER BY  orderIncome desc
+	limit #{start},#{pageSize}
+  </select>
+  
+     <select id="countTotalDoctorIncomeByGroupId" resultType="Integer" parameterType="com.dachen.health.pack.income.entity.param.DoctorIncomeParam" >
+	select count(*) from 
+    	(select doctor_id as doctorId , sum(actual_income) as orderIncome
+   			from t_doctor_income  
+			where 1=1 and division_group_id = #{groupId,jdbcType=VARCHAR}
+			group by doctor_id)  t1
+			
+		INNER JOIN
+
+ 		(select division_doctor_id as doctorId , sum(division_income) as divisionIncome
+    		from t_doctor_division  
+			where 1=1 and group_id = #{groupId,jdbcType=VARCHAR}
+			group by division_doctor_id)  t2
+
+		ON t1.doctorId=t2.doctorId
+
+
+  </select>
+  
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, doctor_id, order_id, order_income, share_income, actual_income, division_doctor_prop, 
+    division_group_prop, division_sys_prop, division_doctor_id, division_group_id, settle_status, 
+    order_status, remark, create_time, complete_time, settle_time, extend_1, extend_2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.income.entity.po.DoctorIncomeExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_doctor_income
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from t_doctor_income
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_doctor_income
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dachen.health.pack.income.entity.po.DoctorIncomeExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_doctor_income
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dachen.health.pack.income.entity.po.DoctorIncome" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into t_doctor_income (id, doctor_id, order_id, 
+      order_income, share_income, actual_income, 
+      division_doctor_prop, division_group_prop, 
+      division_sys_prop, division_doctor_id, division_group_id, 
+      settle_status, order_status, remark, 
+      create_time, complete_time, settle_time, 
+      extend_1, extend_2)
+    values (#{id,jdbcType=INTEGER}, #{doctorId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, 
+      #{orderIncome,jdbcType=DOUBLE}, #{shareIncome,jdbcType=DOUBLE}, #{actualIncome,jdbcType=DOUBLE}, 
+      #{divisionDoctorProp,jdbcType=INTEGER}, #{divisionGroupProp,jdbcType=INTEGER}, 
+      #{divisionSysProp,jdbcType=INTEGER}, #{divisionDoctorId,jdbcType=INTEGER}, #{divisionGroupId,jdbcType=VARCHAR}, 
+      #{settleStatus,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=BIGINT}, #{completeTime,jdbcType=BIGINT}, #{settleTime,jdbcType=BIGINT}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dachen.health.pack.income.entity.po.DoctorIncome" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into t_doctor_income
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="doctorId != null" >
+        doctor_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderIncome != null" >
+        order_income,
+      </if>
+      <if test="shareIncome != null" >
+        share_income,
+      </if>
+      <if test="actualIncome != null" >
+        actual_income,
+      </if>
+      <if test="divisionDoctorProp != null" >
+        division_doctor_prop,
+      </if>
+      <if test="divisionGroupProp != null" >
+        division_group_prop,
+      </if>
+      <if test="divisionSysProp != null" >
+        division_sys_prop,
+      </if>
+      <if test="divisionDoctorId != null" >
+        division_doctor_id,
+      </if>
+      <if test="divisionGroupId != null" >
+        division_group_id,
+      </if>
+      <if test="settleStatus != null" >
+        settle_status,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="completeTime != null" >
+        complete_time,
+      </if>
+      <if test="settleTime != null" >
+        settle_time,
+      </if>
+      <if test="extend1 != null" >
+        extend_1,
+      </if>
+      <if test="extend2 != null" >
+        extend_2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null" >
+        #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderIncome != null" >
+        #{orderIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="shareIncome != null" >
+        #{shareIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="actualIncome != null" >
+        #{actualIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="divisionDoctorProp != null" >
+        #{divisionDoctorProp,jdbcType=INTEGER},
+      </if>
+      <if test="divisionGroupProp != null" >
+        #{divisionGroupProp,jdbcType=INTEGER},
+      </if>
+      <if test="divisionSysProp != null" >
+        #{divisionSysProp,jdbcType=INTEGER},
+      </if>
+      <if test="divisionDoctorId != null" >
+        #{divisionDoctorId,jdbcType=INTEGER},
+      </if>
+      <if test="divisionGroupId != null" >
+        #{divisionGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="settleStatus != null" >
+        #{settleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="completeTime != null" >
+        #{completeTime,jdbcType=BIGINT},
+      </if>
+      <if test="settleTime != null" >
+        #{settleTime,jdbcType=BIGINT},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dachen.health.pack.income.entity.po.DoctorIncomeExample" resultType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from t_doctor_income
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_doctor_income
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctorId != null" >
+        doctor_id = #{record.doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderIncome != null" >
+        order_income = #{record.orderIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="record.shareIncome != null" >
+        share_income = #{record.shareIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="record.actualIncome != null" >
+        actual_income = #{record.actualIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="record.divisionDoctorProp != null" >
+        division_doctor_prop = #{record.divisionDoctorProp,jdbcType=INTEGER},
+      </if>
+      <if test="record.divisionGroupProp != null" >
+        division_group_prop = #{record.divisionGroupProp,jdbcType=INTEGER},
+      </if>
+      <if test="record.divisionSysProp != null" >
+        division_sys_prop = #{record.divisionSysProp,jdbcType=INTEGER},
+      </if>
+      <if test="record.divisionDoctorId != null" >
+        division_doctor_id = #{record.divisionDoctorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.divisionGroupId != null" >
+        division_group_id = #{record.divisionGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.settleStatus != null" >
+        settle_status = #{record.settleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderStatus != null" >
+        order_status = #{record.orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.completeTime != null" >
+        complete_time = #{record.completeTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.settleTime != null" >
+        settle_time = #{record.settleTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.extend1 != null" >
+        extend_1 = #{record.extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend2 != null" >
+        extend_2 = #{record.extend2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_doctor_income
+    set id = #{record.id,jdbcType=INTEGER},
+      doctor_id = #{record.doctorId,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      order_income = #{record.orderIncome,jdbcType=DOUBLE},
+      share_income = #{record.shareIncome,jdbcType=DOUBLE},
+      actual_income = #{record.actualIncome,jdbcType=DOUBLE},
+      division_doctor_prop = #{record.divisionDoctorProp,jdbcType=INTEGER},
+      division_group_prop = #{record.divisionGroupProp,jdbcType=INTEGER},
+      division_sys_prop = #{record.divisionSysProp,jdbcType=INTEGER},
+      division_doctor_id = #{record.divisionDoctorId,jdbcType=INTEGER},
+      division_group_id = #{record.divisionGroupId,jdbcType=VARCHAR},
+      settle_status = #{record.settleStatus,jdbcType=VARCHAR},
+      order_status = #{record.orderStatus,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=BIGINT},
+      complete_time = #{record.completeTime,jdbcType=BIGINT},
+      settle_time = #{record.settleTime,jdbcType=BIGINT},
+      extend_1 = #{record.extend1,jdbcType=VARCHAR},
+      extend_2 = #{record.extend2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dachen.health.pack.income.entity.po.DoctorIncome" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_doctor_income
+    <set >
+      <if test="doctorId != null" >
+        doctor_id = #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderIncome != null" >
+        order_income = #{orderIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="shareIncome != null" >
+        share_income = #{shareIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="actualIncome != null" >
+        actual_income = #{actualIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="divisionDoctorProp != null" >
+        division_doctor_prop = #{divisionDoctorProp,jdbcType=INTEGER},
+      </if>
+      <if test="divisionGroupProp != null" >
+        division_group_prop = #{divisionGroupProp,jdbcType=INTEGER},
+      </if>
+      <if test="divisionSysProp != null" >
+        division_sys_prop = #{divisionSysProp,jdbcType=INTEGER},
+      </if>
+      <if test="divisionDoctorId != null" >
+        division_doctor_id = #{divisionDoctorId,jdbcType=INTEGER},
+      </if>
+      <if test="divisionGroupId != null" >
+        division_group_id = #{divisionGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="settleStatus != null" >
+        settle_status = #{settleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="completeTime != null" >
+        complete_time = #{completeTime,jdbcType=BIGINT},
+      </if>
+      <if test="settleTime != null" >
+        settle_time = #{settleTime,jdbcType=BIGINT},
+      </if>
+      <if test="extend1 != null" >
+        extend_1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        extend_2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dachen.health.pack.income.entity.po.DoctorIncome" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_doctor_income
+    set doctor_id = #{doctorId,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER},
+      order_income = #{orderIncome,jdbcType=DOUBLE},
+      share_income = #{shareIncome,jdbcType=DOUBLE},
+      actual_income = #{actualIncome,jdbcType=DOUBLE},
+      division_doctor_prop = #{divisionDoctorProp,jdbcType=INTEGER},
+      division_group_prop = #{divisionGroupProp,jdbcType=INTEGER},
+      division_sys_prop = #{divisionSysProp,jdbcType=INTEGER},
+      division_doctor_id = #{divisionDoctorId,jdbcType=INTEGER},
+      division_group_id = #{divisionGroupId,jdbcType=VARCHAR},
+      settle_status = #{settleStatus,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      complete_time = #{completeTime,jdbcType=BIGINT},
+      settle_time = #{settleTime,jdbcType=BIGINT},
+      extend_1 = #{extend1,jdbcType=VARCHAR},
+      extend_2 = #{extend2,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

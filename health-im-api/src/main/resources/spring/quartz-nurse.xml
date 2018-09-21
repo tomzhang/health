@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+	<!-- 方式二：使用MethodInvokingJobDetailFactoryBean，任务类可以不实现Job接口，通过targetMethod指定调用方法 -->
+	<!-- 更新线下系统总共接待的人数 add by liwei 20151204 -->
+	<bean id="serviceStatisticImpl_autoSendSchedule" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="serviceStatisticImpl" />
+		</property>
+		<property name="targetMethod">
+			<value>updateTotalReceptionNum</value>
+		</property>
+	</bean>
+	<!-- 下单超过2小时无人接 -->
+	<bean id="getOderOvertopHour"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="exceptionOrderServiceImpl"/>
+		</property>
+		<property name="targetMethod">
+			<value>getOderOvertopHour</value>
+		</property>
+	</bean>
+	<!-- 下单超过2小时无人接 -->
+	<bean id="getBeforeExceptionOrder"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="exceptionOrderServiceImpl"/>
+		</property>
+		<property name="targetMethod">
+			<value>getBeforeExceptionOrder</value>
+		</property>
+	</bean>
+	<!-- 超过3天患者没有做出评价 -->
+	<bean id="getExceptionOrderNoEvaluate"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="exceptionOrderServiceImpl"/>
+		</property>
+		<property name="targetMethod">
+			<value>getExceptionOrderNoEvaluate</value>
+		</property>
+	</bean>
+	<!-- 护士接单成功 但是过半小时仍然没有与患者进行联络 -->
+	<bean id="getExceptionNoCallPhone"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="exceptionOrderServiceImpl"/>
+		</property>
+		<property name="targetMethod">
+			<value>getExceptionNoCallPhone</value>
+		</property>
+	</bean>
+	<!-- 护士在预约时间开始之前点击了开始服务按钮 -->
+	<bean id="getExceptionOfNurseService"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="exceptionOrderServiceImpl"/>
+		</property>
+		<property name="targetMethod">
+			<value>getExceptionOfNurseService</value>
+		</property>
+	</bean>
+	<!-- 护士在预约时间开始之前点击了开始服务按钮 -->
+	<bean id="getExceptionOfNurseServiceNoClick"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="exceptionOrderServiceImpl"/>
+		</property>
+		<property name="targetMethod">
+			<value>getExceptionOfNurseServiceNoClick</value>
+		</property>
+	</bean>
+	<!-- ======================== 调度工厂统（一定义触发时间） ======================== -->
+	<bean id="SpringJobSchedulerFactoryBean2"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="serviceStatisticImpl_autoSendSchedule" />
+					<property name="cronExpression" value="0 0 0/10 * * ?"></property>
+				</bean>
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="getOderOvertopHour" />
+					<property name="cronExpression" value="0 0/5 * * * ?"></property>
+				</bean>
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="getBeforeExceptionOrder" />
+					<property name="cronExpression" value="0 0 22 * * ?"></property>
+				</bean>
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="getExceptionOrderNoEvaluate" />
+					<property name="cronExpression" value="0 0/5 * * * ?"></property>
+				</bean>
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="getExceptionNoCallPhone" />
+					<property name="cronExpression" value="0 0/5 * * * ?"></property>
+				</bean>
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="getExceptionOfNurseService" />
+					<property name="cronExpression" value="0 0/5 * * * ?"></property>
+				</bean>
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="jobDetail" ref="getExceptionOfNurseServiceNoClick" />
+					<property name="cronExpression" value="0 0/5 * * * ?"></property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+</beans>

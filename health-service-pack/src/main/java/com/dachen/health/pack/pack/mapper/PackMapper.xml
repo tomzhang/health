@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.pack.mapper.PackMapper" >
+  <resultMap id="BaseResultMap" type="com.dachen.health.pack.pack.entity.po.Pack" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="doctor_id" property="doctorId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="BIGINT" />
+    <result column="pack_type" property="packType" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="time_limit" property="timeLimit" jdbcType="BIGINT" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="care_template_id" property="careTemplateId" jdbcType="VARCHAR" />
+    <result column="follow_template_id" property="followTemplateId" jdbcType="VARCHAR" />
+  	<result column="group_id" property="groupId" jdbcType="VARCHAR" />
+  	<result column="qrcode_path" property="qrcodePath" jdbcType="VARCHAR" />
+  	<result column="service_item_id" property="serviceItemId" jdbcType="VARCHAR" />
+  	<result column="hospital_id" property="hospitalId" jdbcType="VARCHAR" />
+  	<result column="is_searched" property="isSearched" jdbcType="INTEGER" />
+  	<result column="help_times" property="helpTimes" jdbcType="INTEGER" />
+  	<result column="reply_count" property="replyCount" jdbcType="INTEGER" />
+  	<result column="goods_group_id" property="goodsGroupId" jdbcType="VARCHAR" />
+  	<result column="point" property="point" jdbcType="INTEGER" />
+  	<result column="group_onsultation_id" property="consultationId" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from p_pack
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dachen.health.pack.pack.entity.po.Pack" useGeneratedKeys="true" keyProperty="id">
+    insert into p_pack (id, doctor_id, name, help_times,
+      price, pack_type, create_time, service_item_id, hospital_id, 
+      status, description,time_limit,care_template_id,follow_template_id,group_onsultation_id,
+      group_id,qrcode_path,reply_count,goods_group_id,point)
+    values (#{id,jdbcType=INTEGER}, #{doctorId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{helpTimes,jdbcType=INTEGER}, 
+      #{price,jdbcType=BIGINT}, #{packType,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, #{serviceItemId,jdbcType=VARCHAR},#{hospitalId,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR},#{timeLimit,jdbcType=BIGINT}, #{careTemplateId,jdbcType=VARCHAR},
+      #{followTemplateId,jdbcType=VARCHAR},#{consultationId},#{groupId,jdbcType=VARCHAR},#{qrcodePath,jdbcType=VARCHAR},#{replyCount,jdbcType=INTEGER},
+      #{goodsGroupId,jdbcType=VARCHAR},#{point,jdbcType=INTEGER})
+  </insert>
+  
+  <insert id="addIntegralPack" parameterType="com.dachen.health.pack.pack.entity.po.Pack" useGeneratedKeys="true" keyProperty="id">
+    insert into p_pack (doctor_id, goods_group_id, name, description, point,
+      status, pack_type, create_time, price)
+    values (#{doctorId}, #{goodsGroupId},#{name},#{description}, #{point},
+      #{status}, #{packType}, #{createTime}, #{price})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.dachen.health.pack.pack.entity.po.Pack" >
+    update p_pack
+    set 
+      name = #{name,jdbcType=VARCHAR},
+      price = #{price,jdbcType=BIGINT},
+      point = #{point,jdbcType=INTEGER},
+      pack_type = #{packType,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      time_limit = #{timeLimit,jdbcType=BIGINT},
+      care_template_id= #{careTemplateId,jdbcType=VARCHAR},
+      follow_template_id = #{followTemplateId,jdbcType=VARCHAR},
+      help_times = #{helpTimes,jdbcType=INTEGER},
+      <if test="isSearched != null">
+      	is_searched = #{isSearched,jdbcType=INTEGER} ,
+      </if>
+      <choose>
+        <when test="replyCount != null">
+               reply_count = #{replyCount} ,
+        </when>
+        <otherwise>
+              reply_count = null ,
+         </otherwise>
+      </choose>
+      qrcode_path = #{qrcodePath,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, doctor_id, name, price, pack_type, create_time, status,help_times,service_item_id,hospital_id,
+    	   description,time_limit,care_template_id,follow_template_id,group_id,qrcode_path,is_searched , reply_count,
+    	   goods_group_id,point,group_onsultation_id
+    from p_pack
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="query" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.pack.entity.po.Pack">
+    select id, doctor_id, name, price, pack_type, create_time, status, 
+    	   description,time_limit,care_template_id,follow_template_id,
+    	   group_id,qrcode_path,is_searched,help_times,reply_count,
+    	   goods_group_id,point,group_onsultation_id
+    from p_pack
+     where 1=1
+     <if test="doctorId != null">
+			and doctor_id = #{doctorId,jdbcType=INTEGER}
+	 </if>
+	 <if test="status != null">
+	 		and status = #{status,jdbcType=INTEGER}
+	 </if>
+     <if test="packType != null">
+			and pack_type = #{packType,jdbcType=INTEGER}
+	 </if>
+	 <if test="groupId != null">
+			and group_id = #{groupId,jdbcType=VARCHAR}
+	 </if>
+	 <if test="careTemplateId != null">
+			and care_template_id = #{careTemplateId,jdbcType=VARCHAR}
+	 </if>
+	 <if test="followTemplateId != null">
+			and follow_template_id = #{followTemplateId,jdbcType=VARCHAR}
+	 </if>
+	 <!-- 集团ID add by tanyf 20160604 -->
+	 <if test="groupIds != null">
+		AND (group_id is null or group_id NOT IN
+		<foreach collection="groupIds" item="Item" open="(" close=")" separator="," >
+      			#{Item}
+    	</foreach>
+    	)
+	 </if>
+  </select>
+  
+  <select id="queryForPrice" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.pack.entity.po.Pack">
+    select id, doctor_id, name, price, pack_type, create_time, status, 
+    	   description,time_limit,care_template_id,follow_template_id,
+    	   group_id,qrcode_path,is_searched,help_times,reply_count,group_onsultation_id
+    from p_pack
+     where 1=1 and pack_type in (1, 2, 3, 8, 11)
+     <if test="doctorId != null">
+			and doctor_id = #{doctorId,jdbcType=INTEGER}
+	 </if>
+	 <if test="status != null">
+	 		and status = #{status,jdbcType=INTEGER}
+	 </if>
+     <if test="packType != null">
+			and pack_type = #{packType,jdbcType=INTEGER}
+	 </if>
+	 <if test="groupId != null">
+			and group_id = #{groupId,jdbcType=VARCHAR}
+	 </if>
+	 <if test="careTemplateId != null">
+			and care_template_id = #{careTemplateId,jdbcType=VARCHAR}
+	 </if>
+	 <if test="followTemplateId != null">
+			and follow_template_id = #{followTemplateId,jdbcType=VARCHAR}
+	 </if>
+	 <!-- 集团ID add by tanyf 20160604 -->
+	 <if test="groupIds != null">
+		AND (group_id is null or group_id NOT IN
+		<foreach collection="groupIds" item="Item" open="(" close=")" separator="," >
+      			#{Item}
+    	</foreach>
+    	)
+	 </if>
+  </select>
+  
+  <select id="queryByIds" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.pack.entity.po.PackParam">
+  	 select id, doctor_id, name, price, pack_type, create_time, status, description,time_limit,care_template_id,follow_template_id,group_id,qrcode_path,group_onsultation_id
+    from p_pack where id in 
+   		<foreach collection="itmes" item="Item" open="(" close=")" separator="," >
+      		#{Item}
+    	</foreach>  
+  </select>
+  <select id="queryByUserIds" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.pack.entity.po.PackParam">
+  	 select id, doctor_id, name, price, pack_type, create_time, status, description,time_limit,care_template_id,follow_template_id,group_id,qrcode_path,group_onsultation_id
+    from p_pack where doctor_id in 
+   		<foreach collection="itmes" item="Item" open="(" close=")" separator="," >
+      		#{Item}
+    	</foreach>  
+  </select>
+  
+   <select id="getPack012Doctors" resultMap="BaseResultMap" parameterType="java.util.List">
+  		  SELECT doctor_id 
+  		  FROM p_pack 
+   		  WHERE STATUS=1 AND pack_type IN (0,1,2) and
+          <if test="list.size != 0">
+	         doctor_id in 
+	   		<foreach collection="list" item="Item" open="(" close=")" separator="," >
+	      		#{Item}
+	    	</foreach>  
+    	 </if>
+    	 <if test="list.size == 0">
+    	 1=2
+    	 </if>
+    	   GROUP BY doctor_id
+  </select>
+  
+  <select id="getFeeUpdatePack" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.pack.entity.po.PackParam2">
+  		 SELECT id, doctor_id, name, price, pack_type, create_time, status, description,time_limit,care_template_id,follow_template_id,group_onsultation_id
+  		  FROM p_pack WHERE  STATUS=1
+  		       AND 
+  		     (      ( pack_type = 1 AND  ( price &lt;  #{textMin,jdbcType=BIGINT}  OR price &gt;  #{textMax,jdbcType=BIGINT} ))
+  		        OR  ( pack_type = 2 AND  ( price &lt;  #{phoneMin,jdbcType=BIGINT}  OR price &gt;  #{phoneMax,jdbcType=BIGINT} ))
+  		        OR  ( pack_type = 3 AND  ( price &lt;  #{carePlanMin,jdbcType=BIGINT}  OR price &gt;  #{carePlanMax,jdbcType=BIGINT} ))
+  		      )
+  		     and doctor_id = #{doctorId,jdbcType=INTEGER}
+	   		 
+   </select>
+   
+   <update id="updatePriceById"  parameterType="com.dachen.health.pack.pack.entity.po.Pack" >
+    update p_pack
+    set 
+      price = #{price,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="countCarePack"  resultType="Integer" parameterType="com.dachen.health.pack.pack.entity.po.Pack">
+  	select count(*) from p_pack p where p.doctor_id=#{doctorId}  and p.status=1
+  	<if test="followTemplateId != null">
+			and p.follow_template_id = #{followTemplateId,jdbcType=VARCHAR}
+	</if>
+	<if test="careTemplateId != null">
+			and p.care_template_id = #{careTemplateId,jdbcType=VARCHAR}
+	</if>
+  </select>
+  
+  <select id="queryByDoctorIdAndType"
+  		  parameterType="map"
+  		  resultMap="BaseResultMap">
+  	 SELECT id, 
+  	 		doctor_id, 
+  	 		name, 
+  	 		price,
+  	 		description,group_onsultation_id
+  	 FROM   p_pack 
+  	 WHERE  doctor_id = #{doctorId,jdbcType=INTEGER}
+     and    pack_type = #{packType,jdbcType=INTEGER}
+     and    status = 1 limit 1
+  </select>
+  
+  <select id="getDoctorPackDBData"
+  		  parameterType="map"
+  		  resultMap="BaseResultMap">
+  	 SELECT id, 
+  	 		doctor_id, 
+  	 		name, 
+  	 		price,
+  	 		description,
+  	 		pack_type,
+			status,group_onsultation_id
+  	 FROM   p_pack 
+  	 WHERE  doctor_id = #{doctorId,jdbcType=INTEGER}
+     and    pack_type = #{packType,jdbcType=INTEGER}
+     limit 1
+  </select>
+  
+  <update id="deleteConsultationPackByDoctorId"
+  		  parameterType="int">
+  	update  p_pack
+  	  set  STATUS=2
+  	where pack_type = 8
+  	and   doctor_id = #{doctorId}
+  </update>
+   <!--add by  liwei  20160122 查询某个套餐的所有的医生id  -->
+  <select id="selectPackDortorList"  resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	 SELECT id ,doctor_id , price FROM   p_pack  WHERE  status=1  AND    pack_type = #{packType,jdbcType=INTEGER}
+  </select>
+
+  <select id="getAllBeSearchDoctorIds"
+  		  parameterType="int"
+  		  resultType="int">
+	  	select doctor_id
+	  	from p_pack
+	  	where pack_type = 8
+	  	and   status = 1
+	  	and   doctor_id in
+	  	<foreach collection="list" item="item" open="(" separator="," close=")">
+	  		#{item}
+	  	</foreach>     
+  </select>  
+  
+  <update id="updateConsultationPackPrice"
+  		  parameterType="map">
+  	update 	p_pack
+  	  set   price = #{price},
+  	  		STATUS=1
+  	where   doctor_id = #{doctorId}
+  	  and   pack_type = 8	  
+  </update>
+
+	<select id="getConsultationDoctorId"
+			parameterType="int"
+			resultType="int">
+		select doctor_id
+	  	from p_pack
+	  	where pack_type = 8
+	  	and   doctor_id in
+	  	<foreach collection="list" item="item" open="(" separator="," close=")">
+	  		#{item}
+	  	</foreach>
+	  	and STATUS =  1		
+	</select>
+	
+	<select id="getConsultationDoctorIdNotInIds"
+			parameterType="int"
+			resultType="int">
+	  	select doctor_id
+	  	from p_pack
+	  	where pack_type = 8
+	  	<if test="friendIds != null">
+	  		and doctor_id not in
+		  	<foreach collection="friendIds" item="item" open="(" separator="," close=")">
+		  		#{item}
+		  	</foreach>
+	  	</if>
+	  	and STATUS =  1		
+	</select>
+	
+	<select id="getAllConsultationDoctorIds"
+			resultType="int">
+		select doctor_id
+	  	from p_pack
+	  	where pack_type = 8
+	  	and status = 1		
+	</select>
+	
+	<select id="getPackByGroupIdAndDoctorId"
+			parameterType="map"
+			resultType="com.dachen.health.pack.pack.entity.po.Pack">
+		select id, doctor_id, name, price, pack_type, create_time, status, 
+    	   description,time_limit,care_template_id,follow_template_id,
+    	   group_id,qrcode_path,is_searched,help_times
+    	from p_pack
+    	where pack_type = 9
+    	and   doctor_id = #{doctorId}
+	</select>
+	
+	<update id="updateDoctorAppointmentPack"
+			parameterType="map">
+		update p_pack
+		<set>
+			<if test="price != null">
+				price = #{price} ,
+			</if>
+			<if test="status != null">
+				status = #{status} ,
+			</if>
+		</set>
+		where pack_type = 9
+    	and   doctor_id = #{doctorId}	
+	</update>
+	
+	<select id="getAppointmentDoctorIds"
+			parameterType="list"
+			resultType="int">
+		select distinct doctor_id
+		from p_pack
+		where pack_type = 9
+		and   status = 1
+		and   doctor_id in
+		<foreach collection="list" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>	
+	</select>
+	
+	<select id="getAdviseDoctorIds" resultType="java.lang.Integer" parameterType="com.dachen.health.pack.pack.entity.po.PackParam2">
+		SELECT
+			p.doctor_id
+		FROM
+			p_pack p
+		WHERE
+			p.pack_type = ${type}
+		AND p.`status` = 1
+		AND p.doctor_id IN
+		<foreach collection="doctorIds" item="item" open="(" separator="," close=")">
+	  		#{item}
+	  	</foreach> 
+	</select>
+	
+	<select id="queryAdvise" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.pack.entity.po.PackParam2">
+	    select id, doctor_id, name, price, pack_type, create_time, status, 
+	    	   description,time_limit,care_template_id,follow_template_id,
+	    	   group_id,qrcode_path,is_searched,help_times,reply_count,group_onsultation_id
+	    from p_pack
+		where 1=1
+			AND pack_type = ${type}
+			AND `status` = 1
+			AND doctor_id IN
+		<foreach collection="doctorIds" item="item" open="(" separator="," close=")">
+	  		#{item}
+	  	</foreach> 
+		<if test="skipGroupIds != null">
+			AND (group_id is null or group_id NOT IN
+			<foreach collection="skipGroupIds" item="item" open="(" close=")" separator="," >
+	    			#{item}
+		  	</foreach>
+			  	)
+		</if>
+  	</select>
+	
+	<select id="getNoFreeAdviseDoctorIds" resultType="java.lang.Integer" parameterType="com.dachen.health.pack.pack.entity.po.PackParam2">
+		SELECT
+			p.doctor_id
+		FROM
+			p_pack p
+		WHERE
+			p.pack_type = ${type}
+		AND p.`status` = 1
+		AND p.price &gt; 0
+		AND p.doctor_id IN
+		<foreach collection="doctorIds" item="item" open="(" separator="," close=")">
+	  		#{item}
+	  	</foreach> 
+	</select>
+	
+	<select id="getAdviseDoctorCount" resultType="java.lang.Integer" parameterType="com.dachen.health.pack.pack.entity.po.PackParam2">
+		SELECT COUNT(1) FROM p_pack p WHERE p.pack_type = ${type} AND p.`status` = 1;
+	</select>
+	
+	<select id="getAdviseAdviseOpenedDoctorIds" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		SELECT
+			p.doctor_id
+		FROM
+			p_pack p
+		WHERE
+			p.pack_type = #{type}
+		AND p.`status` = 1
+	</select>
+	
+	<select id="getAdviseAdviseOpenedPacks" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.pack.entity.po.PackParam2">
+		SELECT
+			   id, doctor_id, name, price, pack_type, create_time, status, 
+	    	   description,time_limit,care_template_id,follow_template_id,
+	    	   group_id,qrcode_path,is_searched,help_times,reply_count,group_onsultation_id
+		FROM
+			p_pack p
+		WHERE
+			p.pack_type = ${type}
+		AND p.`status` = 1
+		<if test="skipGroupIds != null">
+			AND (group_id is null or group_id NOT IN
+			<foreach collection="skipGroupIds" item="item" open="(" close=")" separator="," >
+	    			#{item}
+		  	</foreach>
+			  	)
+		</if>
+	</select>
+	
+	<select id="getAdviseDoctorIdsWithGroup" resultType="java.lang.Integer" parameterType="com.dachen.health.pack.pack.entity.po.PackParam2">
+		SELECT
+			p.doctor_id
+		FROM
+			p_pack p
+		WHERE
+			p.pack_type = ${type}
+		AND p.`status` = 1
+		AND p.`group_id` = '${groupId}'
+		AND p.doctor_id IN
+		<foreach collection="doctorIds" item="item" open="(" separator="," close=")">
+	  		#{item}
+	  	</foreach> 
+	</select>
+	
+	<select id="getAdviseByDoctorIds" resultMap="BaseResultMap" parameterType="list">
+		SELECT
+			id, doctor_id, name, price, pack_type, create_time, status, 
+			description, time_limit, care_template_id, follow_template_id,
+			group_id, qrcode_path, is_searched, help_times , reply_count
+		FROM
+			p_pack p
+		WHERE
+			p.`status` = 1
+			AND	p.doctor_id IN 
+			<foreach collection="list" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+	</select>
+	
+	<select id="getNoFreeAdviseByDoctorIds" resultMap="BaseResultMap" parameterType="list">
+		SELECT
+			id, doctor_id, name, price, pack_type, create_time, status, 
+			description, time_limit, care_template_id, follow_template_id,
+			group_id, qrcode_path, is_searched, help_times,group_onsultation_id
+		FROM
+			p_pack p
+		WHERE
+			p.`status` = 1
+			AND p.price &gt; 0
+			AND	p.doctor_id IN 
+			<foreach collection="list" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+	</select>
+	
+	<select id="getAdviseByDoctorIdsWithGroup" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.pack.entity.po.PackParam2">
+		SELECT
+			id, doctor_id, name, price, pack_type, create_time, status, 
+			description, time_limit, care_template_id, follow_template_id,
+			group_id, qrcode_path, is_searched, help_times,group_onsultation_id
+		FROM
+			p_pack p
+		WHERE
+			p.`status` = 1
+			AND p.`group_id` = '${groupId}'
+			AND	p.doctor_id IN 
+			<foreach collection="doctorIds" item="item" open="(" separator="," close=")">
+	  			#{item}
+	  		</foreach> 
+	</select>
+	
+	<select id="getPackByDoctorIdAndPackType" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.pack.entity.po.PackParam2">
+		SELECT
+			id, doctor_id, name, price, pack_type, create_time, status, 
+			description, time_limit, care_template_id, follow_template_id,
+			group_id, qrcode_path, is_searched, help_times , reply_count,group_onsultation_id
+		FROM
+			p_pack p
+		WHERE
+			p.`status` = 1
+		AND p.`pack_type` = ${type}
+		AND	p.doctor_id = ${doctorId}
+	</select>
+	
+	<select id="getNoFreePackByDoctorIdAndPackType" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.pack.entity.po.PackParam2">
+		SELECT
+			id, doctor_id, name, price, pack_type, create_time, status, 
+			description, time_limit, care_template_id, follow_template_id,
+			group_id, qrcode_path, is_searched, help_times,group_onsultation_id
+		FROM
+			p_pack p
+		WHERE
+			p.`status` = 1
+		AND p.price &gt; 0
+		AND p.`pack_type` = ${type}
+		AND	p.doctor_id = ${doctorId}
+	</select>
+	
+	<select id="getServerOnDoctorIds" resultType="java.lang.Integer">
+		SELECT DISTINCT(p.`doctor_id`) FROM p_pack p WHERE p.`status` = 1 and p.pack_type in (1, 2, 3)
+	</select>
+	
+	<select id="getServiceOn" resultMap="BaseResultMap">
+		SELECT
+			p.id,
+			p.doctor_id,
+			p.name,
+			p.price,
+			p.pack_type, 
+			p.create_time,
+			p.status, 
+			p.description,
+			p.time_limit,
+			p.care_template_id, 
+			p.follow_template_id,
+			p.group_id, 
+			p.qrcode_path, 
+			p.is_searched,
+			p.help_times,group_onsultation_id
+		FROM p_pack p WHERE p.`status` = 1 and p.pack_type in (1, 2, 3)
+	</select>
+	
+	<select id="getIntegralPack" resultMap="BaseResultMap" parameterType="Map" >
+    select id, doctor_id, name, price, pack_type, create_time, status,help_times,service_item_id,hospital_id,
+    	   description,time_limit,care_template_id,follow_template_id,group_id,qrcode_path,is_searched , reply_count,
+    	   goods_group_id,point,group_onsultation_id
+    from p_pack
+    where doctor_id = #{doctorId} and goods_group_id = #{goodsGroupId}
+  </select>
+  <update id="delPackByConsultationId" parameterType="java.lang.String" >
+    update p_pack
+    set status = 2
+    where group_onsultation_id = #{consultationId}
+  </update>
+</mapper>

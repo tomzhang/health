@@ -1,0 +1,20 @@
+{
+  "name": "feature mobile",
+  "version": "1.0.0",
+  "description": "Feature mobile平台API",
+  "title": "feature mobile api",
+  "url" : "http://192.168.3.231/health",
+  "sampleUrl": "http://192.168.3.231/health",
+  "header": {
+    "title": "header",
+    "filename": "header.md"
+  },
+  "footer": {
+    "title": "footer",
+    "filename": "footer.md"
+  },
+  "template": {
+  	"withCompare": true,
+  	"withGenerator": true
+  }
+}

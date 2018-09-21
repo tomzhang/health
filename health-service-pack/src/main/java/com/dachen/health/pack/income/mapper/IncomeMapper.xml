@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.income.mapper.IncomeMapper">
+	
+	<resultMap id="incomeMap" type="com.dachen.health.pack.income.entity.vo.IncomeVO">
+		<result column="doctor_id" property="doctorId" />
+		<result column="total_income" property="totalIncome" />
+		<result column="out_income" property="outIncome" />
+	</resultMap>
+
+	<!-- 获取医生收入 -->
+	<select id="getIncome" parameterType="Integer" resultMap="incomeMap">
+		select i.total_income,i.out_income from t_income i where i.doctor_id = #{doctorId}
+	</select>
+	
+	
+	<select id="sumIncome" parameterType="Integer" resultMap="incomeMap">
+		SELECT sum(price) as total_income, sum(price) as out_income FROM p_order WHERE doctor_id=#{doctorId} and (order_status=3 OR order_status=4)
+	</select>
+
+</mapper>

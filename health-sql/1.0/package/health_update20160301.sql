@@ -1,0 +1,1 @@
+alter table t_bank_card add column person_no varchar(50) DEFAULT '' COMMENT '身份证号';

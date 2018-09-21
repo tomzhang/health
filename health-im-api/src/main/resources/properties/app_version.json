@@ -1,0 +1,86 @@
+[
+	{
+        "id": 1,
+        "code": "com.bestunimed.dgroupdoctor",
+        "name": "博德嘉联医生端",
+        "version": "1.3.1",
+        "device": "android",
+        "info": "应用已检测到新版本，为改善您的操作体验，建议更新到新版本！",
+        "downloadUrl": "http://www.chinamediportal.com/replease/dGroupDoctor_bdjl-release.apk"
+    }
+    {
+        "id": 2,
+        "code": "com.dachen.dgroupdoctorcompany",
+        "name": "药企端",
+        "version": "1.3.1",
+        "device": "android",
+        "info": "应用已检测到新版本，为改善您的操作体验，建议更新到新版本！",
+        "downloadUrl": "http://www.chinamediportal.com/replease/dgroupDoctorCompany-dachen-release.apk"
+    }
+     {
+        "id": 3,
+        "code": "com.dachen.dgroupdoctorassistant",
+        "name": "玄关助手",
+        "version": "1.0",
+        "device": "ios",
+        "info": "应用已检测到新版本，为改善您的操作体验，建议更新到新版本！",
+        "downloadUrl": "https://itunes.apple.com/cn/app/xuan-guan-zhu-shou/id1143018664?mt=8"
+    }
+     {
+        "id": 4,
+        "code": "com.dachen.dgroupdoctornewassistant",
+        "name": "玄关助手",
+        "version": "1.1.1",
+        "device": "android",
+        "info": "应用已检测到新版本，为改善您的操作体验，建议更新到新版本！",
+        "downloadUrl": "https://appdist.mediportal.com.cn/release/assistant-release.apk"
+    }
+    {
+        "id": 9,
+        "code": "com.cms.dgroupdoctorassistant",
+        "name": "玄关助手",
+        "version": "1.1.1",
+        "device": "ios",
+        "info": "应用已检测到新版本，为改善您的操作体验，建议更新到新版本！",
+        "downloadUrl": "https://itunes.apple.com/cn/app/xuan-guan-zhu-shou/id1143018664?mt=8"
+    }
+	{
+        "id": 5,
+        "code": "com.cms.DGroupPatient",
+        "name": "玄关健康",
+        "version": "1.9.2",
+        "device": "ios",
+        "info": "应用已检测到新版本，为改善您的操作体验，建议更新到新版本！",
+        "downloadUrl": "https://itunes.apple.com/cn/app/xuan-guan-jian-kang/id1092868086?mt=8"
+    }
+    
+    {
+        "id": 7,
+        "code": "com.cms.DGroupDoctor",
+        "name": "玄关医生",
+        "version": "1.8.1",
+        "device": "ios",
+        "info": "应用已检测到新版本，为改善您的操作体验，建议更新到新版本！",
+        "downloadUrl": "https://itunes.apple.com/cn/app/xuan-guan-yi-sheng/id1092840420?mt=8"
+    }
+    
+	{
+        "id": 6,
+        "code": "com.dachen.dgrouppatient",
+        "name": "玄关健康",
+        "version": "1.9.2",
+        "device": "android",
+        "info": "应用已检测到新版本，为改善您的操作体验，建议更新到新版本！",
+        "downloadUrl": "https://appdist.mediportal.com.cn/release/patient-release.apk"
+    }
+	
+	{
+        "id": 8,
+        "code": "com.dachen.dgroupdoctor",
+        "name": "玄关医生",
+        "version": "1.8",
+        "device": "android",
+        "info": "应用已检测到新版本，为改善您的操作体验，建议更新到新版本！",
+        "downloadUrl": "http://www.chinamediportal.com/replease/dGroupDoctor-release.apk"
+    }
+]

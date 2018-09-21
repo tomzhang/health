@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.order.mapper.OrderRefundMapper" >
+  <resultMap id="BaseResultMap" type="com.dachen.health.pack.order.entity.po.OrderRefund" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="refund_no" property="refundNo" jdbcType="VARCHAR" />
+    <result column="refund_type" property="refundType" jdbcType="INTEGER" />
+    <result column="refund_num" property="refundNum" jdbcType="INTEGER" />
+    <result column="order_recharege_no" property="orderRecharegeNo" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_price" property="orderPrice" jdbcType="BIGINT" />
+    <result column="refund_price" property="refundPrice" jdbcType="BIGINT" />
+    <result column="refund_reason" property="refundReason" jdbcType="VARCHAR" />
+    <result column="refund_status" property="refundStatus" jdbcType="INTEGER" />
+    <result column="refund_create" property="refundCreate" jdbcType="BIGINT" />
+    <result column="refund_update" property="refundUpdate" jdbcType="BIGINT" />
+    <result column="refund_log" property="refundLog" jdbcType="VARCHAR" />
+    <result column="trans_id" property="transId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, refund_no, refund_type, refund_num, order_recharege_no, order_id, order_price, 
+    refund_price, refund_reason, refund_status, refund_create, refund_update, refund_log, 
+    trans_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.order.entity.po.OrderRefundExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_order_refund
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_refund
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_order_refund
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dachen.health.pack.order.entity.po.OrderRefundExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_order_refund
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dachen.health.pack.order.entity.po.OrderRefund" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into t_order_refund (id, refund_no, refund_type, 
+      refund_num, order_recharege_no, order_id, 
+      order_price, refund_price, refund_reason, 
+      refund_status, refund_create, refund_update, 
+      refund_log, trans_id)
+    values (#{id,jdbcType=INTEGER}, #{refundNo,jdbcType=VARCHAR}, #{refundType,jdbcType=INTEGER}, 
+      #{refundNum,jdbcType=INTEGER}, #{orderRecharegeNo,jdbcType=VARCHAR}, #{orderId,jdbcType=INTEGER}, 
+      #{orderPrice,jdbcType=BIGINT}, #{refundPrice,jdbcType=BIGINT}, #{refundReason,jdbcType=VARCHAR}, 
+      #{refundStatus,jdbcType=INTEGER}, #{refundCreate,jdbcType=BIGINT}, #{refundUpdate,jdbcType=BIGINT}, 
+      #{refundLog,jdbcType=VARCHAR}, #{transId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dachen.health.pack.order.entity.po.OrderRefund" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into t_order_refund
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="refundNo != null" >
+        refund_no,
+      </if>
+      <if test="refundType != null" >
+        refund_type,
+      </if>
+      <if test="refundNum != null" >
+        refund_num,
+      </if>
+      <if test="orderRecharegeNo != null" >
+        order_recharege_no,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderPrice != null" >
+        order_price,
+      </if>
+      <if test="refundPrice != null" >
+        refund_price,
+      </if>
+      <if test="refundReason != null" >
+        refund_reason,
+      </if>
+      <if test="refundStatus != null" >
+        refund_status,
+      </if>
+      <if test="refundCreate != null" >
+        refund_create,
+      </if>
+      <if test="refundUpdate != null" >
+        refund_update,
+      </if>
+      <if test="refundLog != null" >
+        refund_log,
+      </if>
+      <if test="transId != null" >
+        trans_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="refundNo != null" >
+        #{refundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundType != null" >
+        #{refundType,jdbcType=INTEGER},
+      </if>
+      <if test="refundNum != null" >
+        #{refundNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderRecharegeNo != null" >
+        #{orderRecharegeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderPrice != null" >
+        #{orderPrice,jdbcType=BIGINT},
+      </if>
+      <if test="refundPrice != null" >
+        #{refundPrice,jdbcType=BIGINT},
+      </if>
+      <if test="refundReason != null" >
+        #{refundReason,jdbcType=VARCHAR},
+      </if>
+      <if test="refundStatus != null" >
+        #{refundStatus,jdbcType=INTEGER},
+      </if>
+      <if test="refundCreate != null" >
+        #{refundCreate,jdbcType=BIGINT},
+      </if>
+      <if test="refundUpdate != null" >
+        #{refundUpdate,jdbcType=BIGINT},
+      </if>
+      <if test="refundLog != null" >
+        #{refundLog,jdbcType=VARCHAR},
+      </if>
+      <if test="transId != null" >
+        #{transId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dachen.health.pack.order.entity.po.OrderRefundExample" resultType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from t_order_refund
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_order_refund
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.refundNo != null" >
+        refund_no = #{record.refundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundType != null" >
+        refund_type = #{record.refundType,jdbcType=INTEGER},
+      </if>
+      <if test="record.refundNum != null" >
+        refund_num = #{record.refundNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderRecharegeNo != null" >
+        order_recharege_no = #{record.orderRecharegeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderPrice != null" >
+        order_price = #{record.orderPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.refundPrice != null" >
+        refund_price = #{record.refundPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.refundReason != null" >
+        refund_reason = #{record.refundReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundStatus != null" >
+        refund_status = #{record.refundStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.refundCreate != null" >
+        refund_create = #{record.refundCreate,jdbcType=BIGINT},
+      </if>
+      <if test="record.refundUpdate != null" >
+        refund_update = #{record.refundUpdate,jdbcType=BIGINT},
+      </if>
+      <if test="record.refundLog != null" >
+        refund_log = #{record.refundLog,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transId != null" >
+        trans_id = #{record.transId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_order_refund
+    set id = #{record.id,jdbcType=INTEGER},
+      refund_no = #{record.refundNo,jdbcType=VARCHAR},
+      refund_type = #{record.refundType,jdbcType=INTEGER},
+      refund_num = #{record.refundNum,jdbcType=INTEGER},
+      order_recharege_no = #{record.orderRecharegeNo,jdbcType=VARCHAR},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      order_price = #{record.orderPrice,jdbcType=BIGINT},
+      refund_price = #{record.refundPrice,jdbcType=BIGINT},
+      refund_reason = #{record.refundReason,jdbcType=VARCHAR},
+      refund_status = #{record.refundStatus,jdbcType=INTEGER},
+      refund_create = #{record.refundCreate,jdbcType=BIGINT},
+      refund_update = #{record.refundUpdate,jdbcType=BIGINT},
+      refund_log = #{record.refundLog,jdbcType=VARCHAR},
+      trans_id = #{record.transId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dachen.health.pack.order.entity.po.OrderRefund" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_order_refund
+    <set >
+      <if test="refundNo != null" >
+        refund_no = #{refundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundType != null" >
+        refund_type = #{refundType,jdbcType=INTEGER},
+      </if>
+      <if test="refundNum != null" >
+        refund_num = #{refundNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderRecharegeNo != null" >
+        order_recharege_no = #{orderRecharegeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderPrice != null" >
+        order_price = #{orderPrice,jdbcType=BIGINT},
+      </if>
+      <if test="refundPrice != null" >
+        refund_price = #{refundPrice,jdbcType=BIGINT},
+      </if>
+      <if test="refundReason != null" >
+        refund_reason = #{refundReason,jdbcType=VARCHAR},
+      </if>
+      <if test="refundStatus != null" >
+        refund_status = #{refundStatus,jdbcType=INTEGER},
+      </if>
+      <if test="refundCreate != null" >
+        refund_create = #{refundCreate,jdbcType=BIGINT},
+      </if>
+      <if test="refundUpdate != null" >
+        refund_update = #{refundUpdate,jdbcType=BIGINT},
+      </if>
+      <if test="refundLog != null" >
+        refund_log = #{refundLog,jdbcType=VARCHAR},
+      </if>
+      <if test="transId != null" >
+        trans_id = #{transId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dachen.health.pack.order.entity.po.OrderRefund" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_order_refund
+    set refund_no = #{refundNo,jdbcType=VARCHAR},
+      refund_type = #{refundType,jdbcType=INTEGER},
+      refund_num = #{refundNum,jdbcType=INTEGER},
+      order_recharege_no = #{orderRecharegeNo,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=INTEGER},
+      order_price = #{orderPrice,jdbcType=BIGINT},
+      refund_price = #{refundPrice,jdbcType=BIGINT},
+      refund_reason = #{refundReason,jdbcType=VARCHAR},
+      refund_status = #{refundStatus,jdbcType=INTEGER},
+      refund_create = #{refundCreate,jdbcType=BIGINT},
+      refund_update = #{refundUpdate,jdbcType=BIGINT},
+      refund_log = #{refundLog,jdbcType=VARCHAR},
+      trans_id = #{transId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

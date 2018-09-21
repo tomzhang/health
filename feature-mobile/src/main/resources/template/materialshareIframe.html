@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	    <meta name="format-detection" content="telephone=no">
+	    <title>广告文章</title>
+	    <style type="text/css">
+		    html,
+		    body {
+		      font-family: '.PingFangTC-Regular';
+		      height: 100%;
+		      width: 100%;
+		      background: #FFFFFF;
+		      margin: 0px;
+		      padding: 0px;
+		      font-size: 14px;
+		    }
+		    .title{
+	            display: -webkit-flex; /* Safari */
+	            display: flex;
+	            position: fixed;
+	            width: 100%;
+	            height: 50px;
+	            background: #FFFFFF;
+	            box-shadow: 0 1px 1px 0 rgba(0,0,0,0.10);
+	            z-index: 3;
+	        }
+	        .title_left{
+	            display: -webkit-flex; /* Safari */
+	            display: flex;
+	            align-items:center;/*垂直居中*/
+	            width: 50%;
+	        }
+	        .title_right{
+	            display: -webkit-flex; /* Safari */
+	            display: flex;
+	            align-items:center;/*垂直居中*/
+	            justify-content:flex-end;
+	            width: 50%;
+	        }
+	        .title_left img{
+	            width: 30px;
+	            height: 30px;
+	            margin: 10px 11px 10px 15px;
+	        }
+	        .title_left span{
+	            font-size: 18px;
+	            color: #171717;
+	            letter-spacing: 0;
+	        }
+	        .title_right div{
+	            height: 30px;
+	            background: #4BA7F7;
+	            border-radius: 94px;
+	            font-size: 14px;
+	            color: #FFFFFF;
+	            letter-spacing: 0;
+	            line-height: 30px;
+	            text-align: center;
+	            margin-right:15px;
+	            padding: 0px 10px;
+	        }
+	        .iframe_div{
+	        	padding-top:50px;
+	        }
+	        iframe{
+	        	width: 100%;
+	        	border:none;
+	        	height: 100%;
+	        	overflow:scroll; 
+	        }
+		</style>
+	</head>
+	<body id="body">
+		<!--导航栏-->
+		<div class="title">
+		    <div class="title_left">
+		        <img src="http://community.test.file.dachentech.com.cn/bucket/app_logo.png">
+		        <span>医生圈</span>
+		    </div>
+		    <div class="title_right">
+		        <div id="down_app">下载APP参与互动</div>
+		    </div>
+		</div>
+
+		<div class="iframe_div" id="iframe_div">
+			<iframe id="iframe_node" src="${iframeUrl}"></iframe>
+		</div>
+	</body>
+	<script type="text/javascript">
+	(function(){
+		//设置ifram 的高度
+		var iframeNode=document.getElementById('iframe_div');
+		iframeNode.style.height=(window.innerHeight-50)+'px';
+		iframeNode.style.width=(window.innerWidth)+'px';
+		function downApp() {
+		    window.top.postMessage({
+		      name:'openApp',
+		      param:{
+		        type:'dog',
+		        param:''
+		      }
+		    }, '*');
+		}
+		//下载APP
+	    document.getElementById('down_app').onclick =function() {
+	        //拉起下载
+	        downApp();
+		}
+		    
+	})();
+
+	</script>
+</html>

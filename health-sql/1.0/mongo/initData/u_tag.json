@@ -1,0 +1,6 @@
+db.u_tag.insert({     "_id" : ObjectId("567139920dbafbbb88082bb5"),     "userId" : NumberInt(0),     "tagName" : "患者报到",     "tagType" : NumberInt(1),     "seq" : NumberInt(10),     "isSys" : true});
+db.u_tag.insert({     "_id" : ObjectId("567139920dbafbbb88082bb6"),     "userId" : NumberInt(0),     "tagName" : "图文咨询",     "tagType" : NumberInt(1),     "seq" : NumberInt(20),     "isSys" : true});
+db.u_tag.insert({     "_id" : ObjectId("567139920dbafbbb88082bb7"),     "userId" : NumberInt(0),     "tagName" : "电话咨询",     "tagType" : NumberInt(1),     "seq" : NumberInt(30),     "isSys" : true});
+db.u_tag.insert({     "_id" : ObjectId("567139920dbafbbb88082bb8"),     "userId" : NumberInt(0),     "tagName" : "在线门诊",     "tagType" : NumberInt(1),     "seq" : NumberInt(40),     "isSys" : true});
+db.u_tag.insert({     "_id" : ObjectId("567139920dbafbbb88082bb9"),     "userId" : NumberInt(0),     "tagName" : "健康关怀",     "tagType" : NumberInt(1),     "seq" : NumberInt(50),     "isSys" : true});
+db.u_tag.insert({     "_id" : ObjectId("567139920dbafbbb88082bba"),     "userId" : NumberInt(0),     "tagName" : "未激活",     "tagType" : NumberInt(1),     "seq" : NumberInt(100),     "isSys" : true});

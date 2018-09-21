@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.order.mapper.CheckInMapper">
+
+	<resultMap id="checkInMap" type="com.dachen.health.pack.order.entity.vo.CheckInVO">
+		<result column="check_in_id" property="checkInId" />
+		<result column="create_time" property="createTime" />
+		<result column="patient_name" property="patientName" />
+		<result column="patient_id" property="patientId" />
+		<result column="sex" property="sex" />
+		<result column="birthday" property="birthday" />
+		<result column="description" property="description"/>
+		<result column="message" property="message"/>
+		<result column="status" property="status"/>
+		<result column="order_id" property="orderId"/>
+		<result column="top_path" property="topPath"/>
+		<result column="user_id" property="userId"/>
+		<result column="area" property="area"/>
+		<result column="doctor_id" property="doctorId"/>
+		<result column="check_in_from" property="checkInFrom"/>
+		<result column="free_pack" property="freePack"/>
+	</resultMap>
+
+	<!-- 添加报到 -->
+	<insert id="add" parameterType="com.dachen.health.pack.order.entity.po.CheckIn" useGeneratedKeys="true" keyProperty="id">
+		insert into p_check_in(user_id,patient_id,doctor_id,create_time,status,check_in_from,free_pack,last_update_time) values(#{userId},#{patientId},#{doctorId},#{createTime},#{status},#{checkInFrom},#{freePack},#{lastUpdateTime})
+	</insert>
+	
+	<!-- 报到列表 -->
+	<select id="list" parameterType="com.dachen.health.pack.order.entity.vo.CheckInVO" resultMap="checkInMap">
+		select 
+			pi.id check_in_id,
+			case when pi.last_update_time is null  then pi.create_time else pi.last_update_time end as create_time,
+			pi.status,
+			pi.order_id,
+			pi.check_in_from,
+			pi.free_pack,
+		  	pc.patient_name,
+		  	pc.sex,
+		  	pc.birthday,
+		  	pc.description,
+		  	pc.message,
+		  	p.top_path,
+		  	p.area,
+		  	p.user_id,
+			p.id AS patient_id
+		from p_check_in pi,p_case pc,t_patient p
+		where 
+		  	  pi.id=pc.check_in_id  
+		  and pi.patient_id=p.id
+		  and pi.doctor_id=#{doctorId}
+		  <if test="status!=null">
+			and pi.status=#{status}		  
+		  </if>
+		  order by pi.last_update_time desc limit #{start},#{pageSize}
+	</select>
+	
+	<!-- 通过id查找患者报到 -->
+	<select id="getById" parameterType="Integer" resultType="com.dachen.health.pack.order.entity.po.CheckIn">
+		select id,user_id userId,patient_id patientId,doctor_id doctorId,create_time createTime,check_in_from checkInFrom, free_pack freePack,status from p_check_in where id=#{id}
+	</select>
+	
+	<select id="getByUserId" parameterType="Integer" resultType="com.dachen.health.pack.order.entity.po.CheckIn">
+		select id,user_id userId,patient_id patientId,doctor_id doctorId,create_time createTime,check_in_from checkInFrom, free_pack freePack,status from p_check_in where user_id=#{userId}
+	</select>
+	
+	<!-- 处理报到 -->
+	<update id="update">
+		update p_check_in set status=#{status},order_id=#{orderId} where id=#{checkInId} and doctor_id=#{doctorId}
+	</update>
+	
+	<!-- 获取新报道个数 -->
+	<select id="getNewCheckInCount" resultType="Integer" parameterType="Integer">
+		select count(1) from p_check_in  where STATUS=1 and doctor_id=#{doctorId} 
+	</select>
+	
+	<select id="countByPatientId" resultType="Integer" parameterType="Integer">
+		select count(*) from p_check_in where patient_id=#{patientId} 
+	</select>
+	
+	<select id="getCheckInByParam" resultMap="checkInMap" parameterType="com.dachen.health.pack.order.entity.po.CheckIn">
+		select 
+			pi.id check_in_id,
+			pi.create_time,
+			pi.check_in_from,
+			pi.free_pack,
+			pi.status,
+			pi.order_id,
+			pi.patient_id,
+		  	pc.patient_name,
+		  	pc.sex,
+		  	pc.birthday,
+		  	pc.description,
+		  	pc.message,
+		  	p.top_path,
+		  	p.area,
+		  	p.user_id
+		from p_check_in pi,p_case pc,t_patient p
+		where 
+		  	  pi.id=pc.check_in_id  
+		  and pi.patient_id=p.id
+		  and pi.user_id=#{userId}
+		  and pi.doctor_id=#{doctorId}
+<!-- 		  and pi.patient_id = #{patientId} -->
+<!-- 		  <if test="status!=null"> -->
+<!-- 			and pi.status=#{status}		   -->
+<!-- 		  </if> -->
+	</select>
+	
+	<select id="getCheckInByOrderId" resultMap="checkInMap" parameterType="Integer">
+		select 
+			pi.id check_in_id,
+			pi.create_time,
+			pi.check_in_from,
+			pi.free_pack,
+			pi.status,
+			pi.order_id,
+		  	case when pc.patient_name is null then p.user_name else pc.patient_name end patient_name,
+		  	pc.sex,
+		  	pc.birthday,
+		  	pc.description,
+		  	pc.message,
+		  	p.top_path,
+		  	p.area,
+		  	p.user_id
+		from p_check_in pi,p_case pc,t_patient p
+		where 
+		  	  pi.id=pc.check_in_id  
+		  and pi.patient_id=p.id
+		  and pi.order_id=#{orderId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getCheckInByUserIds" resultMap="checkInMap" parameterType="com.dachen.health.pack.order.entity.param.CheckInParam">
+		select
+			pi.id check_in_id,
+			pi.create_time,
+			pi.check_in_from,
+			pi.free_pack,
+			pi.status,
+			pi.order_id,
+			pi.patient_id,
+			pi.doctor_id,
+			pi.user_id
+		from p_check_in pi
+		where pi.user_id in
+		<foreach collection="userIds" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach> 
+	</select>
+	<update id="updateLastConfirmTime" parameterType="com.dachen.health.pack.order.entity.param.CheckInParam">
+		update p_check_in set last_update_time=#{lastUpdateTime} where id=#{checkInId}
+	</update>
+</mapper>

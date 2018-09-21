@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.patient.mapper.DiseaseMapper" >
+  <resultMap id="BaseResultMap" type="com.dachen.health.pack.patient.model.Disease" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="patient_id" property="patientId" jdbcType="INTEGER" />
+    <result column="need_help" property="needHelp" jdbcType="BIT" />
+    <result column="created_time" property="createdTime" jdbcType="BIGINT" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="relation" property="relation" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="is_see_doctor" property="isSeeDoctor" jdbcType="BIT" />
+    <result column="visit_time" property="visitTime" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.dachen.health.pack.patient.model.Disease" extends="BaseResultMap" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <result column="disease_info" property="diseaseInfo" jdbcType="LONGVARCHAR" />
+    <result column="disease_info_now" property="diseaseInfoNow" jdbcType="LONGVARCHAR" />
+    <result column="disease_info_old" property="diseaseInfoOld" jdbcType="LONGVARCHAR" />
+    <result column="family_disease_info" property="familyDiseaseInfo" jdbcType="LONGVARCHAR" />
+    <result column="menstruationdisease_info" property="menstruationdiseaseInfo" jdbcType="LONGVARCHAR" />
+    <result column="see_doctor_msg" property="seeDoctorMsg" jdbcType="LONGVARCHAR" />
+    <result column="heigth" property="heigth" jdbcType="LONGVARCHAR" />
+    <result column="weigth" property="weigth" jdbcType="LONGVARCHAR" />
+    <result column="marriage" property="marriage" jdbcType="LONGVARCHAR" />
+    <result column="profession" property="profession" jdbcType="LONGVARCHAR" />
+    <result column="cure_situation" property="cureSituation" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, patient_id, need_help, created_time, create_user_id, telephone, area, relation, 
+    birthday, user_name, age, sex, is_see_doctor, visit_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    disease_info, disease_info_now, disease_info_old, family_disease_info, menstruationdisease_info, 
+    see_doctor_msg, heigth, weigth, marriage, profession, cure_situation
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.dachen.health.pack.patient.model.DiseaseExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_disease
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.patient.model.DiseaseExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_disease
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_disease
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_disease
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dachen.health.pack.patient.model.DiseaseExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_disease
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dachen.health.pack.patient.model.Disease" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_disease (id, patient_id, need_help, 
+      created_time, create_user_id, telephone, 
+      area, relation, birthday, 
+      user_name, age, sex, 
+      is_see_doctor, visit_time, disease_info, 
+      disease_info_now, disease_info_old, 
+      family_disease_info, menstruationdisease_info, 
+      see_doctor_msg, heigth, weigth, 
+      marriage, profession, cure_situation
+      )
+    values (#{id,jdbcType=INTEGER}, #{patientId,jdbcType=INTEGER}, #{needHelp,jdbcType=BIT}, 
+      #{createdTime,jdbcType=BIGINT}, #{createUserId,jdbcType=INTEGER}, #{telephone,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{relation,jdbcType=VARCHAR}, #{birthday,jdbcType=BIGINT}, 
+      #{userName,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, 
+      #{isSeeDoctor,jdbcType=BIT}, #{visitTime,jdbcType=BIGINT}, #{diseaseInfo,jdbcType=LONGVARCHAR}, 
+      #{diseaseInfoNow,jdbcType=LONGVARCHAR}, #{diseaseInfoOld,jdbcType=LONGVARCHAR}, 
+      #{familyDiseaseInfo,jdbcType=LONGVARCHAR}, #{menstruationdiseaseInfo,jdbcType=LONGVARCHAR}, 
+      #{seeDoctorMsg,jdbcType=LONGVARCHAR}, #{heigth,jdbcType=LONGVARCHAR}, #{weigth,jdbcType=LONGVARCHAR}, 
+      #{marriage,jdbcType=LONGVARCHAR}, #{profession,jdbcType=LONGVARCHAR}, #{cureSituation,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dachen.health.pack.patient.model.Disease" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into t_disease
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="patientId != null" >
+        patient_id,
+      </if>
+      <if test="needHelp != null" >
+        need_help,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="relation != null" >
+        relation,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="isSeeDoctor != null" >
+        is_see_doctor,
+      </if>
+      <if test="visitTime != null" >
+        visit_time,
+      </if>
+      <if test="diseaseInfo != null" >
+        disease_info,
+      </if>
+      <if test="diseaseInfoNow != null" >
+        disease_info_now,
+      </if>
+      <if test="diseaseInfoOld != null" >
+        disease_info_old,
+      </if>
+      <if test="familyDiseaseInfo != null" >
+        family_disease_info,
+      </if>
+      <if test="menstruationdiseaseInfo != null" >
+        menstruationdisease_info,
+      </if>
+      <if test="seeDoctorMsg != null" >
+        see_doctor_msg,
+      </if>
+      <if test="heigth != null" >
+        heigth,
+      </if>
+      <if test="weigth != null" >
+        weigth,
+      </if>
+      <if test="marriage != null" >
+        marriage,
+      </if>
+      <if test="profession != null" >
+        profession,
+      </if>
+      <if test="cureSituation != null" >
+        cure_situation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="patientId != null" >
+        #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="needHelp != null" >
+        #{needHelp,jdbcType=BIT},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null" >
+        #{relation,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="isSeeDoctor != null" >
+        #{isSeeDoctor,jdbcType=BIT},
+      </if>
+      <if test="visitTime != null" >
+        #{visitTime,jdbcType=BIGINT},
+      </if>
+      <if test="diseaseInfo != null" >
+        #{diseaseInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="diseaseInfoNow != null" >
+        #{diseaseInfoNow,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="diseaseInfoOld != null" >
+        #{diseaseInfoOld,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="familyDiseaseInfo != null" >
+        #{familyDiseaseInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="menstruationdiseaseInfo != null" >
+        #{menstruationdiseaseInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="seeDoctorMsg != null" >
+        #{seeDoctorMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="heigth != null" >
+        #{heigth,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="weigth != null" >
+        #{weigth,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="marriage != null" >
+        #{marriage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="profession != null" >
+        #{profession,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="cureSituation != null" >
+        #{cureSituation,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dachen.health.pack.patient.model.DiseaseExample" resultType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from t_disease
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_disease
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.patientId != null" >
+        patient_id = #{record.patientId,jdbcType=INTEGER},
+      </if>
+      <if test="record.needHelp != null" >
+        need_help = #{record.needHelp,jdbcType=BIT},
+      </if>
+      <if test="record.createdTime != null" >
+        created_time = #{record.createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.createUserId != null" >
+        create_user_id = #{record.createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.telephone != null" >
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relation != null" >
+        relation = #{record.relation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=BIGINT},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null" >
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.isSeeDoctor != null" >
+        is_see_doctor = #{record.isSeeDoctor,jdbcType=BIT},
+      </if>
+      <if test="record.visitTime != null" >
+        visit_time = #{record.visitTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.diseaseInfo != null" >
+        disease_info = #{record.diseaseInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.diseaseInfoNow != null" >
+        disease_info_now = #{record.diseaseInfoNow,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.diseaseInfoOld != null" >
+        disease_info_old = #{record.diseaseInfoOld,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.familyDiseaseInfo != null" >
+        family_disease_info = #{record.familyDiseaseInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.menstruationdiseaseInfo != null" >
+        menstruationdisease_info = #{record.menstruationdiseaseInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.seeDoctorMsg != null" >
+        see_doctor_msg = #{record.seeDoctorMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.heigth != null" >
+        heigth = #{record.heigth,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.weigth != null" >
+        weigth = #{record.weigth,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.marriage != null" >
+        marriage = #{record.marriage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.profession != null" >
+        profession = #{record.profession,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.cureSituation != null" >
+        cure_situation = #{record.cureSituation,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_disease
+    set id = #{record.id,jdbcType=INTEGER},
+      patient_id = #{record.patientId,jdbcType=INTEGER},
+      need_help = #{record.needHelp,jdbcType=BIT},
+      created_time = #{record.createdTime,jdbcType=BIGINT},
+      create_user_id = #{record.createUserId,jdbcType=INTEGER},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      relation = #{record.relation,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=BIGINT},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      age = #{record.age,jdbcType=INTEGER},
+      sex = #{record.sex,jdbcType=INTEGER},
+      is_see_doctor = #{record.isSeeDoctor,jdbcType=BIT},
+      visit_time = #{record.visitTime,jdbcType=BIGINT},
+      disease_info = #{record.diseaseInfo,jdbcType=LONGVARCHAR},
+      disease_info_now = #{record.diseaseInfoNow,jdbcType=LONGVARCHAR},
+      disease_info_old = #{record.diseaseInfoOld,jdbcType=LONGVARCHAR},
+      family_disease_info = #{record.familyDiseaseInfo,jdbcType=LONGVARCHAR},
+      menstruationdisease_info = #{record.menstruationdiseaseInfo,jdbcType=LONGVARCHAR},
+      see_doctor_msg = #{record.seeDoctorMsg,jdbcType=LONGVARCHAR},
+      heigth = #{record.heigth,jdbcType=LONGVARCHAR},
+      weigth = #{record.weigth,jdbcType=LONGVARCHAR},
+      marriage = #{record.marriage,jdbcType=LONGVARCHAR},
+      profession = #{record.profession,jdbcType=LONGVARCHAR},
+      cure_situation = #{record.cureSituation,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_disease
+    set id = #{record.id,jdbcType=INTEGER},
+      patient_id = #{record.patientId,jdbcType=INTEGER},
+      need_help = #{record.needHelp,jdbcType=BIT},
+      created_time = #{record.createdTime,jdbcType=BIGINT},
+      create_user_id = #{record.createUserId,jdbcType=INTEGER},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      relation = #{record.relation,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=BIGINT},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      age = #{record.age,jdbcType=INTEGER},
+      sex = #{record.sex,jdbcType=INTEGER},
+      is_see_doctor = #{record.isSeeDoctor,jdbcType=BIT},
+      visit_time = #{record.visitTime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dachen.health.pack.patient.model.Disease" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_disease
+    <set >
+      <if test="patientId != null" >
+        patient_id = #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="needHelp != null" >
+        need_help = #{needHelp,jdbcType=BIT},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null" >
+        relation = #{relation,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="isSeeDoctor != null" >
+        is_see_doctor = #{isSeeDoctor,jdbcType=BIT},
+      </if>
+      <if test="visitTime != null" >
+        visit_time = #{visitTime,jdbcType=BIGINT},
+      </if>
+      <if test="diseaseInfo != null" >
+        disease_info = #{diseaseInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="diseaseInfoNow != null" >
+        disease_info_now = #{diseaseInfoNow,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="diseaseInfoOld != null" >
+        disease_info_old = #{diseaseInfoOld,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="familyDiseaseInfo != null" >
+        family_disease_info = #{familyDiseaseInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="menstruationdiseaseInfo != null" >
+        menstruationdisease_info = #{menstruationdiseaseInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="seeDoctorMsg != null" >
+        see_doctor_msg = #{seeDoctorMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="heigth != null" >
+        heigth = #{heigth,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="weigth != null" >
+        weigth = #{weigth,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="marriage != null" >
+        marriage = #{marriage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="profession != null" >
+        profession = #{profession,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="cureSituation != null" >
+        cure_situation = #{cureSituation,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dachen.health.pack.patient.model.Disease" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_disease
+    set patient_id = #{patientId,jdbcType=INTEGER},
+      need_help = #{needHelp,jdbcType=BIT},
+      created_time = #{createdTime,jdbcType=BIGINT},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      relation = #{relation,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=INTEGER},
+      is_see_doctor = #{isSeeDoctor,jdbcType=BIT},
+      visit_time = #{visitTime,jdbcType=BIGINT},
+      disease_info = #{diseaseInfo,jdbcType=LONGVARCHAR},
+      disease_info_now = #{diseaseInfoNow,jdbcType=LONGVARCHAR},
+      disease_info_old = #{diseaseInfoOld,jdbcType=LONGVARCHAR},
+      family_disease_info = #{familyDiseaseInfo,jdbcType=LONGVARCHAR},
+      menstruationdisease_info = #{menstruationdiseaseInfo,jdbcType=LONGVARCHAR},
+      see_doctor_msg = #{seeDoctorMsg,jdbcType=LONGVARCHAR},
+      heigth = #{heigth,jdbcType=LONGVARCHAR},
+      weigth = #{weigth,jdbcType=LONGVARCHAR},
+      marriage = #{marriage,jdbcType=LONGVARCHAR},
+      profession = #{profession,jdbcType=LONGVARCHAR},
+      cure_situation = #{cureSituation,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dachen.health.pack.patient.model.Disease" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_disease
+    set patient_id = #{patientId,jdbcType=INTEGER},
+      need_help = #{needHelp,jdbcType=BIT},
+      created_time = #{createdTime,jdbcType=BIGINT},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      relation = #{relation,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=INTEGER},
+      is_see_doctor = #{isSeeDoctor,jdbcType=BIT},
+      visit_time = #{visitTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateRelationIllCase"
+  		  parameterType="map">
+  	update t_disease
+  		<set>
+  			<if test="diseaseInfo != null">
+  				disease_info = #{diseaseInfo},
+  			</if>
+  			<if test="seeDoctorMsg != null">
+  				see_doctor_msg = #{seeDoctorMsg},
+  			</if>
+  			<if test="isSeeDoctor != null">
+  				is_see_doctor = #{isSeeDoctor},
+  			</if>
+  		</set>
+  	where id in
+  	<foreach collection="diseaseIds" item="item" open="(" separator="," close=")">
+  		#{item}
+  	</foreach>	  
+  </update>
+  
+</mapper>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.stat.mapper.PackStatMapper">
+	
+	<resultMap id="orderMoneyMap" type="com.dachen.health.pack.stat.entity.vo.PackStatVO">
+		<result column="id" property="id" />
+		<result column="money" property="money" />
+		<result column="amount" property="amount" />
+		<result column="time" property="time" />
+		<result column="order_no" property="orderNo" />
+		<result column="pack_type" property="packType" />
+	</resultMap>
+	
+	<!-- 按集团统计订单金额 -->
+	<select id="orderMoneyByGroup" parameterType="com.dachen.health.pack.stat.entity.param.PackStatParam" resultMap="orderMoneyMap">
+		select
+			t.doctor_id id,
+			sum(t.price) money,
+			count(1) amount
+		from
+			p_order t
+		left join t_order_session s on t.id = s.order_id
+		where
+			t.order_status = ${status}
+			AND t.`order_type` != 2
+			and t.doctor_id in 
+			<foreach collection="userIds" item="item" open="(" separator="," close=")">
+				${item}
+			</foreach>
+			<if test="startTime != null">
+				and s.service_end_time &gt;= ${startTime} 
+			</if>
+			<if test="endTime != null">
+				and s.service_end_time &lt;= ${endTime} 
+			</if>
+			<if test="groupId != null">
+				and t.group_id = '${groupId}'
+			</if>
+		group by
+			t.doctor_id
+		order by money desc limit ${start},${pageSize}
+	</select>
+	
+	<!-- 按集团统计订单金额 -->
+	<select id="orderMoneyByGroupList" parameterType="com.dachen.health.pack.stat.entity.param.PackStatParam" resultMap="orderMoneyMap">
+		select
+			t.doctor_id id,
+			sum(t.price) money,
+			count(1) amount
+		from
+			p_order t
+		left join t_order_session s on t.id = s.order_id
+		where
+			t.order_status = ${status}
+			AND t.`order_type` != 2
+			and t.doctor_id in 
+			<foreach collection="userIds" item="item" open="(" separator="," close=")">
+				${item}
+			</foreach>
+			<if test="startTime != null">
+				and s.service_end_time &gt;= ${startTime} 
+			</if>
+			<if test="endTime != null">
+				and s.service_end_time &lt;= ${endTime} 
+			</if>
+			<if test="groupId != null">
+				and t.group_id = '${groupId}'
+			</if>
+		group by
+			t.doctor_id
+		order by money desc
+	</select>
+	
+	<select id="orderMoneyByGroupCount" parameterType="com.dachen.health.pack.stat.entity.param.PackStatParam" resultType="long">
+		select count(1) from (
+			select
+				1
+			from
+				p_order t
+			left join t_order_session s on t.id = s.order_id
+			where
+				t.order_status = ${status}
+				AND t.`order_type` != 2
+				and t.doctor_id in 
+				<foreach collection="userIds" item="item" open="(" separator="," close=")">
+					${item}
+				</foreach>
+				<if test="startTime != null">
+					and s.service_end_time &gt;= ${startTime} 
+				</if>
+				<if test="endTime != null">
+					and s.service_end_time &lt;= ${endTime} 
+				</if>
+			group by
+				t.doctor_id
+		) a
+	</select>
+	
+	<!-- 按医生统计订单金额 -->
+	<select id="orderMoneyByDoctor" parameterType="com.dachen.health.pack.stat.entity.param.PackStatParam" resultMap="orderMoneyMap">
+		select
+			t.order_no,
+			t.user_id id,
+			t.pack_type,
+			t.price money,
+			CASE WHEN s.service_end_time IS NULL THEN s.create_time ELSE s.service_end_time END time
+		from
+			p_order t
+		left join t_order_session s on t.id = s.order_id
+		where
+			t.order_status = ${status}
+			AND t.`order_type` != 2
+			and t.doctor_id = ${doctorId}
+			<if test="ignoreZeroPrice">
+				and t.price != 0 
+			</if>
+			<if test="startTime != null">
+				and CASE WHEN s.service_end_time IS NULL THEN s.create_time ELSE s.service_end_time END &gt;= ${startTime} 
+			</if>
+			<if test="endTime != null">
+				and CASE WHEN s.service_end_time IS NULL THEN s.create_time ELSE s.service_end_time END &lt;= ${endTime} 
+			</if>
+			<if test="groupId != null">
+				and t.group_id = '${groupId}'
+			</if>
+		order by time desc limit ${start},${pageSize}
+	</select>
+	<select id="orderMoneyByDoctorCount" parameterType="com.dachen.health.pack.stat.entity.param.PackStatParam" resultType="long">
+		select count(1)
+		from
+			p_order t
+		left join t_order_session s on t.id = s.order_id
+		where
+			t.order_status = ${status}
+			AND t.`order_type` != 2
+			and t.doctor_id = ${doctorId}
+			<if test="ignoreZeroPrice">
+				and t.price != 0 
+			</if>
+			<if test="startTime != null">
+				and s.service_end_time &gt;= ${startTime} 
+			</if>
+			<if test="endTime != null">
+				and s.service_end_time &lt;= ${endTime} 
+			</if>
+			<if test="groupId != null">
+				and t.group_id = '${groupId}'
+			</if>
+	</select>
+	
+</mapper>

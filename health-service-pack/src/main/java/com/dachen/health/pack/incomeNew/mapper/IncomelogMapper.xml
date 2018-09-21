@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.incomeNew.mapper.IncomelogMapper" >
+  <resultMap id="BaseResultMap" type="com.dachen.health.pack.incomeNew.entity.po.Incomelog" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="doctor_id" property="doctorId" jdbcType="INTEGER" />
+    <result column="group_id" property="groupId" jdbcType="VARCHAR" />
+    <result column="child_doctor_id" property="childDoctorId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="refund_order_id" property="refundOrderId" jdbcType="INTEGER" />
+    <result column="expend_id" property="expendId" jdbcType="INTEGER" />
+    <result column="cash_id" property="cashId" jdbcType="INTEGER" />
+    <result column="log_type" property="logType" jdbcType="INTEGER" />
+    <result column="money" property="money" jdbcType="DOUBLE" />
+    <result column="create_date" property="createDate" jdbcType="BIGINT" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="month" property="month" jdbcType="VARCHAR" />
+    <result column="extend_1" property="extend1" jdbcType="VARCHAR" />
+    <result column="extend_2" property="extend2" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap type="com.dachen.health.pack.incomeNew.entity.vo.DoctorMoneyVO" id="indexMap">
+  		<result column="balance" property="balance" jdbcType="DOUBLE" />
+  		<result column="totalMoney" property="totalMoney" jdbcType="DOUBLE" />
+  		<result column="unBalance" property="unFinshedMoney" jdbcType="DOUBLE" />
+  		<result column="totalNum" property="totalNum" jdbcType="INTEGER" />
+  		<result column="month" property="month" jdbcType="VARCHAR" />
+  		<result column="year" property="year" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap type="com.dachen.health.pack.incomeNew.entity.vo.BaseDetailVO" id="detailVO">
+  		<result column="id" property="id" jdbcType="INTEGER" />
+  		<result column="order_id" property="orderId" jdbcType="INTEGER" />
+  		<result column="refund_id" property="refundId" jdbcType="INTEGER" />
+  		<result column="expand_id" property="expandId" jdbcType="INTEGER" />
+  		<result column="cash_id" property="cashId" jdbcType="INTEGER" />
+  		<result column="child_doctor_id" property="childId" jdbcType="INTEGER" />
+  		<result column="money" property="money" jdbcType="DOUBLE" />
+  		<result column="price" property="orderMoney" jdbcType="DOUBLE" />
+  		<result column="log_type" property="logType" jdbcType="INTEGER" />
+  		<result column="order_type" property="orderType" />
+  		<result column="order_no" property="orderNO" />
+		<result column="pack_type" property="packType" />
+		<result column="pack_id" property="packId" />
+  		<result column="create_date" property="createDate" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, doctor_id, group_id, child_doctor_id, order_id, refund_order_id, expend_id, cash_id,log_type, 
+    money, create_date, year, month, extend_1, extend_2, type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.incomeNew.entity.po.IncomelogExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_incomelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from t_incomelog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_incomelog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dachen.health.pack.incomeNew.entity.po.IncomelogExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_incomelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dachen.health.pack.incomeNew.entity.po.Incomelog" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into t_incomelog (id, doctor_id, group_id, 
+      child_doctor_id, order_id, refund_order_id, 
+      expend_id, cash_id,log_type, money, 
+      create_date, year, month, 
+      extend_1, extend_2, type
+      )
+    values (#{id,jdbcType=INTEGER}, #{doctorId,jdbcType=INTEGER}, #{groupId,jdbcType=VARCHAR}, 
+      #{childDoctorId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{refundOrderId,jdbcType=INTEGER}, 
+      #{expendId,jdbcType=INTEGER},#{cashId,jdbcType=INTEGER}, #{logType,jdbcType=INTEGER}, #{money,jdbcType=DOUBLE}, 
+      #{createDate,jdbcType=BIGINT}, #{year,jdbcType=INTEGER}, #{month,jdbcType=VARCHAR}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dachen.health.pack.incomeNew.entity.po.Incomelog" useGeneratedKeys="true"  keyProperty="id">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into t_incomelog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="doctorId != null" >
+        doctor_id,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="childDoctorId != null" >
+        child_doctor_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="refundOrderId != null" >
+        refund_order_id,
+      </if>
+      <if test="expendId != null" >
+        expend_id,
+      </if>
+      <if test="cashId != null" >
+        cash_id,
+      </if>
+      <if test="logType != null" >
+        log_type,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="month != null" >
+        month,
+      </if>
+      <if test="extend1 != null" >
+        extend_1,
+      </if>
+      <if test="extend2 != null" >
+        extend_2,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null" >
+        #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="childDoctorId != null" >
+        #{childDoctorId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="refundOrderId != null" >
+        #{refundOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="expendId != null" >
+        #{expendId,jdbcType=INTEGER},
+      </if>
+      <if test="cashId != null" >
+        #{cashId,jdbcType=INTEGER},
+      </if>
+      <if test="logType != null" >
+        #{logType,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=BIGINT},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dachen.health.pack.incomeNew.entity.po.IncomelogExample" resultType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from t_incomelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_incomelog
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctorId != null" >
+        doctor_id = #{record.doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupId != null" >
+        group_id = #{record.groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.childDoctorId != null" >
+        child_doctor_id = #{record.childDoctorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.refundOrderId != null" >
+        refund_order_id = #{record.refundOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.expendId != null" >
+        expend_id = #{record.expendId,jdbcType=INTEGER},
+      </if>
+      
+       <if test="record.expendId != null" >
+        cash_id = #{cashId.expendId,jdbcType=INTEGER},
+      </if>
+      
+      
+      <if test="record.logType != null" >
+        log_type = #{record.logType,jdbcType=INTEGER},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DOUBLE},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=BIGINT},
+      </if>
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null" >
+        month = #{record.month,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend1 != null" >
+        extend_1 = #{record.extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend2 != null" >
+        extend_2 = #{record.extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_incomelog
+    set id = #{record.id,jdbcType=INTEGER},
+      doctor_id = #{record.doctorId,jdbcType=INTEGER},
+      group_id = #{record.groupId,jdbcType=VARCHAR},
+      child_doctor_id = #{record.childDoctorId,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      refund_order_id = #{record.refundOrderId,jdbcType=INTEGER},
+      expend_id = #{record.expendId,jdbcType=INTEGER},
+      cash_id = #{record.cashId,jdbcType=INTEGER},
+      log_type = #{record.logType,jdbcType=INTEGER},
+      money = #{record.money,jdbcType=DOUBLE},
+      create_date = #{record.createDate,jdbcType=BIGINT},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=VARCHAR},
+      extend_1 = #{record.extend1,jdbcType=VARCHAR},
+      extend_2 = #{record.extend2,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dachen.health.pack.incomeNew.entity.po.Incomelog" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_incomelog
+    <set >
+      <if test="doctorId != null" >
+        doctor_id = #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="childDoctorId != null" >
+        child_doctor_id = #{childDoctorId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="refundOrderId != null" >
+        refund_order_id = #{refundOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="expendId != null" >
+        expend_id = #{expendId,jdbcType=INTEGER},
+      </if>
+      <if test="expendId != null" >
+        cash_id = #{cashId,jdbcType=INTEGER},
+      </if>
+      
+      <if test="logType != null" >
+        log_type = #{logType,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=BIGINT},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        month = #{month,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        extend_1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        extend_2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dachen.health.pack.incomeNew.entity.po.Incomelog" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_incomelog
+    set doctor_id = #{doctorId,jdbcType=INTEGER},
+      group_id = #{groupId,jdbcType=VARCHAR},
+      child_doctor_id = #{childDoctorId,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER},
+      refund_order_id = #{refundOrderId,jdbcType=INTEGER},
+      expend_id = #{expendId,jdbcType=INTEGER},
+      cash_id = #{cashId,jdbcType=INTEGER},
+      log_type = #{logType,jdbcType=INTEGER},
+      money = #{money,jdbcType=DOUBLE},
+      create_date = #{createDate,jdbcType=BIGINT},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=VARCHAR},
+      extend_1 = #{extend1,jdbcType=VARCHAR},
+      extend_2 = #{extend2,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="getTotalMoneyAndCountIncomByParam" parameterType="com.dachen.health.pack.incomeNew.entity.param.IncomelogParam" resultMap="indexMap">
+  		select sum(money) as totalMoney, count(*) as totalNum from t_incomelog
+  		where log_type != 14 
+  		<choose>
+  			<when test="type != null and type== 1">
+  				and doctor_id=#{doctorId,jdbcType=INTEGER}
+  			</when>
+  			<when test="type != null and type == 2">
+  				and group_id = #{groupId,jdbcType=VARCHAR}
+  			</when>
+  			<otherwise>
+				<!--此种情况不支持就查不到  -->
+  				and doctor_id=0 and group_id =0
+  			</otherwise>
+  		</choose>
+  </select>
+  
+  <select id="getBalanceMoneyAndCountIncomByParam" parameterType="com.dachen.health.pack.incomeNew.entity.param.IncomelogParam" resultMap="indexMap">
+  		select sum(money) as balance, count(*) as totalNum from t_incomelog
+  		where 1=1
+  		<choose>
+  			<when test="type != null and type== 1">
+  				and doctor_id=#{doctorId,jdbcType=INTEGER}
+  			</when>
+  			<when test="type != null and type == 2">
+  				and group_id = #{groupId,jdbcType=VARCHAR}
+  			</when>
+  			<otherwise>
+				<!--此种情况不支持就查不到  -->
+  				and doctor_id=0 and group_id =0
+  			</otherwise>
+  		</choose>
+  </select>
+  
+  <select id="getUnFinishedMoneyAndCountByParam" parameterType="com.dachen.health.pack.incomeNew.entity.param.IncomelogParam" resultMap="indexMap">
+  		select sum(p1.split_money) as unBalance ,count(*) as totalNum
+		from p_order_doctor p1  
+		INNER JOIN p_order p2 on p1.order_id=p2.id
+		where p2.order_status = 3 
+		and p1.doctor_id = #{doctorId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getUnFinishedMoneyList" parameterType="com.dachen.health.pack.incomeNew.entity.param.IncomelogParam" resultMap="detailVO">
+  		select p1.split_money as money, p2.create_time as create_date,p2.order_type ,p2.id as order_id,p2.pack_type
+		from p_order_doctor p1  
+		INNER JOIN p_order p2 on p1.order_id=p2.id
+		where p2.order_status = 3 and  p1.split_money > 0
+		and p1.doctor_id = #{doctorId,jdbcType=INTEGER}
+  		order by p2.create_time desc 
+  		limit #{start},#{pageSize}
+  </select>
+  
+  <select id="getUnFinishedMoneyCount" parameterType="com.dachen.health.pack.incomeNew.entity.param.IncomelogParam" resultType="java.lang.Integer" >
+  		select count(*)
+		from p_order_doctor p1  
+		INNER JOIN p_order p2 on p1.order_id=p2.id
+		where p2.order_status = 3  and  p1.split_money > 0
+		and p1.doctor_id = #{doctorId,jdbcType=INTEGER}
+  </select>
+  
+  
+ <select id="getBalanceDetail" parameterType="com.dachen.health.pack.incomeNew.entity.param.IncomelogParam" resultMap="detailVO">
+  		SELECT t.id,t.create_date,t.money,t.log_type,t.child_doctor_id,
+  		po.id as order_id,po.order_type,po.pack_type,po.pack_id,
+  		pr.id as refund_id,pe.id as expand_id,tc.id as cash_id 
+  		from t_incomelog t
+		LEFT JOIN p_order po on t.order_id = po.id
+		LEFT JOIN p_refund_order pr on t.refund_order_id = pr.id
+		LEFT JOIN p_expend pe on t.refund_order_id = pe.id
+		LEFT JOIN t_cash tc on t.cash_id = tc.id
+		WHERE t.doctor_id =#{doctorId,jdbcType=INTEGER}
+		ORDER BY t.create_date DESC 
+		limit #{start},#{pageSize}
+  </select>
+  
+  <select id="getBalanceDetailCount" parameterType="com.dachen.health.pack.incomeNew.entity.param.IncomelogParam" resultType="java.lang.Integer" >
+  		SELECT count(*) 
+  		from t_incomelog t
+		LEFT JOIN p_order po on t.order_id = po.id
+		LEFT JOIN p_refund_order pr on t.refund_order_id = pr.id
+		LEFT JOIN p_expend pe on t.refund_order_id = pe.id
+		LEFT JOIN t_cash tc on t.cash_id = tc.id
+		WHERE t.doctor_id =#{doctorId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getTotalMoneyYMList" parameterType="com.dachen.health.pack.incomeNew.entity.param.IncomelogParam" resultMap="indexMap">
+  		select sum(money) as totalMoney, count(*) as totalNum ,month,year from t_incomelog
+  		where log_type != 14 
+  		<choose>
+  			<when test="type != null and type== 1">
+  				and doctor_id=#{doctorId,jdbcType=INTEGER}
+  			</when>
+  			<when test="type != null and type == 2">
+  				and group_id = #{groupId,jdbcType=VARCHAR}
+  			</when>
+  			<otherwise>
+				<!--此种情况不支持就查不到  -->
+  				and doctor_id=0 and group_id =0
+  			</otherwise>
+  		</choose>
+  		group by month,year
+		ORDER BY create_date DESC
+  		limit #{start},#{pageSize}
+  </select>
+  
+  <select id="getTotalMoneyYMListCount" parameterType="com.dachen.health.pack.incomeNew.entity.param.IncomelogParam" resultType="java.lang.Integer" >
+  	select count(t.totalMoney) from
+  	  (
+	  		select sum(money) as totalMoney, count(*) as totalNum from t_incomelog
+	  		where log_type != 14 
+	  		<choose>
+	  			<when test="type != null and type== 1">
+	  				and doctor_id=#{doctorId,jdbcType=INTEGER}
+	  			</when>
+	  			<when test="type != null and type == 2">
+	  				and group_id = #{groupId,jdbcType=VARCHAR}
+	  			</when>
+	  			<otherwise>
+					<!--此种情况不支持就查不到  -->
+	  				and doctor_id=0 and group_id =0
+	  			</otherwise>
+	  		</choose>
+	  		group by month
+	  	) as t
+  </select>
+  
+  <select id="getTotalMoneyYMDetail" parameterType="com.dachen.health.pack.incomeNew.entity.param.IncomelogParam" resultMap="detailVO">
+  		SELECT t.id,t.create_date,t.money,t.log_type,t.child_doctor_id,t.create_date,
+  		po.id as order_id,po.order_type,po.pack_type,po.pack_id,po.price,po.price,po.order_no,
+  		pr.id as refund_id,pe.id as expand_id,tc.id as cash_id 
+  		from t_incomelog t
+		LEFT JOIN p_order po on t.order_id = po.id
+		LEFT JOIN p_refund_order pr on t.refund_order_id = pr.id
+		LEFT JOIN p_expend pe on t.refund_order_id = pe.id
+		LEFT JOIN t_cash tc on t.cash_id = tc.id
+		where  t.log_type != 14  and t.month = #{month,jdbcType=VARCHAR}
+		<choose>
+	  			<when test="type != null and type== 1">
+	  				and t.doctor_id=#{doctorId,jdbcType=INTEGER}
+	  				ORDER BY t.log_type ASC ,t.create_date DESC 
+	  			</when>
+	  			<when test="type != null and type == 2">
+	  				and t.group_id = #{groupId,jdbcType=VARCHAR}
+	  				ORDER BY t.create_date DESC 
+	  			</when>
+	  			<otherwise>
+					<!--此种情况不支持就查不到  -->
+	  				and t.doctor_id=0 and t.group_id =0
+	  			</otherwise>
+	  		</choose>
+		limit #{start},#{pageSize}
+  </select>
+  
+  <select id="getTotalMoneyYMDetailCount" parameterType="com.dachen.health.pack.incomeNew.entity.param.IncomelogParam" resultType="java.lang.Integer" >
+  		select count(dc.id) from 
+  		(
+  			SELECT t.id,t.create_date,t.money,t.log_type,t.child_doctor_id,
+	  		po.id as order_id,po.order_type,po.pack_type,po.pack_id,
+	  		pr.id as refund_id,pe.id as expand_id,tc.id as cash_id 
+	  		from t_incomelog t
+			LEFT JOIN p_order po on t.order_id = po.id
+			LEFT JOIN p_refund_order pr on t.refund_order_id = pr.id
+			LEFT JOIN p_expend pe on t.refund_order_id = pe.id
+			LEFT JOIN t_cash tc on t.cash_id = tc.id
+			where  t.log_type != 14   and t.month = #{month,jdbcType=VARCHAR}
+			<choose>
+		  			<when test="type != null and type== 1">
+		  				and  t.doctor_id=#{doctorId,jdbcType=INTEGER}
+		  			</when>
+		  			<when test="type != null and type == 2">
+		  				and  t.group_id = #{groupId,jdbcType=VARCHAR}
+		  			</when>
+		  			<otherwise>
+						<!--此种情况不支持就查不到  -->
+		  				and  t.doctor_id=0 and  t.group_id =0
+		  			</otherwise>
+		  		</choose>
+			ORDER BY t.log_type ASC ,t.create_date DESC 
+  		)as dc
+  </select>
+  <select id="getMoreConditionMMList" parameterType="com.dachen.health.pack.incomeNew.entity.param.IncomelogParam" resultMap="detailVO">
+  		SELECT t.id,t.create_date,t.money,t.log_type,t.child_doctor_id,
+  		po.id as order_id,po.order_type,po.pack_type,po.pack_id,po.price,po.order_no,
+  		pr.id as refund_id,pe.id as expand_id,tc.id as cash_id 
+  		from t_incomelog t
+		LEFT JOIN p_order po on t.order_id = po.id
+		LEFT JOIN p_refund_order pr on t.refund_order_id = pr.id
+		LEFT JOIN p_expend pe on t.refund_order_id = pe.id
+		LEFT JOIN t_cash tc on t.cash_id = tc.id
+		where  t.log_type != 14  and t.type = 2 and t.group_id = #{groupId,jdbcType=VARCHAR} and t.month = #{month,jdbcType=VARCHAR}
+		
+<!-- 	      <if test="childDoctorId != null" > -->
+<!-- 	         and t.child_doctor_id = #{childDoctorId,jdbcType=INTEGER} -->
+<!-- 	      </if> -->
+	      <if test="uIdList != null">
+					and t.child_doctor_id in
+					<foreach collection="uIdList" item="statusType" open="(" close=")" separator="," >
+	      					#{statusType}
+	    			</foreach>
+    			</if>
+	      <if test="logType != null">
+	      	and t.log_type =  #{logType,jdbcType=INTEGER}
+	      </if>
+	       <if test="kj != null">
+	      	and t.log_type in (11,12,13,15,16)
+	      </if>
+	      <if test="startTime != null" >
+	        and t.create_date &gt; #{startTime,jdbcType=BIGINT}
+	      </if>
+	      <if test="endTime != null">
+	      	and t.create_date &lt; #{endTime,jdbcType=BIGINT}
+	      </if>
+	      <if  test="orderType != null">
+	      	and po.order_type=#{orderType}
+	      </if>
+	      <if test="packType != null">
+	        and po.pack_type=#{packType}
+	      </if>
+	     order by t.create_date desc 
+	     limit #{start},#{pageSize}
+  </select>
+  
+  	 <select id="getMoreConditionMMCount" parameterType="com.dachen.health.pack.incomeNew.entity.param.IncomelogParam" resultType="java.lang.Integer" >
+  		SELECT count(*) 
+  		from t_incomelog t
+		LEFT JOIN p_order po on t.order_id = po.id
+		LEFT JOIN p_refund_order pr on t.refund_order_id = pr.id
+		LEFT JOIN p_expend pe on t.refund_order_id = pe.id
+		LEFT JOIN t_cash tc on t.cash_id = tc.id
+		where  t.log_type != 14  and t.type = 2 and t.group_id = #{groupId,jdbcType=VARCHAR} and t.month = #{month,jdbcType=VARCHAR}
+		
+<!-- 	      <if test="childDoctorId != null" > -->
+<!-- 	         and t.child_doctor_id = #{childDoctorId,jdbcType=INTEGER} -->
+<!-- 	      </if> -->
+ 			<if test="uIdList != null">
+					and t.child_doctor_id in
+					<foreach collection="uIdList" item="statusType" open="(" close=")" separator="," >
+	      					#{statusType}
+	    			</foreach>
+   			</if>
+	      <if test="logType != null">
+	      	and t.log_type = #{logType,jdbcType=INTEGER}
+	      </if>
+	        <if test="kj != null">
+	      	and t.log_type in (11,12,13,15,16)
+	      </if>
+	      <if test="startTime != null" >
+	        and t.create_date &gt; #{startTime,jdbcType=BIGINT}
+	      </if>
+	      <if test="endTime != null">
+	      	and t.create_date &lt; #{endTime,jdbcType=BIGINT}
+	      </if>
+	       <if  test="orderType != null">
+	      	and po.order_type=#{orderType}
+	      </if>
+	       <if test="packType != null">
+	        and po.pack_type=#{packType}
+	      </if>
+  </select>
+</mapper>

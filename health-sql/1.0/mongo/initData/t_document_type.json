@@ -1,0 +1,104 @@
+{ 
+    "_id" : ObjectId("565550b2b52225572a9b957f"), 
+    "code" : "PF", 
+    "name" : "皮肤性病科", 
+    "weight" : NumberInt(1), 
+    "documentType" : NumberInt(2), 
+    "count" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("566a78453bfa48e39522a68e"), 
+    "code" : "TJ", 
+    "name" : "头颈外科", 
+    "weight" : NumberInt(0), 
+    "documentType" : NumberInt(2), 
+    "count" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("566a78453bfa48e39522a68f"), 
+    "code" : "SJ", 
+    "name" : "神经内科", 
+    "weight" : NumberInt(0), 
+    "documentType" : NumberInt(2), 
+    "count" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("566a78453bfa48e39522a690"), 
+    "code" : "NK", 
+    "name" : "内科", 
+    "weight" : NumberInt(8), 
+    "documentType" : NumberInt(2), 
+    "count" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("566a78463bfa48e39522a691"), 
+    "code" : "YK", 
+    "name" : "眼科", 
+    "weight" : NumberInt(4), 
+    "documentType" : NumberInt(2), 
+    "count" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("566a78463bfa48e39522a692"), 
+    "code" : "KQ", 
+    "name" : "口腔科", 
+    "weight" : NumberInt(3), 
+    "documentType" : NumberInt(2), 
+    "count" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("566a78463bfa48e39522a693"), 
+    "code" : "EB", 
+    "name" : "耳鼻喉科", 
+    "weight" : NumberInt(0), 
+    "documentType" : NumberInt(2), 
+    "count" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("566a78463bfa48e39522a694"), 
+    "code" : "EK", 
+    "name" : "儿科", 
+    "weight" : NumberInt(5), 
+    "documentType" : NumberInt(2), 
+    "count" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("566a78463bfa48e39522a695"), 
+    "code" : "XL", 
+    "name" : "心理科", 
+    "weight" : NumberInt(2), 
+    "documentType" : NumberInt(2), 
+    "count" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("566a78463bfa48e39522a696"), 
+    "code" : "CR", 
+    "name" : "传染科", 
+    "weight" : NumberInt(0), 
+    "documentType" : NumberInt(2), 
+    "count" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("566a78463bfa48e39522a697"), 
+    "code" : "FC", 
+    "name" : "妇产科", 
+    "weight" : NumberInt(6), 
+    "documentType" : NumberInt(2), 
+    "count" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("566a78463bfa48e39522a698"), 
+    "code" : "WK", 
+    "name" : "外科", 
+    "weight" : NumberInt(7), 
+    "documentType" : NumberInt(2), 
+    "count" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("566a78463bfa48e39522a699"), 
+    "code" : "QT", 
+    "name" : "其它", 
+    "weight" : NumberInt(0), 
+    "documentType" : NumberInt(2), 
+    "count" : NumberInt(0)
+}

@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dachen.health.pack.patient.mapper.PatientMapper">
+  <resultMap id="BaseResultMap" type="com.dachen.health.pack.patient.model.Patient">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="sex" jdbcType="SMALLINT" property="sex" />
+    <result column="birthday" jdbcType="BIGINT" property="birthday" />
+    <result column="relation" jdbcType="VARCHAR" property="relation" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="top_path" jdbcType="VARCHAR" property="topPath" />
+    <result column="idcard" property="idcard" jdbcType="VARCHAR" />
+    <result column="idType" property="idtype" jdbcType="SMALLINT" />
+    <result column="height" property="height" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="VARCHAR" />
+    <result column="marriage" property="marriage" jdbcType="VARCHAR" />
+    <result column="professional" property="professional" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, user_name, sex, birthday, relation, area, user_id, telephone, top_path, idcard, idType, height, weight, marriage, professional
+  </sql>
+  <select id="selectByExample" parameterType="com.dachen.health.pack.patient.model.PatientExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_patient
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from t_patient
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+   <select id="findByIds" parameterType="list" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_patient
+    where id IN
+      <foreach collection="list" item="item" open="(" separator="," close=")">
+          #{item}
+      </foreach>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_patient
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dachen.health.pack.patient.model.PatientExample">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_patient
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dachen.health.pack.patient.model.Patient">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_patient ( user_name, sex, 
+      birthday, relation, area, 
+      user_id, telephone, top_path, 
+      idcard, idType, height, 
+      weight, marriage, professional
+      )
+    values (#{userName,jdbcType=VARCHAR}, #{sex,jdbcType=SMALLINT}, 
+      #{birthday,jdbcType=BIGINT}, #{relation,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, #{telephone,jdbcType=VARCHAR}, #{topPath,jdbcType=VARCHAR}, 
+      #{idcard,jdbcType=VARCHAR}, #{idtype,jdbcType=SMALLINT}, #{height,jdbcType=VARCHAR}, 
+      #{weight,jdbcType=VARCHAR}, #{marriage,jdbcType=VARCHAR}, #{professional,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dachen.health.pack.patient.model.Patient">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_patient
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="relation != null">
+        relation,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="topPath != null">
+        top_path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=BIGINT},
+      </if>
+      <if test="relation != null">
+        #{relation,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="topPath != null">
+        #{topPath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dachen.health.pack.patient.model.PatientExample" resultType="java.lang.Integer">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from t_patient
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_patient
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=SMALLINT},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=BIGINT},
+      </if>
+      <if test="record.relation != null">
+        relation = #{record.relation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null">
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.telephone != null">
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.topPath != null">
+        top_path = #{record.topPath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_patient
+    set id = #{record.id,jdbcType=INTEGER},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=SMALLINT},
+      birthday = #{record.birthday,jdbcType=BIGINT},
+      relation = #{record.relation,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      top_path = #{record.topPath,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dachen.health.pack.patient.model.Patient">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_patient
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=BIGINT},
+      </if>
+      <if test="relation != null">
+        relation = #{relation,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="topPath != null">
+        top_path = #{topPath,jdbcType=VARCHAR},
+      </if>
+     <if test="idcard != null" >
+        idcard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="idtype != null" >
+        idType = #{idtype,jdbcType=SMALLINT},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="marriage != null" >
+        marriage = #{marriage,jdbcType=VARCHAR},
+      </if>
+      <if test="professional != null" >
+        professional = #{professional,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dachen.health.pack.patient.model.Patient">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_patient
+    set user_name = #{userName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=SMALLINT},
+      birthday = #{birthday,jdbcType=BIGINT},
+      relation = #{relation,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      top_path = #{topPath,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getPatientIdsByUserId"
+  		  parameterType="int"
+  		  resultType="int">
+	  	select distinct id
+	  	from t_patient
+	  	where user_id = #{userId,jdbcType=INTEGER}	  
+  </select>
+
+  <select id="getPatientIdsByUserIds" parameterType="list" resultType="Integer">
+    SELECT
+      p.id
+    FROM
+      t_patient p
+    WHERE
+      p.user_id IN
+      <foreach collection="list" item="item" open="(" separator="," close=")">
+          #{item}
+      </foreach>
+  </select>
+  
+  <select id="getByIds" parameterType="com.dachen.health.pack.patient.model.PatientExample" resultMap="BaseResultMap">
+  	SELECT
+		*
+	FROM
+		t_patient t
+	WHERE
+		t.id IN
+	<foreach collection="ids" item="item" open="(" separator="," close=")">
+		#{item}
+	</foreach> 
+  </select>
+  
+  <select id="getAllPatientNames"
+  		  parameterType="int"
+  		  resultType="string">
+  	select user_name
+  	from  t_patient
+  	where user_id = #{userId,jdbcType=INTEGER}	    
+  </select>
+
+  <select id="findPatientIdsByKeyword"
+ 		 parameterType="string"
+ 		 resultType="int">
+ 	select id
+ 	from t_patient
+ 	where user_name like concat('%',#{keyword},'%')
+ 	or    idcard = #{keyword}
+ 	or    telephone  = #{keyword}
+  </select>
+  
+  <select id="findPatientsByKeyword" parameterType="string" resultMap="BaseResultMap">
+ 	select 
+ 	<include refid="Base_Column_List" />
+ 	from t_patient
+ 	where user_name like concat('%',#{keyword},'%')
+ 	or    idcard = #{keyword}
+ 	or    telephone  = #{keyword}
+  </select>
+
+  <select id="findSelfByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT * FROM t_patient p WHERE p.`user_id` = #{userId} AND p.`relation` = "本人" LIMIT 1
+  </select>
+
+
+</mapper>

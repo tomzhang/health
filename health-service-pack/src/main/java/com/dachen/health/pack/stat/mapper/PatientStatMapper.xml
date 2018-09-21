@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.stat.mapper.PatientStatMapper">
+	
+	<resultMap id="patientStatMap" type="com.dachen.health.pack.stat.entity.vo.PatientStatVO">
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="sex" property="sex" />
+		<result column="birthday" property="birthday" />
+		<result column="relation" property="relation" />
+		<result column="telephone" property="telephone" />
+		<result column="top_path" property="topPath" />
+		<result column="area" property="area"/>
+	</resultMap>
+	
+	<resultMap id="cureRecordMap" type="com.dachen.health.pack.stat.entity.vo.PatientStatVO">
+		<result column="id" property="id" />
+		<result column="disease_type_name" property="diseaseTypeName" />
+		<result column="create_time" property="createTime" />
+		<result column="order_id" property="orderId"/>
+	</resultMap>
+	
+	<resultMap id="patientGroupMap" type="com.dachen.health.pack.stat.entity.vo.PatientGroupStatVO">
+		<result column="group_id" property="groupId" />
+		<result column="user_id" property="userId" />
+	</resultMap>
+	
+	<resultMap id="diseaseInfoMap" type="com.dachen.health.pack.stat.entity.vo.DiseaseInfoVo">
+		<result column="patient_id" property="patientId"/>
+		<result column="disease_type_id" property="diseaseTypeId"/>
+		<result column="disease_type_name" property="diseaseTypeName"/>
+	</resultMap>
+	
+	<!-- 统计用户被医生治疗过的患者 -->
+	<select id="getByUserAndDoctor" parameterType="com.dachen.health.pack.stat.entity.param.PatientStatParam" resultMap="patientStatMap">
+		select
+			p.id,
+			p.user_name name,
+			p.sex,
+			p.birthday,
+			p.relation,
+			p.telephone,
+			p.top_path
+		from
+			t_patient p,
+			p_order o
+		where
+			 o.patient_id=p.id
+		and p.user_id = ${userId}
+		and o.doctor_id in
+		<foreach collection="doctorIds" item="item" open="(" separator="," close=")">
+			${item}
+		</foreach>
+		and o.order_status = ${status}
+		 AND o.group_id=      #{groupId,jdbcType=VARCHAR}
+		group by p.id
+	</select>
+	
+	<!-- 按用户和病种查找患者 -->
+	<select id="getByUserAndDisease" parameterType="com.dachen.health.pack.stat.entity.param.PatientStatParam" resultMap="patientStatMap">
+		select
+			p.id,
+			p.user_name name,
+			p.sex,
+			p.birthday,
+			p.relation,
+			p.telephone,
+			p.top_path
+		from
+			t_patient p,
+			t_patient_disease pd
+		where
+			p.id = pd.patient_id
+		and p.user_id = pd.user_id
+		and p.user_id = ${userId}
+	     AND pd.group_id= #{groupId,jdbcType=VARCHAR}
+		and pd.disease_type_id in 
+		<foreach collection="diseaseIds" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		group by p.id
+	</select>
+	
+	<!-- 按病种统计出被医生治疗过用户 -->
+	<select id="getUserByDiseaseAndDoctor" parameterType="com.dachen.health.pack.stat.entity.param.PatientStatParam" resultType="Integer">
+		select pd.user_id from t_patient_disease pd where pd.doctor_id in 
+		<foreach collection="doctorIds" item="doctorId" open="(" separator="," close=")">
+			${doctorId}
+		</foreach>
+		and pd.disease_type_id in 
+		<foreach collection="diseaseIds" item="diseaseId" open="(" separator="," close=")">
+			#{diseaseId}
+		</foreach>
+		and pd.group_Id = "${groupId}"
+		order by id desc limit ${start},${pageSize}
+	</select>
+	
+	<select id="getUserByDiseaseAndDoctorCount" parameterType="com.dachen.health.pack.stat.entity.param.PatientStatParam" resultType="long">
+		select count(1) from (select pd.user_id from  t_patient_disease pd where pd.doctor_id in 
+		<foreach collection="doctorIds" item="doctorId" open="(" separator="," close=")">
+			${doctorId}
+		</foreach>
+		and pd.disease_type_id in 
+		<foreach collection="diseaseIds" item="diseaseId" open="(" separator="," close=")">
+			#{diseaseId}
+		</foreach>
+		group by pd.user_id) as pp
+	</select>
+	
+	<!-- 获取诊疗记录,通过患者和医生获取 -->
+	<select id="getCureRecordByDoctor" parameterType="com.dachen.health.pack.stat.entity.param.PatientStatParam" resultMap="cureRecordMap">
+		select
+			p.disease_type_name,
+			c.doctor_id id,
+			c.create_time
+		from
+			p_cure_record c
+		left join t_patient_disease p on c.order_id = p.order_id
+		where
+			c.patient_id = ${patientId}
+		and c.doctor_id in 
+		<foreach collection="doctorIds" item="item" open="(" separator="," close=")">
+			${item}
+		</foreach>
+		order by
+			c.create_time desc
+	</select>
+	
+	<!-- 获取诊疗记录,通过患者和医生获取 -->
+	<select id="getCureRecordByGroupDoctor" parameterType="com.dachen.health.pack.stat.entity.param.PatientStatParam" resultMap="cureRecordMap">
+		SELECT
+			c.order_id,
+			c.doctor_id id,
+			c.create_time
+		FROM
+			p_cure_record c LEFT JOIN p_order o ON c.order_id = o.id
+		WHERE
+			c.patient_id = ${patientId}
+		AND c.doctor_id IN
+		<foreach collection="doctorIds" item="item" open="(" separator="," close=")">
+			${item}
+		</foreach>
+		AND o.group_id = "${groupId}"
+		ORDER BY
+			c.create_time DESC
+	</select>
+	
+	<!-- 获取诊疗记录,通过患者和医生获取 -->
+	<select id="getDieaseByGroupDoctor" parameterType="com.dachen.health.pack.stat.entity.param.PatientStatParam" resultMap="cureRecordMap">
+		SELECT
+			p.order_id,
+			p.disease_type_name
+		FROM
+			t_patient_disease p
+		WHERE
+			p.order_id IN
+		<foreach collection="orderIds" item="item" open="(" separator="," close=")">
+			${item}
+		</foreach>
+	</select>
+	
+	<!-- 获取诊疗记录,通过患者和病种获取 -->
+	<select id="getCureRecordByDisease" parameterType="com.dachen.health.pack.stat.entity.param.PatientStatParam" resultMap="cureRecordMap">
+		select
+			p.disease_type_name,
+			c.doctor_id id,
+			c.create_time
+		from
+			t_patient_disease p,
+			p_cure_record c
+		where
+			p.order_id = c.order_id
+		and p.patient_id = ${patientId}
+		and p.disease_type_id in 
+		<foreach collection="diseaseIds" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		order by c.create_time desc
+	</select>
+	
+	<!-- 获取医生给患者打的病种 -->
+	<select id="getDiseaseByDoctor" resultType="String">
+		select 
+			d.disease_type_id 
+		from 
+			t_patient_disease d 
+		where
+		     d.`disease_type_id` !='null'
+			AND d.doctor_id in
+		<foreach collection="list" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		group by d.disease_type_id
+	</select>
+	
+	<!-- 获取医生给患者打的病种 -->
+	<select id="getDiseaseByDoctorAndGroup" parameterType="com.dachen.health.group.stat.entity.param.StatParam"  resultType="String">
+		select 
+			d.disease_type_id 
+		from 
+			t_patient_disease d 
+		where
+		     d.`disease_type_id` !='null'
+			AND d.doctor_id in
+		<foreach collection="doctorIds" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+			AND d.group_Id="${groupId}" 
+		group by d.disease_type_id
+	</select>
+	
+	<!-- 统计 集团所有患者id -->
+	<select id="statGroupPatient"  parameterType="com.dachen.health.group.stat.entity.param.StatParam"  resultType="Integer">
+		SELECT DISTINCT user_id
+		FROM t_patient_disease
+		where group_Id="${groupId}" 
+		ORDER BY patient_id LIMIT ${start} , ${pageSize} 
+	</select>
+
+	<!-- 统计 集团所有患者数量-->
+	<select id="countGroupPatient"  parameterType="com.dachen.health.group.stat.entity.param.StatParam"  resultType="Integer">
+		SELECT COUNT( DISTINCT user_id)
+		FROM t_patient_disease
+		WHERE group_Id="${groupId}"
+	</select>
+
+	<!-- 按条件查询用户id -->
+	<select id="queryGroupUserByCondition" parameterType="com.dachen.health.group.stat.entity.param.StatParam" resultType="Integer">
+		SELECT DISTINCT o.patient_id
+		FROM t_patient p, p_order o
+		WHERE o.patient_id = p.id
+		AND o.group_id = #{groupId}
+		AND ((o.order_status = 4) OR (o.order_type = 4 AND o.order_status = 3))
+		<if test="doctorId != null">
+			AND o.doctor_id = ${doctorId}
+		</if>
+		<if test="doctorIds != null">
+			AND o.doctor_id IN
+			<foreach collection="doctorIds" item="doctorId" open="(" separator="," close=")">
+				#{doctorId}
+			</foreach>
+		</if>
+		<if test="diseaseIds != null">
+			AND o.disease_id IN
+			<foreach collection="diseaseIds" item="diseaseId" open="(" separator="," close=")">
+				#{diseaseId}
+			</foreach>
+		</if>
+
+		ORDER BY p.id LIMIT ${start} , ${pageSize}
+	</select>
+
+	<!-- 按条件查询用户数量-->
+	<select id="countGroupUserByCondition"  parameterType="com.dachen.health.group.stat.entity.param.StatParam"  resultType="Integer">
+		SELECT COUNT( DISTINCT o.patient_id)
+		FROM t_patient p, p_order o
+		WHERE o.patient_id = p.id
+		AND o.group_id = #{groupId}
+		AND ((o.order_status = 4) OR (o.order_type = 4 AND o.order_status = 3))
+		<if test="doctorId != null">
+			AND o.doctor_id = ${doctorId}
+		</if>
+		<if test="doctorIds != null">
+			AND o.doctor_id IN
+			<foreach collection="doctorIds" item="doctorId" open="(" separator="," close=")">
+				#{doctorId}
+			</foreach>
+		</if>
+		<if test="diseaseIds != null">
+			AND o.disease_id IN
+			<foreach collection="diseaseIds" item="diseaseId" open="(" separator="," close=")">
+				#{diseaseId}
+			</foreach>
+		</if>
+
+	</select>
+
+	<!-- 按病种查询集团患者id -->
+	<select id="queryGroupUserByDisease" parameterType="com.dachen.health.group.stat.entity.param.StatParam" resultType="Integer">
+		SELECT
+			DISTINCT t.`patient_id`
+		FROM t_patient_disease t
+		WHERE t.`group_id` =  #{groupId}
+		AND t.`disease_type_id` IN
+            <foreach collection="diseaseIds" item="diseaseId" open="(" separator="," close=")">
+              #{diseaseId}
+            </foreach>
+		order by t.`patient_id` LIMIT ${start} , ${pageSize}
+	</select>
+
+    <!-- 按病种查询集团患者id -->
+    <select id="countGroupUserByDisease" parameterType="com.dachen.health.group.stat.entity.param.StatParam" resultType="Integer">
+        SELECT
+          COUNT(DISTINCT t.`patient_id`)
+        FROM t_patient_disease t
+        WHERE t.`group_id` =  #{groupId}
+        AND t.`disease_type_id` IN
+        <foreach collection="diseaseIds" item="diseaseId" open="(" separator="," close=")">
+            #{diseaseId}
+        </foreach>
+        order by t.`patient_id`
+    </select>
+	
+	<!-- 统计 集团中某个医生 的患者id -->
+	<select id="statDoctorPatient" parameterType="com.dachen.health.group.stat.entity.param.StatParam" resultType="Integer">
+		SELECT DISTINCT user_id
+		FROM t_patient_disease
+		WHERE group_Id="${groupId}" AND doctor_id=${doctorId}
+		ORDER BY patient_id LIMIT ${start} , ${pageSize} 
+	</select>
+	
+	<!-- 统计 集团中某个医生 的患者数量 -->
+	<select id="countDoctorPatient"  parameterType="com.dachen.health.group.stat.entity.param.StatParam" resultType="Integer">
+		select  count( DISTINCT user_id)
+		from t_patient_disease
+		where group_Id="${groupId}" and doctor_id=${doctorId} 
+	</select>
+	
+			<!-- 统计 集团中多个医生的患者id -->
+	<select id="statDoctorsPatient"  parameterType="com.dachen.health.group.stat.entity.param.StatParam" resultType="Integer">
+		select DISTINCT user_id 
+		from t_patient_disease 
+		where group_id="${groupId}"  
+					AND doctor_id in
+		<foreach collection="doctorIds" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach> 
+		ORDER BY patient_id LIMIT ${start} , ${pageSize} 
+	</select>
+	
+			<!-- 计算 集团中多个医生的患者总数 -->
+	<select id="countDoctorsPatient" parameterType="com.dachen.health.group.stat.entity.param.StatParam" resultType="Integer">
+		select  count( DISTINCT user_id)
+		from t_patient_disease
+		where group_Id="${groupId}" 
+					AND doctor_id in
+		<foreach collection="doctorIds" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach> 
+	</select>
+	
+	
+	<!-- 统计 患者对应的集团 -->
+	<select id="statPatietGroupList"  parameterType="com.dachen.health.pack.stat.entity.param.PatientStatParam" resultType="String">
+		select DISTINCT  group_id   from t_patient_disease  where user_id="${userId}"  
+	</select>
+	
+	<!-- 统计 患者对应的医生 -->
+	<select id="statPatietDoctorList"  parameterType="com.dachen.health.pack.stat.entity.param.PatientStatParam" resultType="Integer">
+		select DISTINCT  doctor_id   from t_patient_disease  where user_id="${userId}"  
+	</select>
+	
+	<!-- 统计集团患者的地区信息 -->
+	<select id="getGroupPatientRegions" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT 
+		    p.area
+		FROM
+		    t_patient p
+        LEFT JOIN
+		    t_patient_disease pd ON pd.patient_id = p.id
+		WHERE
+			1=1
+	    	AND	pd.group_id = #{groupId}
+	</select>
+	
+	<!-- 统计集团患者的病种信息 -->
+	<select id="getGroupPatientDiseases" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT 
+		    pd.disease_type_id
+		FROM
+		    t_patient p
+	    LEFT JOIN
+		    t_patient_disease pd ON p.id = pd.patient_id
+		WHERE
+			1=1
+	    	AND	pd.group_id = #{groupId}
+	</select>
+	
+	<select id="getGroupPatientInfos" parameterType="com.dachen.health.pack.stat.entity.param.PatientStatParam" resultMap="patientStatMap">
+		SELECT 
+		    p.id,
+		    p.user_name name,
+		    p.birthday,
+		    p.sex,
+		    p.area,
+		    p.top_path
+		FROM
+		    t_patient p
+		        LEFT JOIN
+		    p_order o ON p.id = o.patient_id
+		        LEFT JOIN
+		    t_patient_disease pd ON p.id = pd.patient_id
+		WHERE
+			1=1
+			<if test="groupId != null">
+		    	AND o.group_id = #{groupId}
+		    	AND pd.group_id = #{groupId}
+		    </if>
+		    <if test="area != null">
+		    	<choose>
+		    		<when test="area == '暂无'">
+		    			AND (p.area IS NULL OR  p.area = '')
+		    		</when>
+		    		<otherwise>
+		    			AND p.area LIKE CONCAT('%',#{area},'%')
+		    		</otherwise>
+		    	</choose>
+		    </if>
+		    <if test="diseaseIds != null">
+		    	<choose>
+		    		<when test="diseaseIds[0] == '-1'">
+		    			AND (pd.disease_type_id IS NULL OR pd.disease_type_id = '')
+		    		</when>
+		    		<otherwise>
+			    		AND pd.disease_type_id IN
+					    <foreach collection="diseaseIds" item="item" open="(" separator="," close=")">
+					    	'${item}'
+					    </foreach>
+		    		</otherwise>
+		    	</choose>
+		    </if>
+		GROUP BY p.id LIMIT #{start}, #{pageSize} 
+	</select>
+	
+	<select id="getGroupPatientInfosCount" parameterType="com.dachen.health.pack.stat.entity.param.PatientStatParam" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM (
+			SELECT 
+			    DISTINCT(p.id)
+			FROM
+			    t_patient p
+			        LEFT JOIN
+			    p_order o ON p.id = o.patient_id
+			        LEFT JOIN
+			    t_patient_disease pd ON p.id = pd.patient_id
+			WHERE
+				1=1
+				<if test="groupId != null">
+			    	AND o.group_id = #{groupId}
+			    	AND pd.group_id = #{groupId}
+			    </if>
+			    <if test="area != null">
+			    	<choose>
+			    		<when test="area == '暂无'">
+			    			AND (p.area IS NULL OR  p.area = '')
+			    		</when>
+			    		<otherwise>
+			    			AND p.area LIKE CONCAT('%',#{area},'%')
+			    		</otherwise>
+			    	</choose>
+			    </if>
+			    <if test="diseaseIds != null">
+			    	<choose>
+			    		<when test="diseaseIds[0] == '-1'">
+			    			AND (pd.disease_type_id IS NULL OR pd.disease_type_id = '')
+			    		</when>
+			    		<otherwise>
+				    		AND pd.disease_type_id IN
+						    <foreach collection="diseaseIds" item="item" open="(" separator="," close=")">
+						    	'${item}'
+						    </foreach>
+			    		</otherwise>
+		    		</choose>
+			    </if>
+			GROUP BY p.id) t
+	</select>
+	
+	<select id="getGroupPatientCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM (
+			SELECT 
+			    DISTINCT(p.id)
+			FROM
+			    t_patient p
+			        LEFT JOIN
+			    p_order o ON p.id = o.patient_id
+			        LEFT JOIN
+			    t_patient_disease pd ON p.id = pd.patient_id
+			WHERE
+				1=1
+		    	AND o.group_id = #{groupId}
+		    	AND pd.group_id = #{groupId}
+			GROUP BY p.id) t
+	</select>
+	
+	<select id="getDiseaseNames" parameterType="com.dachen.health.pack.stat.entity.param.PatientStatParam" resultMap="diseaseInfoMap">
+		SELECT 
+		    pd.patient_id, pd.disease_type_id, pd.disease_type_name
+		FROM
+		    t_patient_disease pd
+		WHERE
+			1=1
+			<if test="groupId != null">
+				AND pd.group_id = #{groupId}
+			</if>
+			<if test="patientIds != null">
+				AND pd.patient_id IN
+				<foreach collection="patientIds" item="item" open="(" separator="," close=")">
+					${item}
+				</foreach>
+			</if>
+	</select>
+	
+
+	
+</mapper>

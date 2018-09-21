@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.incomeNew.mapper.SettleMapperNew" >
+  <resultMap id="BaseResultMap" type="com.dachen.health.pack.incomeNew.entity.po.SettleNew" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="doctor_id" property="doctorId" jdbcType="INTEGER" />
+    <result column="group_id" property="groupId" jdbcType="VARCHAR" />
+    <result column="object_type" property="objectType" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="month_money" property="monthMoney" jdbcType="DOUBLE" />
+    <result column="total_money" property="totalMoney" jdbcType="DOUBLE" />
+    <result column="bankcard_id" property="bankcardId" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="BIGINT" />
+    <result column="settle_date" property="settleDate" jdbcType="BIGINT" />
+    <result column="settle_user_id" property="settleUserId" jdbcType="INTEGER" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="month" property="month" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap type="com.dachen.health.pack.incomeNew.entity.vo.SysSettleVO" id="sysSettleVO">
+ 	<result column="month" property="month" jdbcType="VARCHAR" />
+ 	<result column="noSettle" property="noSettleMoney" jdbcType="DOUBLE" />
+    <result column="settled" property="settledMoney" jdbcType="DOUBLE" />
+  </resultMap>
+  
+  <resultMap type="com.dachen.health.pack.incomeNew.entity.vo.SettleDetailVO" id="detailVO">
+  	<result column="id" property="id" jdbcType="INTEGER" />
+  	<result column="doctor_id" property="doctorId" jdbcType="INTEGER" />
+    <result column="group_id" property="groupId" jdbcType="VARCHAR" />
+    <result column="object_type" property="objectType" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="month_money" property="monthMoney" jdbcType="DOUBLE" />
+    <result column="total_money" property="noSettleMoney" jdbcType="DOUBLE" />
+    <result column="bank_no" property="bankNo" />
+	<result column="bank_name" property="bankName" />
+	<result column="sub_bank" property="subBankName" />
+	<result column="user_real_name" property="userRealName" />
+	<result column="person_no" property="personNo" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, doctor_id, group_id, object_type, status, month_money, total_money, bankcard_id, 
+    create_date, settle_date, settle_user_id, year, month
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dachen.health.pack.incomeNew.entity.po.SettleExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_settle_new
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from t_settle_new
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_settle_new
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dachen.health.pack.incomeNew.entity.po.SettleExample" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from t_settle_new
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dachen.health.pack.incomeNew.entity.po.SettleNew" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into t_settle_new (id, doctor_id, group_id, 
+      object_type, status, month_money, 
+      total_money, bankcard_id, create_date, 
+      settle_date, settle_user_id, year, 
+      month)
+    values (#{id,jdbcType=INTEGER}, #{doctorId,jdbcType=INTEGER}, #{groupId,jdbcType=VARCHAR}, 
+      #{objectType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{monthMoney,jdbcType=DOUBLE}, 
+      #{totalMoney,jdbcType=DOUBLE}, #{bankcardId,jdbcType=INTEGER}, #{createDate,jdbcType=BIGINT}, 
+      #{settleDate,jdbcType=BIGINT}, #{settleUserId,jdbcType=INTEGER}, #{year,jdbcType=INTEGER}, 
+      #{month,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dachen.health.pack.incomeNew.entity.po.SettleNew" keyProperty="id" useGeneratedKeys="true">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into t_settle_new
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="doctorId != null" >
+        doctor_id,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="objectType != null" >
+        object_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="monthMoney != null" >
+        month_money,
+      </if>
+      <if test="totalMoney != null" >
+        total_money,
+      </if>
+      <if test="bankcardId != null" >
+        bankcard_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="settleDate != null" >
+        settle_date,
+      </if>
+      <if test="settleUserId != null" >
+        settle_user_id,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="month != null" >
+        month,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null" >
+        #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="objectType != null" >
+        #{objectType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="monthMoney != null" >
+        #{monthMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="totalMoney != null" >
+        #{totalMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="bankcardId != null" >
+        #{bankcardId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=BIGINT},
+      </if>
+      <if test="settleDate != null" >
+        #{settleDate,jdbcType=BIGINT},
+      </if>
+      <if test="settleUserId != null" >
+        #{settleUserId,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dachen.health.pack.incomeNew.entity.po.SettleExample" resultType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from t_settle_new
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_settle_new
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctorId != null" >
+        doctor_id = #{record.doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupId != null" >
+        group_id = #{record.groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objectType != null" >
+        object_type = #{record.objectType,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.monthMoney != null" >
+        month_money = #{record.monthMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.totalMoney != null" >
+        total_money = #{record.totalMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.bankcardId != null" >
+        bankcard_id = #{record.bankcardId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=BIGINT},
+      </if>
+      <if test="record.settleDate != null" >
+        settle_date = #{record.settleDate,jdbcType=BIGINT},
+      </if>
+      <if test="record.settleUserId != null" >
+        settle_user_id = #{record.settleUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null" >
+        month = #{record.month,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_settle_new
+    set id = #{record.id,jdbcType=INTEGER},
+      doctor_id = #{record.doctorId,jdbcType=INTEGER},
+      group_id = #{record.groupId,jdbcType=VARCHAR},
+      object_type = #{record.objectType,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      month_money = #{record.monthMoney,jdbcType=DOUBLE},
+      total_money = #{record.totalMoney,jdbcType=DOUBLE},
+      bankcard_id = #{record.bankcardId,jdbcType=INTEGER},
+      create_date = #{record.createDate,jdbcType=BIGINT},
+      settle_date = #{record.settleDate,jdbcType=BIGINT},
+      settle_user_id = #{record.settleUserId,jdbcType=INTEGER},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dachen.health.pack.incomeNew.entity.po.SettleNew" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_settle_new
+    <set >
+      <if test="doctorId != null" >
+        doctor_id = #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="objectType != null" >
+        object_type = #{objectType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="monthMoney != null" >
+        month_money = #{monthMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="totalMoney != null" >
+        total_money = #{totalMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="bankcardId != null" >
+        bankcard_id = #{bankcardId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=BIGINT},
+      </if>
+      <if test="settleDate != null" >
+        settle_date = #{settleDate,jdbcType=BIGINT},
+      </if>
+      <if test="settleUserId != null" >
+        settle_user_id = #{settleUserId,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        month = #{month,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dachen.health.pack.incomeNew.entity.po.SettleNew" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update t_settle_new
+    set doctor_id = #{doctorId,jdbcType=INTEGER},
+      group_id = #{groupId,jdbcType=VARCHAR},
+      object_type = #{objectType,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      month_money = #{monthMoney,jdbcType=DOUBLE},
+      total_money = #{totalMoney,jdbcType=DOUBLE},
+      bankcard_id = #{bankcardId,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=BIGINT},
+      settle_date = #{settleDate,jdbcType=BIGINT},
+      settle_user_id = #{settleUserId,jdbcType=INTEGER},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+ 
+ <select id="selectSettleYMListByType" parameterType="com.dachen.health.pack.incomeNew.entity.param.SettleNewParam" resultMap="sysSettleVO">
+ 		<!-- 只有status是结算状态的，已结算金额就是待结算金额，其它状态是已结算金额是0 -->
+<!--  		select t.month,sum(t.to_settle) as noSettle,sum(t.settled) as settled from -->
+<!-- 		( -->
+<!--  			select id,month,total_money as to_settle, -->
+<!--  				case status when 3 then total_money else 0 end as settled  -->
+<!--  			from t_settle_new -->
+<!--  			where  object_type = #{objectType,jdbcType=INTEGER} -->
+<!--  			order by create_date desc -->
+<!-- 		) t -->
+<!--  		group by t.month -->
+<!--  		order by t.month desc -->
+<!--  		limit #{start},#{pageSize} -->
+			select t.month,sum(t.to_settle) as noSettle,sum(t.settled) as settled from
+			(
+	 			select ts.id,ts.month,ts.total_money as to_settle,
+	 				case ts.status when 3 then ts.total_money else 0 end as settled 
+	 			from t_settle_new ts
+	 			left join t_bank_card tb 
+				<choose> 
+					<when test="objectType == 1"> on ts.doctor_id=tb.user_id and tb.is_delete=2 </when> 
+					<when test="objectType == 2"> on ts.group_id=tb.group_id and tb.is_delete=2</when> 
+					<otherwise> on ts.bankcard_id = tb.id and tb.is_delete=2</otherwise> 
+				</choose> 
+				where ts.object_type=#{objectType,jdbcType=INTEGER} 
+				order by create_date desc	
+			) t
+	 		group by t.month
+	 		order by t.month desc
+	 		limit #{start},#{pageSize}
+ </select>
+ <select id="selectSettleYMCountByType" parameterType="com.dachen.health.pack.incomeNew.entity.param.SettleNewParam" resultType="java.lang.Integer">
+ 	select count(x.month) from 
+		(select t.month from
+			(
+	 			select ts.id,ts.month,ts.total_money as to_settle,
+	 				case ts.status when 3 then ts.total_money else 0 end as settled 
+	 			from t_settle_new ts
+	 			left join t_bank_card tb 
+				<choose> 
+					<when test="objectType == 1"> on ts.doctor_id=tb.user_id and tb.is_delete=2</when> 
+					<when test="objectType == 2"> on ts.group_id=tb.group_id and tb.is_delete=2</when> 
+					<otherwise> on ts.bankcard_id = tb.id </otherwise> 
+				</choose> 
+				where ts.object_type=#{objectType,jdbcType=INTEGER} 
+				order by create_date desc		
+			) t
+ 		group by t.month
+	)x
+ </select>
+ 
+ <select id="selectListByMonth" parameterType="com.dachen.health.pack.incomeNew.entity.param.SettleNewParam" resultMap="detailVO">
+<!--  		select ts.id,ts.doctor_id,ts.group_id,ts.status,ts.month_money,ts.total_money,ts.object_type, -->
+<!-- 			tb.user_real_name,tb.person_no,tb.bank_name,tb.sub_bank,tb.bank_no -->
+<!-- 		from t_settle_new ts  -->
+<!-- 		left join t_bank_card tb on ts.bankcard_id = tb.id -->
+<!-- 		where ts.month = #{month,jdbcType=VARCHAR}  and ts.object_type=#{objectType,jdbcType=INTEGER} 	 -->
+<!-- 		order by ts.status asc, ts.create_date desc -->
+<!-- 		limit #{start},#{pageSize} -->
+<!-- 只有已结算才显示结算时银行卡，其它均显示当前用户绑定最新银行卡 -->
+<!-- 已结算则查询结算时绑定的银行卡且该银行卡有可能是已删除 -->
+	select * from(
+			select ts.id,ts.doctor_id,ts.group_id,ts.status,ts.month_money,ts.total_money,ts.object_type,ts.create_date,
+			tb.user_real_name,tb.person_no,tb.bank_name,tb.sub_bank,tb.bank_no
+			from t_settle_new ts 
+			left join t_bank_card tb 
+			<choose> 
+				<when test="objectType == 1"> on ts.doctor_id=tb.user_id  and tb.is_delete=2</when> 
+				<when test="objectType == 2"> on ts.group_id=tb.group_id  and tb.is_delete=2</when> 
+				<otherwise> on ts.bankcard_id = tb.id  and tb.is_delete=2 and tb.tb.id=0</otherwise> 
+			</choose> 
+			where ts.month = #{month,jdbcType=VARCHAR}  
+			and ts.object_type=#{objectType,jdbcType=INTEGER} 
+			and ts.status !=3  
+			AND ts.total_money!=0 
+			UNION all
+			select ts.id,ts.doctor_id,ts.group_id,ts.status,ts.month_money,ts.total_money,ts.object_type,ts.create_date,
+			tb.user_real_name,tb.person_no,tb.bank_name,tb.sub_bank,tb.bank_no
+			from t_settle_new ts 
+			left join t_bank_card tb  on ts.bankcard_id = tb.id  
+			where ts.month = #{month,jdbcType=VARCHAR}  
+			and ts.object_type=#{objectType,jdbcType=INTEGER} 
+			and ts.status =3   
+			AND ts.total_money!=0 
+			)X
+			order by X.status asc,X.bank_no desc, X.create_date desc
+			limit #{start},#{pageSize}
+ </select>
+ <select id="selectListByMonthCount" parameterType="com.dachen.health.pack.incomeNew.entity.param.SettleNewParam" resultType="java.lang.Integer">
+<!--  		select count(*) -->
+<!-- 		from t_settle_new ts  -->
+<!-- 		left join t_bank_card tb on ts.bankcard_id = tb.id -->
+<!-- 		where ts.month = #{month,jdbcType=VARCHAR}  and ts.object_type=#{objectType,jdbcType=INTEGER} 	 -->
+
+			select count(*) from(
+			select ts.id,ts.doctor_id,ts.group_id,ts.status,ts.month_money,ts.total_money,ts.object_type,ts.create_date,
+			tb.user_real_name,tb.person_no,tb.bank_name,tb.sub_bank,tb.bank_no
+			from t_settle_new ts 
+			left join t_bank_card tb 
+			<choose> 
+				<when test="objectType == 1"> on ts.doctor_id=tb.user_id  and tb.is_delete=2</when> 
+				<when test="objectType == 2"> on ts.group_id=tb.group_id  and tb.is_delete=2</when> 
+				<otherwise> on ts.bankcard_id = tb.id  and tb.is_delete=2 and tb.tb.id=0</otherwise> 
+			</choose> 
+			where ts.month = #{month,jdbcType=VARCHAR}  
+			and ts.object_type=#{objectType,jdbcType=INTEGER} 
+			and ts.status !=3 
+			AND ts.total_money!=0 
+			UNION all
+			select ts.id,ts.doctor_id,ts.group_id,ts.status,ts.month_money,ts.total_money,ts.object_type,ts.create_date,
+			tb.user_real_name,tb.person_no,tb.bank_name,tb.sub_bank,tb.bank_no
+			from t_settle_new ts 
+			left join t_bank_card tb  on ts.bankcard_id = tb.id  
+			where ts.month = #{month,jdbcType=VARCHAR}  
+			and ts.object_type=#{objectType,jdbcType=INTEGER} 
+			and ts.status =3 
+			AND ts.total_money!=0 
+			)X
+ </select>
+ 
+</mapper>

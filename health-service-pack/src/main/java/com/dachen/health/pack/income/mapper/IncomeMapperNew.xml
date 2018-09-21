@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.income.mapper.IncomeMapperNew">
+	
+  <resultMap id="incomeDetailsVOMap" type="com.dachen.health.pack.income.entity.vo.IncomeDetailsVO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="doctor_id" property="doctorId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="money" property="money" jdbcType="BIGINT" />
+    <result column="income_type" property="incomeType" jdbcType="INTEGER" />
+   
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+     <result column="finish_time" property="finishTime" jdbcType="BIGINT" />
+      <result column="order_status" property="orderStatus" />
+    <result column="order_type" property="orderType" jdbcType="INTEGER"  />
+    <result column="pack_type" property="packType" jdbcType="INTEGER"  />
+     <result column="income_doctor_id" property="incomeDoctorId" jdbcType="INTEGER" />
+    
+  </resultMap>
+
+	<!-- 从t_doctor_income中查询实际收入合计 -->
+	<select id="getDoctorIncomeBalance" parameterType="com.dachen.health.pack.income.entity.vo.IncomeVONew" resultType="Integer">
+		SELECT SUM(actual_income) FROM t_doctor_income where 1=1
+		<if test="doctorId != null">
+		and	doctor_id=#{doctorId}
+		</if>
+		<if test="orderStatus != null">
+		and	order_status=#{orderStatus}
+		</if>
+		<if test="extend2 != null">
+		and	extend_2=#{extend2}
+		</if>
+	</select>
+	
+	<!-- 从t_doctor_division中查询提成收入合计 -->
+	<select id="getDoctorDivisionBalance" parameterType="com.dachen.health.pack.income.entity.vo.IncomeVONew" resultType="Integer">
+		SELECT SUM(division_income) FROM t_doctor_division where 1=1
+		<if test="doctorId != null">
+			and division_doctor_id=#{doctorId}
+		</if>
+		<if test="extend2 != null">
+			and extend_2=#{extend2}
+		</if>
+	</select>
+	
+	<!-- 从t_doctor_income中查询未完成收入合计 -->
+	<select id="getDoctorUnFinishBalance" parameterType="com.dachen.health.pack.income.entity.vo.IncomeVONew" resultType="Integer">
+		SELECT SUM(share_income) FROM t_doctor_income where 1=1
+		<if test="doctorId != null">
+		and	doctor_id=#{doctorId}
+		</if>
+		<if test="orderStatus != null">
+		and	order_status=#{orderStatus}
+		</if>
+	</select>
+	
+	
+	
+	 <select id="getDoctorFinishDetail" parameterType="com.dachen.health.pack.income.entity.vo.IncomeVONew" resultMap="incomeDetailsVOMap">
+	 SELECT * FROM 
+     (	  
+			SELECT  a.id ,a.doctor_id,a.order_id,a.actual_income money,11 incomeType,b.order_type,b.pack_type,a.create_time,b.order_status ,0 income_doctor_id  FROM t_doctor_income a
+			LEFT JOIN p_order b ON a.order_id=b.id
+ 			WHERE 1=1
+	  		 <if test="doctorId != null">
+			   and	a.doctor_id=#{doctorId}
+			</if>
+	  		<if test="orderStatus != null">
+				and	a.order_status=#{orderStatus}
+			</if>
+			<if test="extend2 != null">
+				and	a.extend_2=#{extend2}
+			</if>
+			<if test="createTime !=null">
+	  			and a.create_time &gt; #{createTime}
+	  		</if>
+	  		<if test="finishTime !=null">
+	  			 and a.create_time &lt; #{finishTime}
+	  		</if>
+				 UNION
+ 				SELECT  a.id ,a.division_doctor_id,a.order_id,a.division_income money,12 incomeType,b.order_type,b.pack_type,a.create_time ,b.order_status,income_doctor_id  FROM t_doctor_division a
+				LEFT JOIN p_order b ON a.order_id=b.id
+ 				WHERE 1=1
+ 			 <if test="doctorId != null">
+			   and	a.division_doctor_id=#{doctorId}
+			</if>
+			 <if test="extend2 != null">
+				and	a.extend_2=#{extend2}
+			 </if>
+			 <if test="createTime !=null">
+	  			and a.create_time &gt; #{createTime}
+	  		</if>
+	  		<if test="finishTime !=null">
+	  			 and a.create_time &lt; #{finishTime}
+	  		</if>
+		   ) X
+ 			ORDER BY create_time DESC 
+  			limit #{start},#{pageSize}
+  </select>
+  
+   <select id="getDoctorUnFinishDetail" parameterType="com.dachen.health.pack.income.entity.vo.IncomeVONew" resultMap="incomeDetailsVOMap">
+			SELECT  a.id ,a.doctor_id,a.order_id,a.share_income money,11 incomeType,b.order_type,b.pack_type ,a.create_time FROM t_doctor_income a
+			LEFT JOIN p_order b ON a.order_id=b.id
+ 			WHERE 1=1
+	  		 <if test="doctorId != null">
+			   and	a.doctor_id=#{doctorId}
+			</if>
+	  		<if test="orderStatus != null">
+				and	a.order_status=#{orderStatus}
+			</if>
+ 			ORDER BY create_time DESC 
+  			limit #{start},#{pageSize}
+  </select>
+  
+  
+   <select id="getDoctorFinishDetailCount" parameterType="com.dachen.health.pack.income.entity.vo.IncomeVONew"  resultType="Integer">
+	 SELECT count(*) FROM 
+     (	  
+			SELECT  a.id ,a.doctor_id,a.order_id,a.actual_income money,11 incomeType,b.order_type,b.pack_type,a.create_time,b.order_status  ,0 income_doctor_id FROM t_doctor_income a
+			LEFT JOIN p_order b ON a.order_id=b.id
+ 			WHERE 1=1
+	  		 <if test="doctorId != null">
+			   and	a.doctor_id=#{doctorId}
+			</if>
+	  		<if test="orderStatus != null">
+				and	a.order_status=#{orderStatus}
+			</if>
+			<if test="extend2 != null">
+				and	a.extend_2=#{extend2}
+			</if>
+			
+				 UNION
+ 				SELECT  a.id ,a.division_doctor_id,a.order_id,a.division_income money,12 incomeType,b.order_type,b.pack_type,a.create_time,b.order_status ,income_doctor_id FROM t_doctor_division a
+				LEFT JOIN p_order b ON a.order_id=b.id
+ 				WHERE 1=1
+ 			 <if test="doctorId != null">
+			   and	a.division_doctor_id=#{doctorId}
+			</if>
+			 <if test="extend2 != null">
+				and	a.extend_2=#{extend2}
+			 </if>
+ 
+		   ) X
+  </select>
+  
+   <select id="getDoctorUnFinishDetailCount" parameterType="com.dachen.health.pack.income.entity.vo.IncomeVONew"  resultType="Integer">
+			SELECT  count(*) FROM t_doctor_income a
+			LEFT JOIN p_order b ON a.order_id=b.id
+ 			WHERE 1=1
+	  		 <if test="doctorId != null">
+			   and	a.doctor_id=#{doctorId}
+			</if>
+	  		<if test="orderStatus != null">
+				and	a.order_status=#{orderStatus}
+			</if>
+  </select>
+  
+
+	
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dachen.health.pack.account.mapper.AccountMapper">
+	
+	
+	<resultMap id="accountMap" type="com.dachen.health.pack.account.entity.vo.AccountVO">
+		<result column="user_id" property="userId" />
+		<result column="usable_money" property="usableMoney" />
+		<result column="frozen_money" property="frozenMoney" />
+		<result column="create_time" property="createTime" />
+		<result column="mofidy_time" property="mofidyTime" />
+	</resultMap>
+	
+	<resultMap id="resultMap" type="com.dachen.health.pack.account.entity.po.Account">
+		<result column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="usable_money" property="usableMoney" />
+		<result column="frozen_money" property="frozenMoney" />
+		<result column="create_time" property="createTime" />
+		<result column="mofidy_time" property="mofidyTime" />
+	</resultMap>
+	
+	<insert id="addAccount" useGeneratedKeys="true" parameterType="com.dachen.health.pack.account.entity.po.Account">
+		insert into t_account (
+			user_id,
+			usable_money,
+			frozen_money,
+			create_time,
+			mofidy_time
+		) 
+		values (
+			#{userId}, 
+			#{usableMoney}, 
+      		#{frozenMoney}, 
+      		#{createTime}, 
+      		#{mofidyTime} 
+		)
+	</insert>
+	
+	<update id="updateAccount" parameterType="com.dachen.health.pack.account.entity.po.Account" >
+		UPDATE t_account
+		<set>
+			<if test="usableMoney != null">
+				usable_money = #{usableMoney,jdbcType=INTEGER},
+			</if>
+			<if test="mofidyTime != null">
+				mofidy_time = #{mofidyTime,jdbcType=BIGINT},
+			</if>
+		</set>
+		WHERE user_id = #{userId,jdbcType=BIGINT}
+	</update>
+	
+	<select id="findOne" resultMap="resultMap" parameterType="java.lang.Integer">
+		select 
+			a.id,
+			a.user_id,
+			a.usable_money,
+			a.frozen_money,
+			a.create_time,
+			a.mofidy_time
+		 from t_account a 
+		 WHERE user_id=#{value}
+	</select>
+	
+</mapper>

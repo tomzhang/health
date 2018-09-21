@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<project name="dachen-findbugs">
+	<property name="findbugs_dir" location="/data/program/findbugs-3.0.1"></property>
+	<property name="export_dir" location="/data/www/resources/findbugs"></property>
+
+	<path id="findbugs.path">
+		<fileset dir="${findbugs_dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="findbugs.path" />
+	
+	<target name="EntityGeerator">
+		<findbugs home="${findbugs_dir}" jvmargs="-Xmx884m" output="html" 
+			outputFile="${export_dir}/EntityGeerator.html">
+			<class location="../EntityGenerator/target/classes" />
+			<auxClasspath path="${findbugs_dir}/lib/findbugs-ant.jar" />
+		</findbugs>
+	</target>
+
+	<target name="health-common" depends="EntityGeerator">
+		<findbugs home="${findbugs_dir}" jvmargs="-Xmx884m" output="html" 
+			outputFile="${export_dir}/health-common.html">
+			<class location="../health-common/target/classes" />
+			<auxClasspath path="${findbugs_dir}/lib/findbugs-ant.jar" />
+		</findbugs>
+	</target>
+
+	<target name="health-facade" depends="health-common">
+		<findbugs home="${findbugs_dir}" jvmargs="-Xmx884m" output="html" 
+			outputFile="${export_dir}/health-facade.html">
+			<class location="../health-facade/target/classes" />
+			<auxClasspath path="${findbugs_dir}/lib/findbugs-ant.jar" />
+		</findbugs>
+	</target>
+
+	<target name="health-group" depends="health-facade">
+		<findbugs home="${findbugs_dir}" jvmargs="-Xmx884m" output="html" 
+			outputFile="${export_dir}/health-group.html">
+			<class location="../health-group/target/classes" />
+			<auxClasspath path="${findbugs_dir}/lib/findbugs-ant.jar" />
+		</findbugs>
+	</target>
+
+	<target name="health-im-api" depends="health-group">
+		<findbugs home="${findbugs_dir}" jvmargs="-Xmx884m" output="html" 
+			outputFile="${export_dir}/health-im-api.html">
+			<class location="../health-im-api/target/classes" />
+			<auxClasspath path="${findbugs_dir}/lib/findbugs-ant.jar" />
+		</findbugs>
+	</target>
+
+	<target name="health-line-service" depends="health-im-api">
+		<findbugs home="${findbugs_dir}" jvmargs="-Xmx884m" output="html" 
+			outputFile="${export_dir}/health-line-service.html">
+			<class location="../health-line-service/target/classes" />
+			<auxClasspath path="${findbugs_dir}/lib/findbugs-ant.jar" />
+		</findbugs>
+	</target>
+
+	<target name="health-public" depends="health-line-service">
+		<findbugs home="${findbugs_dir}" jvmargs="-Xmx884m" output="html" 
+			outputFile="${export_dir}/health-public.html">
+			<class location="../health-public/target/classes" />
+			<auxClasspath path="${findbugs_dir}/lib/findbugs-ant.jar" />
+		</findbugs>
+	</target>
+
+	<target name="health-service" depends="health-public">
+		<findbugs home="${findbugs_dir}" jvmargs="-Xmx884m" output="html" 
+			outputFile="${export_dir}/health-service.html">
+			<class location="../health-service/target/classes" />
+			<auxClasspath path="${findbugs_dir}/lib/findbugs-ant.jar" />
+		</findbugs>
+	</target>
+
+	<target name="health-service-base" depends="health-service">
+		<findbugs home="${findbugs_dir}" jvmargs="-Xmx884m" output="html" 
+			outputFile="${export_dir}/health-service-base.html">
+			<class location="../health-service-base/target/classes" />
+			<auxClasspath path="${findbugs_dir}/lib/findbugs-ant.jar" />
+		</findbugs>
+	</target>
+
+	<target name="health-service-pack" depends="health-service-base">
+		<findbugs home="${findbugs_dir}" jvmargs="-Xmx884m" output="html" 
+			outputFile="${export_dir}/health-service-pack.html">
+			<class location="../health-service-pack/target/classes" />
+			<auxClasspath path="${findbugs_dir}/lib/findbugs-ant.jar" />
+		</findbugs>
+	</target>
+
+	<target name="health-support" depends="health-service-pack">
+		<findbugs home="${findbugs_dir}" jvmargs="-Xmx884m" output="html" 
+			outputFile="${export_dir}/health-support.html">
+			<class location="../health-support/target/classes" />
+			<auxClasspath path="${findbugs_dir}/lib/findbugs-ant.jar" />
+		</findbugs>
+	</target>
+	
+	<target name="auto" depends="health-support"/>
+
+
+</project>
